@@ -13,13 +13,28 @@ interface PhotoWithDate {
 interface CollapsibleMonthProps {
   monthName: string;
   photos: PhotoWithDate[];
+  isExpanded?: boolean;
+  onToggle?: () => void;
 }
 
-export function CollapsibleMonth({ monthName, photos }: CollapsibleMonthProps) {
-  const [isExpanded, setIsExpanded] = useState(true);
+export function CollapsibleMonth({
+  monthName,
+  photos,
+  isExpanded: externalExpanded,
+  onToggle,
+}: CollapsibleMonthProps) {
+  const [internalExpanded, setInternalExpanded] = useState(true);
+
+  // Use external control if provided, otherwise use internal state
+  const isExpanded =
+    externalExpanded !== undefined ? externalExpanded : internalExpanded;
 
   const toggleExpanded = () => {
-    setIsExpanded(!isExpanded);
+    if (onToggle) {
+      onToggle();
+    } else {
+      setInternalExpanded(!internalExpanded);
+    }
   };
 
   return (

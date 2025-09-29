@@ -1,8 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { parse } from "exifr";
-import { CollapsibleMonth } from "./CollapsibleMonth";
-import { Header } from "./components/Header";
+import { GalleryContent } from "./components/GalleryContent";
 
 interface PhotoWithDate {
   filename: string;
@@ -136,32 +135,13 @@ export default async function Gallery() {
     return b.localeCompare(a); // Most recent first
   });
 
-  const formatMonthYear = (key: string) => {
-    if (key === "no-date") return "Unknown Date";
-    const [year, month] = key.split("-");
-    const date = new Date(parseInt(year), parseInt(month));
-    return date.toLocaleDateString("en-US", { month: "long" });
-  };
-
   return (
     <main className='bg-black dark:bg-white min-h-screen p-4'>
-      <Header photoCount={files.length} />
-
-      {files.length === 0 ? (
-        <p className='text-white dark:text-black'>
-          No photos found in /public/photos/
-        </p>
-      ) : (
-        <div className='space-y-16'>
-          {sortedGroupKeys.map((groupKey) => (
-            <CollapsibleMonth
-              key={groupKey}
-              monthName={formatMonthYear(groupKey)}
-              photos={groupedPhotos[groupKey]}
-            />
-          ))}
-        </div>
-      )}
+      <GalleryContent
+        files={files}
+        sortedGroupKeys={sortedGroupKeys}
+        groupedPhotos={groupedPhotos}
+      />
     </main>
   );
 }
