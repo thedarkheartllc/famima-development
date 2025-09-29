@@ -22,7 +22,6 @@ export function GalleryContent({
   groupedPhotos,
 }: GalleryContentProps) {
   const formatMonthYear = (key: string) => {
-    if (key === "no-date") return "Unknown Date";
     const [year, month] = key.split("-");
     const date = new Date(parseInt(year), parseInt(month));
     return date.toLocaleDateString("en-US", { month: "long" });

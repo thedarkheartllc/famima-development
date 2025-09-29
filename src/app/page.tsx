@@ -70,8 +70,14 @@ export default async function Gallery() {
   // Check if photos directory exists, if not return empty array
   let files: string[] = [];
   try {
-    files = fs.readdirSync(photosDir);
-    console.log("Found files:", files);
+    const allFiles = fs.readdirSync(photosDir);
+    // Filter for common iPhone image formats
+    const imageExtensions = [".jpg", ".jpeg", ".png", ".heic", ".heif"];
+    files = allFiles.filter((file) => {
+      const ext = path.extname(file).toLowerCase();
+      return imageExtensions.includes(ext);
+    });
+    console.log("Found image files:", files);
   } catch (error) {
     // Directory doesn't exist yet
     console.log("Photos directory not found:", error);
@@ -95,15 +101,12 @@ export default async function Gallery() {
 
   console.log("All photos with dates:", photosWithDates);
 
-  // Sort photos by date (most recent first)
-  const sortedPhotos = photosWithDates.sort((a, b) => {
-    if (!a.date && !b.date) return 0;
-    if (!a.date) return 1; // photos without dates go to end
-    if (!b.date) return -1; // photos without dates go to end
-
+  // Filter out photos without dates and sort by date (most recent first)
+  const photosWithValidDates = photosWithDates.filter((photo) => photo.date);
+  const sortedPhotos = photosWithValidDates.sort((a, b) => {
     // Parse dates for comparison (MM/DD/YYYY format)
-    const dateA = new Date(a.date);
-    const dateB = new Date(b.date);
+    const dateA = new Date(a.date!);
+    const dateB = new Date(b.date!);
 
     return dateB.getTime() - dateA.getTime(); // Most recent first
   });
@@ -112,26 +115,16 @@ export default async function Gallery() {
 
   // Group photos by month/year
   const groupedPhotos = sortedPhotos.reduce((groups, photo) => {
-    if (photo.dateObj) {
-      const monthYear = `${photo.dateObj.getFullYear()}-${photo.dateObj.getMonth()}`;
-      if (!groups[monthYear]) {
-        groups[monthYear] = [];
-      }
-      groups[monthYear].push(photo);
-    } else {
-      // Photos without dates go in a special group
-      if (!groups["no-date"]) {
-        groups["no-date"] = [];
-      }
-      groups["no-date"].push(photo);
+    const monthYear = `${photo.dateObj!.getFullYear()}-${photo.dateObj!.getMonth()}`;
+    if (!groups[monthYear]) {
+      groups[monthYear] = [];
     }
+    groups[monthYear].push(photo);
     return groups;
   }, {} as Record<string, PhotoWithDate[]>);
 
-  // Sort group keys (most recent first, no-date last)
+  // Sort group keys (most recent first)
   const sortedGroupKeys = Object.keys(groupedPhotos).sort((a, b) => {
-    if (a === "no-date") return 1;
-    if (b === "no-date") return -1;
     return b.localeCompare(a); // Most recent first
   });
 
