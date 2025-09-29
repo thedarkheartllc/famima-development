@@ -1,103 +1,135 @@
+import fs from "fs";
+import path from "path";
 import Image from "next/image";
+import { parse } from "exifr";
 
-export default function Home() {
+interface PhotoWithDate {
+  filename: string;
+  date?: string;
+}
+
+async function getPhotoDate(filePath: string): Promise<string | undefined> {
+  try {
+    const buffer = fs.readFileSync(filePath);
+    const exif = await parse(buffer);
+
+    console.log(`EXIF data for ${path.basename(filePath)}:`, {
+      dateTimeOriginal: exif?.DateTimeOriginal,
+      dateTime: exif?.DateTime,
+      dateTimeDigitized: exif?.DateTimeDigitized,
+    });
+
+    // Try different date fields in order of preference
+    const dateTime =
+      exif?.DateTimeOriginal || exif?.DateTime || exif?.DateTimeDigitized;
+
+    if (dateTime) {
+      console.log(`Raw dateTime value: ${dateTime} (type: ${typeof dateTime})`);
+
+      // Handle different date formats
+      let date: Date;
+      if (typeof dateTime === "string") {
+        // iPhone EXIF dates are often in format "2025:07:28 17:08:38"
+        if (dateTime.includes(":")) {
+          // Replace first 3 colons with slashes for proper parsing
+          const formattedDateString = dateTime
+            .replace(/:/g, "/")
+            .replace(/\//, "/")
+            .replace(/\//, "/");
+          date = new Date(formattedDateString);
+        } else {
+          date = new Date(dateTime);
+        }
+      } else {
+        date = new Date(dateTime);
+      }
+
+      console.log(`Parsed date: ${date} (valid: ${!isNaN(date.getTime())})`);
+
+      if (!isNaN(date.getTime())) {
+        // Format as MM/DD/YYYY
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        const year = date.getFullYear();
+        const formattedDate = `${month}/${day}/${year}`;
+        console.log(
+          `Found date for ${path.basename(filePath)}: ${formattedDate}`
+        );
+        return formattedDate;
+      }
+    }
+  } catch (error) {
+    console.log(`Could not read EXIF data for ${filePath}:`, error);
+  }
+  return undefined;
+}
+
+export default async function Gallery() {
+  const photosDir = path.join(process.cwd(), "public/photos");
+
+  // Check if photos directory exists, if not return empty array
+  let files: string[] = [];
+  try {
+    files = fs.readdirSync(photosDir);
+    console.log("Found files:", files);
+  } catch (error) {
+    // Directory doesn't exist yet
+    console.log("Photos directory not found:", error);
+  }
+
+  // Extract dates for each photo
+  const photosWithDates: PhotoWithDate[] = await Promise.all(
+    files.map(async (filename) => {
+      const filePath = path.join(photosDir, filename);
+      const date = await getPhotoDate(filePath);
+      console.log(`Photo ${filename}: date = ${date || "no date found"}`);
+      return { filename, date };
+    })
+  );
+
+  console.log("All photos with dates:", photosWithDates);
+
+  // Sort photos by date (most recent first)
+  const sortedPhotos = photosWithDates.sort((a, b) => {
+    if (!a.date && !b.date) return 0;
+    if (!a.date) return 1; // photos without dates go to end
+    if (!b.date) return -1; // photos without dates go to end
+
+    // Parse dates for comparison (MM/DD/YYYY format)
+    const dateA = new Date(a.date);
+    const dateB = new Date(b.date);
+
+    return dateB.getTime() - dateA.getTime(); // Most recent first
+  });
+
+  console.log("Sorted photos (most recent first):", sortedPhotos);
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <main className='bg-black min-h-screen p-4'>
+      <h1 className='text-white text-3xl mb-5'>Gunnar's Photo Gallery</h1>
+      <p className='text-white mb-5'>Found {files.length} photos</p>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {files.length === 0 ? (
+        <p className='text-white'>No photos found in /public/photos/</p>
+      ) : (
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 gap-y-8'>
+          {sortedPhotos.map((photo) => (
+            <div key={photo.filename} className='flex flex-col'>
+              <div className='relative w-full h-80 mb-2 border border-white rounded'>
+                <Image
+                  src={`/photos/${photo.filename}`}
+                  alt={photo.filename}
+                  fill
+                  className='object-cover rounded'
+                />
+              </div>
+              {photo.date && (
+                <p className='text-white text-sm text-right '>{photo.date}</p>
+              )}
+            </div>
+          ))}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      )}
+    </main>
   );
 }
