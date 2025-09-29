@@ -6,6 +6,7 @@ import { parse } from "exifr";
 interface PhotoWithDate {
   filename: string;
   date?: string;
+  dateObj?: Date;
 }
 
 async function getPhotoDate(filePath: string): Promise<string | undefined> {
@@ -47,11 +48,10 @@ async function getPhotoDate(filePath: string): Promise<string | undefined> {
       console.log(`Parsed date: ${date} (valid: ${!isNaN(date.getTime())})`);
 
       if (!isNaN(date.getTime())) {
-        // Format as MM/DD/YYYY
+        // Format as MM/DD
         const month = String(date.getMonth() + 1).padStart(2, "0");
         const day = String(date.getDate()).padStart(2, "0");
-        const year = date.getFullYear();
-        const formattedDate = `${month}/${day}/${year}`;
+        const formattedDate = `${month}/${day}`;
         console.log(
           `Found date for ${path.basename(filePath)}: ${formattedDate}`
         );
@@ -83,7 +83,13 @@ export default async function Gallery() {
       const filePath = path.join(photosDir, filename);
       const date = await getPhotoDate(filePath);
       console.log(`Photo ${filename}: date = ${date || "no date found"}`);
-      return { filename, date };
+
+      let dateObj: Date | undefined;
+      if (date) {
+        dateObj = new Date(date);
+      }
+
+      return { filename, date, dateObj };
     })
   );
 
@@ -104,6 +110,38 @@ export default async function Gallery() {
 
   console.log("Sorted photos (most recent first):", sortedPhotos);
 
+  // Group photos by month/year
+  const groupedPhotos = sortedPhotos.reduce((groups, photo) => {
+    if (photo.dateObj) {
+      const monthYear = `${photo.dateObj.getFullYear()}-${photo.dateObj.getMonth()}`;
+      if (!groups[monthYear]) {
+        groups[monthYear] = [];
+      }
+      groups[monthYear].push(photo);
+    } else {
+      // Photos without dates go in a special group
+      if (!groups["no-date"]) {
+        groups["no-date"] = [];
+      }
+      groups["no-date"].push(photo);
+    }
+    return groups;
+  }, {} as Record<string, PhotoWithDate[]>);
+
+  // Sort group keys (most recent first, no-date last)
+  const sortedGroupKeys = Object.keys(groupedPhotos).sort((a, b) => {
+    if (a === "no-date") return 1;
+    if (b === "no-date") return -1;
+    return b.localeCompare(a); // Most recent first
+  });
+
+  const formatMonthYear = (key: string) => {
+    if (key === "no-date") return "Unknown Date";
+    const [year, month] = key.split("-");
+    const date = new Date(parseInt(year), parseInt(month));
+    return date.toLocaleDateString("en-US", { month: "long" });
+  };
+
   return (
     <main className='bg-black min-h-screen p-4'>
       <h1 className='text-white text-3xl mb-5'>Gunnar's Photo Gallery</h1>
@@ -112,20 +150,29 @@ export default async function Gallery() {
       {files.length === 0 ? (
         <p className='text-white'>No photos found in /public/photos/</p>
       ) : (
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 gap-y-8'>
-          {sortedPhotos.map((photo) => (
-            <div key={photo.filename} className='flex flex-col'>
-              <div className='relative w-full h-80 mb-2 border border-white rounded'>
-                <Image
-                  src={`/photos/${photo.filename}`}
-                  alt={photo.filename}
-                  fill
-                  className='object-cover rounded'
-                />
+        <div className='space-y-16'>
+          {sortedGroupKeys.map((groupKey) => (
+            <div key={groupKey} className='space-y-6'>
+              <h2 className='text-white text-4xl font-semibold text-center border-b border-gray-600 pb-4'>
+                {formatMonthYear(groupKey)}
+              </h2>
+              <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 gap-y-8'>
+                {groupedPhotos[groupKey].map((photo) => (
+                  <div key={photo.filename} className='flex flex-col'>
+                    <div className='relative w-full h-80 mb-2 border border-white rounded'>
+                      <Image
+                        src={`/photos/${photo.filename}`}
+                        alt={photo.filename}
+                        fill
+                        className='object-cover rounded'
+                      />
+                    </div>
+                    <p className='text-white text-sm text-right'>
+                      {photo.date || "?"}
+                    </p>
+                  </div>
+                ))}
               </div>
-              {photo.date && (
-                <p className='text-white text-sm text-right '>{photo.date}</p>
-              )}
             </div>
           ))}
         </div>
