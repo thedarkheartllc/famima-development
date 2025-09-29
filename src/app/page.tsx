@@ -1,7 +1,8 @@
 import fs from "fs";
 import path from "path";
-import Image from "next/image";
 import { parse } from "exifr";
+import { CollapsibleMonth } from "./CollapsibleMonth";
+import { Header } from "./components/Header";
 
 interface PhotoWithDate {
   filename: string;
@@ -32,11 +33,11 @@ async function getPhotoDate(filePath: string): Promise<string | undefined> {
       if (typeof dateTime === "string") {
         // iPhone EXIF dates are often in format "2025:07:28 17:08:38"
         if (dateTime.includes(":")) {
-          // Replace first 3 colons with slashes for proper parsing
-          const formattedDateString = dateTime
-            .replace(/:/g, "/")
-            .replace(/\//, "/")
-            .replace(/\//, "/");
+          // Convert "2025:07:28 17:08:38" to "2025-07-28T17:08:38"
+          const parts = dateTime.split(" ");
+          const datePart = parts[0].replace(/:/g, "-");
+          const timePart = parts[1] || "00:00:00";
+          const formattedDateString = `${datePart}T${timePart}`;
           date = new Date(formattedDateString);
         } else {
           date = new Date(dateTime);
@@ -143,37 +144,21 @@ export default async function Gallery() {
   };
 
   return (
-    <main className='bg-black min-h-screen p-4'>
-      <h1 className='text-white text-3xl mb-5'>Gunnar's Photo Gallery</h1>
-      <p className='text-white mb-5'>Found {files.length} photos</p>
+    <main className='bg-black dark:bg-white min-h-screen p-4'>
+      <Header photoCount={files.length} />
 
       {files.length === 0 ? (
-        <p className='text-white'>No photos found in /public/photos/</p>
+        <p className='text-white dark:text-black'>
+          No photos found in /public/photos/
+        </p>
       ) : (
         <div className='space-y-16'>
           {sortedGroupKeys.map((groupKey) => (
-            <div key={groupKey} className='space-y-6'>
-              <h2 className='text-white text-4xl font-semibold text-center border-b border-gray-600 pb-4'>
-                {formatMonthYear(groupKey)}
-              </h2>
-              <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 gap-y-8'>
-                {groupedPhotos[groupKey].map((photo) => (
-                  <div key={photo.filename} className='flex flex-col'>
-                    <div className='relative w-full h-80 mb-2 border border-white rounded'>
-                      <Image
-                        src={`/photos/${photo.filename}`}
-                        alt={photo.filename}
-                        fill
-                        className='object-cover rounded'
-                      />
-                    </div>
-                    <p className='text-white text-sm text-right'>
-                      {photo.date || "?"}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <CollapsibleMonth
+              key={groupKey}
+              monthName={formatMonthYear(groupKey)}
+              photos={groupedPhotos[groupKey]}
+            />
           ))}
         </div>
       )}
