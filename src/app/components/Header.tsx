@@ -28,7 +28,7 @@ export function Header({
   return (
     <header className='flex justify-between items-center mb-5'>
       <div>
-        <h1 className='text-3xl text-white dark:text-black'>
+        <h1 className='text-3xl text-white dark:text-black capitalize'>
           {personName ? `${personName}'s Gallery` : "Photo Gallery"}
         </h1>
         <p className='text-white dark:text-black'>{photoCount} photos</p>

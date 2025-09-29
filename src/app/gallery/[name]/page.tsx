@@ -145,9 +145,8 @@ export default async function Gallery({
       <main className='bg-black dark:bg-white min-h-screen p-4'>
         <div className='flex justify-between items-center mb-5'>
           <div>
-            <h1 className='text-3xl text-white dark:text-black'>
-              {params.name.charAt(0).toUpperCase() + params.name.slice(1)}
-              &apos;s Gallery
+            <h1 className='text-3xl text-white dark:text-black capitalize'>
+              {params.name}&apos;s Gallery
             </h1>
             <p className='text-white dark:text-black'>0 photos</p>
           </div>

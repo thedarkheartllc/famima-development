@@ -1,3 +1,10 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Style Script";
+  src: url("/StyleScript-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 @custom-variant dark (&:where(.dark, .dark *));

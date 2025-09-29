@@ -75,7 +75,7 @@ export function GalleryContent({
           No photos found in /public/photos/
         </p>
       ) : (
-        <div className='space-y-10'>
+        <div className='space-y-10 mx-32'>
           {sortedGroupKeys.map((groupKey) => (
             <CollapsibleMonth
               key={groupKey}

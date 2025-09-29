@@ -7,7 +7,11 @@ module.exports = {
   ],
   darkMode: "class",
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        "style-script": ["Style Script", "cursive"],
+      },
+    },
   },
   plugins: [],
 };
