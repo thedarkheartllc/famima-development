@@ -14,12 +14,14 @@ interface GalleryContentProps {
   files: string[];
   sortedGroupKeys: string[];
   groupedPhotos: Record<string, PhotoWithDate[]>;
+  personName?: string;
 }
 
 export function GalleryContent({
   files,
   sortedGroupKeys,
   groupedPhotos,
+  personName,
 }: GalleryContentProps) {
   const formatMonthYear = (key: string) => {
     const [year, month] = key.split("-");
@@ -65,6 +67,7 @@ export function GalleryContent({
         photoCount={files.length}
         onToggleAllMonths={toggleAllMonths}
         allExpanded={allExpanded}
+        personName={personName}
       />
 
       {files.length === 0 ? (

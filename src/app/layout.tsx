@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Gunnar's photo gallery",
+  title: "family photo gallery",
   description: "For my family",
 };
 

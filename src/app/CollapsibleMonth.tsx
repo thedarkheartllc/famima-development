@@ -57,12 +57,12 @@ export function CollapsibleMonth({
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 gap-y-8'>
           {photos.map((photo) => (
             <div key={photo.filename} className='flex flex-col'>
-              <div className='relative w-full h-80 mb-2 border border-white dark:border-black rounded'>
+              <div className='relative w-full h-80 mb-2 border border-white dark:border-black rounded overflow-hidden'>
                 <Image
                   src={`/photos/${photo.filename}`}
                   alt={photo.filename}
                   fill
-                  className='object-cover rounded'
+                  className='object-cover rounded transition-transform duration-300 hover:scale-110'
                 />
               </div>
               <p className='text-white dark:text-black text-sm text-right'>

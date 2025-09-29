@@ -1,18 +1,27 @@
 "use client";
 
 import { useTheme } from "../contexts/ThemeContext";
-import { FaSun, FaMoon, FaChevronDown, FaChevronUp } from "react-icons/fa";
+import {
+  FaSun,
+  FaMoon,
+  FaChevronDown,
+  FaChevronUp,
+  FaHome,
+} from "react-icons/fa";
+import Link from "next/link";
 
 interface HeaderProps {
   photoCount: number;
   onToggleAllMonths: () => void;
   allExpanded: boolean;
+  personName?: string;
 }
 
 export function Header({
   photoCount,
   onToggleAllMonths,
   allExpanded,
+  personName,
 }: HeaderProps) {
   const { theme, toggleTheme } = useTheme();
 
@@ -20,12 +29,20 @@ export function Header({
     <header className='flex justify-between items-center mb-5'>
       <div>
         <h1 className='text-3xl text-white dark:text-black'>
-          Gunnar&apos;s Gallery
+          {personName ? `${personName}'s Gallery` : "Photo Gallery"}
         </h1>
         <p className='text-white dark:text-black'>{photoCount} photos</p>
       </div>
 
       <div className='flex gap-3'>
+        <Link
+          href='/'
+          className='p-3 rounded-full bg-gray-800 dark:bg-gray-200 hover:bg-gray-700 dark:hover:bg-gray-300 transition-colors'
+          aria-label='Go to home'
+        >
+          <FaHome className='text-white dark:text-black text-xl' />
+        </Link>
+
         <button
           onClick={onToggleAllMonths}
           className='p-3 rounded-full bg-gray-800 dark:bg-gray-200 hover:bg-gray-700 dark:hover:bg-gray-300 transition-colors'
