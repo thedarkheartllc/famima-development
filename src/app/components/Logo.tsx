@@ -28,7 +28,7 @@ export function Logo({
   const logoContent = (
     <div className='text-center'>
       <h1
-        className={`${sizeClasses[size]} font-bold text-white dark:text-black pr-12`}
+        className={`${sizeClasses[size]} font-bold text-white dark:text-black`}
         style={{ fontFamily: '"Style Script", cursive' }}
       >
         Famima
@@ -37,7 +37,7 @@ export function Logo({
         <p
           className={`${taglineSizeClasses[size]} text-white dark:text-black opacity-80`}
         >
-          stay connected with family
+          a family memory book{" "}
         </p>
       )}
     </div>

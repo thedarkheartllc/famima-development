@@ -11,7 +11,7 @@ function HomeContent() {
   const { isAdmin } = useAuth();
 
   return (
-    <main className='bg-black dark:bg-white min-h-screen flex flex-col items-center justify-center p-4 '>
+    <main className='bg-black dark:bg-white min-h-screen flex flex-col items-center '>
       <HomePageHeader />
 
       {isAdmin ? (
