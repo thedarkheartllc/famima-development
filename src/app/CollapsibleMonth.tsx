@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { MdExpandMore, MdExpandLess } from "react-icons/md";
+import Image from "next/image";
 import { ImageViewer } from "./components/ImageViewer";
 
 interface PhotoWithDate {
@@ -73,10 +74,11 @@ export function CollapsibleMonth({
                 className='relative w-full aspect-square mb-2 border border-white dark:border-black rounded overflow-hidden cursor-pointer'
                 onClick={() => openImageViewer(index)}
               >
-                <img
+                <Image
                   src={photo.url || `/photos/${photo.filename}`}
                   alt={photo.filename}
-                  className='w-full h-full object-cover rounded transition-transform duration-300 hover:scale-105'
+                  fill
+                  className='object-cover rounded transition-transform duration-300 hover:scale-105'
                 />
               </div>
               <p className='text-white dark:text-black text-sm text-right'>

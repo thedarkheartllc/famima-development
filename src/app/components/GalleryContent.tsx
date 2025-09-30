@@ -77,7 +77,7 @@ export function GalleryContent({
 
       {files.length === 0 ? (
         <p className='text-white dark:text-black'>
-          No photos found in /public/photos/
+          No photos found for this person.
         </p>
       ) : (
         <div className='space-y-10 mx-32'>

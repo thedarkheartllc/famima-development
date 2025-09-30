@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { FamilyTree } from "./components/FamilyTree";
 import { LoginForm } from "./components/LoginForm";

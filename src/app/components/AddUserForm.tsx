@@ -110,7 +110,16 @@ export function AddUserForm({ onClose }: AddUserFormProps) {
             </label>
             <select
               value={relationshipType}
-              onChange={(e) => setRelationshipType(e.target.value as any)}
+              onChange={(e) =>
+                setRelationshipType(
+                  e.target.value as
+                    | "parent"
+                    | "child"
+                    | "partner"
+                    | "grandchild"
+                    | "other"
+                )
+              }
               className='w-full p-3 border border-gray-300 rounded-lg bg-white text-black'
             >
               <option value='parent'>Parent</option>

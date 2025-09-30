@@ -56,12 +56,10 @@
 - [x] Storage rules: read for all, write for authenticated users
 - [x] Firestore rules: read for all, write for authenticated users
 
-### 7. Migration Strategy ⏳
+### 7. Migration Strategy ✅
 
-- [ ] Keep existing photos in `/public/photos/` as fallback
-- [ ] Upload new photos to Firebase
-- [ ] Gradually migrate existing photos
-- [ ] Update image URLs to Firebase Storage URLs
+- [x] All photos now stored in Firebase Storage
+- [x] No fallback to public directory needed
 
 ### 8. Performance Optimizations ⏳
 
@@ -149,7 +147,6 @@ NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=
 ### ⏳ Pending (15%)
 
 - Photo deletion/editing capabilities
-- Migration of existing photos to Firebase
 - Performance optimizations (lazy loading, caching)
 - Bulk operations for photo management
 - Advanced features (search, filtering, export)

@@ -1,7 +1,6 @@
 "use client";
 
 import { use } from "react";
-import Link from "next/link";
 import { GalleryContent } from "../../components/GalleryContent";
 import { usePhotos } from "../../../hooks/usePhotos";
 import { usePeople } from "../../../hooks/usePeople";
@@ -98,9 +97,6 @@ export default function Gallery({
   const sortedGroupKeys = Object.keys(groupedPhotos).sort((a, b) => {
     return b.localeCompare(a); // Most recent first
   });
-
-  // Check if this person has any photos
-  const hasPhotos = photos.length > 0;
 
   // Always use GalleryContent component to get the proper header with upload button
 

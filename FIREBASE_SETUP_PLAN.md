@@ -90,10 +90,8 @@ match /photos/{photoId} {
 
 ## 7. Migration Strategy
 
-- Keep existing photos in `/public/photos/` as fallback
-- Upload new photos to Firebase
-- Gradually migrate existing photos
-- Update image URLs to Firebase Storage URLs
+- All photos now stored in Firebase Storage
+- No fallback to public directory needed
 
 ## 8. Performance Optimizations
 

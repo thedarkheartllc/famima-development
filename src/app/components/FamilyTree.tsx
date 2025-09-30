@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FaHeart, FaBaby } from "react-icons/fa";
+import { FaBaby } from "react-icons/fa";
 import { usePeople } from "@/hooks/usePeople";
 
 export function FamilyTree() {
@@ -33,7 +33,7 @@ export function FamilyTree() {
   );
 
   const renderPersonCard = (
-    person: any,
+    person: { id: string; name: string; color: string; birthDate?: string },
     size: "large" | "medium" | "small" = "medium"
   ) => {
     const sizeClasses = {
@@ -130,7 +130,8 @@ export function FamilyTree() {
         <div className='text-center text-gray-500 py-8'>
           <p>No family members added yet.</p>
           <p className='text-sm mt-2'>
-            Use the "Add Family Member" button in the header to get started!
+            Use the &quot;Add Family Member&quot; button in the header to get
+            started!
           </p>
         </div>
       )}

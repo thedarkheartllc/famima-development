@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 import { FaTimes, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 interface PhotoWithDate {
@@ -29,17 +30,17 @@ export function ImageViewer({
 
   const currentPhoto = photos[currentIndex];
 
-  const goToPrevious = () => {
+  const goToPrevious = useCallback(() => {
     if (currentIndex > 0) {
       onIndexChange(currentIndex - 1);
     }
-  };
+  }, [currentIndex, onIndexChange]);
 
-  const goToNext = () => {
+  const goToNext = useCallback(() => {
     if (currentIndex < photos.length - 1) {
       onIndexChange(currentIndex + 1);
     }
-  };
+  }, [currentIndex, photos.length, onIndexChange]);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -120,9 +121,11 @@ export function ImageViewer({
           </div>
         )}
 
-        <img
+        <Image
           src={currentPhoto.url || `/photos/${currentPhoto.filename}`}
           alt={currentPhoto.filename}
+          width={800}
+          height={600}
           className={`max-w-full max-h-full object-contain transition-opacity duration-300 ${
             imageLoading ? "opacity-0" : "opacity-100"
           }`}

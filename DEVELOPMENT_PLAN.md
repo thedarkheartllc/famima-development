@@ -3,7 +3,7 @@
 ## Current State
 
 - Next.js 15 family photo gallery with individual person pages
-- Static photo serving from `/public/photos/[name]/`
+- Firebase Storage photo serving
 - Basic UI with theme support and responsive design
 - Photo metadata extraction (dates) and chronological sorting
 
