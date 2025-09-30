@@ -3,7 +3,6 @@ import {
   collection,
   query,
   where,
-  orderBy,
   getDocs,
   addDoc,
   deleteDoc,
@@ -12,10 +11,11 @@ import {
 } from "firebase/firestore";
 import {
   ref,
-  uploadBytes,
+  uploadBytesResumable,
   getDownloadURL,
   deleteObject,
 } from "firebase/storage";
+import imageCompression from "browser-image-compression";
 import { db, storage } from "../lib/firebase";
 import { Photo } from "../types/photo";
 
@@ -72,43 +72,76 @@ export function usePhotos(personId?: string) {
     try {
       setError(null);
 
+      // Compress the image before uploading
+      const compressedFile = await imageCompression(file, {
+        maxSizeMB: 0.25, // 250KB target
+        maxWidthOrHeight: 1920, // Max width or height
+        useWebWorker: true,
+        fileType: "image/jpeg",
+        initialQuality: 0.8, // Start with 80% quality
+      });
+
+      console.log(
+        `Original size: ${(file.size / 1024 / 1024).toFixed(
+          2
+        )}MB, Compressed size: ${(compressedFile.size / 1024).toFixed(2)}KB`
+      );
+
       // Create storage reference
       const photoId = Date.now().toString();
       const storageRef = ref(storage, `photos/${personId}/${photoId}.jpg`);
 
-      // Upload file to Firebase Storage
-      const uploadTask = uploadBytes(storageRef, file);
-      await uploadTask;
+      // Upload compressed file to Firebase Storage with progress tracking
+      const uploadTask = uploadBytesResumable(storageRef, compressedFile);
 
-      // Get download URL
-      const downloadURL = await getDownloadURL(storageRef);
+      // Set up progress tracking
+      return new Promise<Photo>((resolve, reject) => {
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            onProgress?.(progress);
+          },
+          (error) => {
+            reject(error);
+          },
+          async () => {
+            try {
+              // Get download URL
+              const downloadURL = await getDownloadURL(storageRef);
 
-      // Save photo metadata to Firestore
-      const photoData = {
-        personId,
-        filename: file.name,
-        storagePath: `photos/${personId}/${photoId}.jpg`,
-        uploadedAt: Timestamp.now(),
-        size: file.size,
-        url: downloadURL,
-      };
+              // Save photo metadata to Firestore
+              const photoData = {
+                personId,
+                filename: file.name,
+                storagePath: `photos/${personId}/${photoId}.jpg`,
+                uploadedAt: Timestamp.now(),
+                size: compressedFile.size,
+                url: downloadURL,
+              };
 
-      const docRef = await addDoc(collection(db, "photos"), photoData);
+              const docRef = await addDoc(collection(db, "photos"), photoData);
 
-      // Add to local state
-      const newPhoto: Photo = {
-        id: docRef.id,
-        personId,
-        filename: file.name,
-        storagePath: `photos/${personId}/${photoId}.jpg`,
-        uploadedAt: new Date(),
-        size: file.size,
-        url: downloadURL,
-      };
+              // Add to local state
+              const newPhoto: Photo = {
+                id: docRef.id,
+                personId,
+                filename: file.name,
+                storagePath: `photos/${personId}/${photoId}.jpg`,
+                uploadedAt: new Date(),
+                size: compressedFile.size,
+                url: downloadURL,
+              };
 
-      setPhotos((prev) => [newPhoto, ...prev]);
-
-      return newPhoto;
+              setPhotos((prev) => [newPhoto, ...prev]);
+              resolve(newPhoto);
+            } catch (err) {
+              reject(err);
+            }
+          }
+        );
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to upload photo");
       throw err;
