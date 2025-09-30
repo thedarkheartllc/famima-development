@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "firebase:deploy:rules": "firebase deploy --only firestore:rules,storage:rules",
+    "firebase:init": "firebase init"
   },
   "dependencies": {
     "exifr": "^7.1.3",
