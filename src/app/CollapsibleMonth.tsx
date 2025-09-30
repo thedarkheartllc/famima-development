@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { MdExpandMore, MdExpandLess } from "react-icons/md";
 
 interface PhotoWithDate {
@@ -59,11 +58,10 @@ export function CollapsibleMonth({
           {photos.map((photo) => (
             <div key={photo.filename} className='flex flex-col'>
               <div className='relative w-full aspect-square mb-2 border border-white dark:border-black rounded overflow-hidden'>
-                <Image
+                <img
                   src={photo.url || `/photos/${photo.filename}`}
                   alt={photo.filename}
-                  fill
-                  className='object-cover rounded transition-transform duration-300 hover:scale-105'
+                  className='w-full h-full object-cover rounded transition-transform duration-300 hover:scale-105'
                 />
               </div>
               <p className='text-white dark:text-black text-sm text-right'>

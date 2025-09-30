@@ -39,14 +39,6 @@ export function GalleryHeader({
     (p) => p.name.toLowerCase() === personName?.toLowerCase()
   );
 
-  // Debug logging
-  console.log("Header Debug:", {
-    people: people.length,
-    personName,
-    person: person?.name,
-    showUploadModal,
-  });
-
   return (
     <>
       <header className='sticky top-0 z-50 bg-black dark:bg-white flex justify-between items-center mb-4 p-4 -mx-4'>

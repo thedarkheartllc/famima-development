@@ -70,8 +70,10 @@ export default function Gallery({
   const photosWithDates: PhotoWithDate[] = photos.map((photo) => ({
     filename: photo.filename,
     url: photo.url || "",
-    date: photo.takenAt ? formatDate(photo.takenAt) : undefined,
-    dateObj: photo.takenAt,
+    date: photo.takenAt
+      ? formatDate(photo.takenAt)
+      : formatDate(photo.uploadedAt),
+    dateObj: photo.takenAt || photo.uploadedAt,
   }));
 
   // Filter out photos without dates and sort by date (most recent first)
