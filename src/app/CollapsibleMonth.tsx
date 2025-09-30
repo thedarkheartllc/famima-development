@@ -8,6 +8,7 @@ interface PhotoWithDate {
   filename: string;
   date?: string;
   dateObj?: Date;
+  url?: string;
 }
 
 interface CollapsibleMonthProps {
@@ -59,7 +60,7 @@ export function CollapsibleMonth({
             <div key={photo.filename} className='flex flex-col'>
               <div className='relative w-full aspect-square mb-2 border border-white dark:border-black rounded overflow-hidden'>
                 <Image
-                  src={`/photos/${photo.filename}`}
+                  src={photo.url || `/photos/${photo.filename}`}
                   alt={photo.filename}
                   fill
                   className='object-cover rounded transition-transform duration-300 hover:scale-105'

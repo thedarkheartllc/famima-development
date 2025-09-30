@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { Header } from "./Header";
+import { GalleryHeader } from "./Header";
 import { CollapsibleMonth } from "../CollapsibleMonth";
 
 interface PhotoWithDate {
   filename: string;
   date?: string;
   dateObj?: Date;
+  url?: string;
 }
 
 interface GalleryContentProps {
@@ -15,6 +16,8 @@ interface GalleryContentProps {
   sortedGroupKeys: string[];
   groupedPhotos: Record<string, PhotoWithDate[]>;
   personName?: string;
+  photos?: Array<{ url?: string; filename: string }>; // Firebase photos for URL access
+  onUploadComplete?: () => void;
 }
 
 export function GalleryContent({
@@ -22,6 +25,7 @@ export function GalleryContent({
   sortedGroupKeys,
   groupedPhotos,
   personName,
+  onUploadComplete,
 }: GalleryContentProps) {
   const formatMonthYear = (key: string) => {
     const [year, month] = key.split("-");
@@ -63,11 +67,12 @@ export function GalleryContent({
 
   return (
     <>
-      <Header
+      <GalleryHeader
         photoCount={files.length}
         onToggleAllMonths={toggleAllMonths}
         allExpanded={allExpanded}
         personName={personName}
+        onUploadComplete={onUploadComplete}
       />
 
       {files.length === 0 ? (
