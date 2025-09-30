@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { GalleryHeader } from "./Header";
+import { GalleryHeader } from "./GalleryHeader";
 import { CollapsibleMonth } from "../CollapsibleMonth";
 
 interface PhotoWithDate {
