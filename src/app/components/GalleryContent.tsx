@@ -5,10 +5,12 @@ import { GalleryHeader } from "./GalleryHeader";
 import { CollapsibleMonth } from "../CollapsibleMonth";
 
 interface PhotoWithDate {
+  id?: string;
   filename: string;
   date?: string;
   dateObj?: Date;
   url?: string;
+  storagePath?: string;
 }
 
 interface GalleryContentProps {
@@ -18,6 +20,7 @@ interface GalleryContentProps {
   personName?: string;
   photos?: Array<{ url?: string; filename: string }>; // Firebase photos for URL access
   onUploadComplete?: () => void;
+  onDeletePhoto?: (photoId: string, storagePath: string) => Promise<void>;
 }
 
 export function GalleryContent({
@@ -26,6 +29,7 @@ export function GalleryContent({
   groupedPhotos,
   personName,
   onUploadComplete,
+  onDeletePhoto,
 }: GalleryContentProps) {
   const formatMonthYear = (key: string) => {
     const [year, month] = key.split("-");
@@ -88,6 +92,7 @@ export function GalleryContent({
               photos={groupedPhotos[groupKey]}
               isExpanded={expandedMonths[groupKey] ?? allExpanded}
               onToggle={() => toggleMonth(groupKey)}
+              onDeletePhoto={onDeletePhoto}
             />
           ))}
         </div>

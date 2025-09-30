@@ -6,10 +6,12 @@ import { usePhotos } from "../../../hooks/usePhotos";
 import { usePeople } from "../../../hooks/usePeople";
 
 interface PhotoWithDate {
+  id?: string;
   filename: string;
   date?: string;
   dateObj?: Date;
   url: string;
+  storagePath?: string;
 }
 
 export default function Gallery({
@@ -27,6 +29,7 @@ export default function Gallery({
     loading: photosLoading,
     error,
     fetchPhotos,
+    deletePhoto,
   } = usePhotos(person?.id);
 
   const handleUploadComplete = () => {
@@ -67,8 +70,10 @@ export default function Gallery({
 
   // Convert Firebase photos to the format expected by GalleryContent
   const photosWithDates: PhotoWithDate[] = photos.map((photo) => ({
+    id: photo.id,
     filename: photo.filename,
     url: photo.url || "",
+    storagePath: photo.storagePath,
     date: photo.takenAt
       ? formatDate(photo.takenAt)
       : formatDate(photo.uploadedAt),
@@ -109,6 +114,7 @@ export default function Gallery({
         personName={resolvedParams.name}
         photos={photos} // Pass Firebase photos for URL access
         onUploadComplete={handleUploadComplete}
+        onDeletePhoto={deletePhoto}
       />
     </main>
   );

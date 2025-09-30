@@ -6,10 +6,12 @@ import Image from "next/image";
 import { ImageViewer } from "./components/ImageViewer";
 
 interface PhotoWithDate {
+  id?: string;
   filename: string;
   date?: string;
   dateObj?: Date;
   url?: string;
+  storagePath?: string;
 }
 
 interface CollapsibleMonthProps {
@@ -17,6 +19,7 @@ interface CollapsibleMonthProps {
   photos: PhotoWithDate[];
   isExpanded?: boolean;
   onToggle?: () => void;
+  onDeletePhoto?: (photoId: string, storagePath: string) => Promise<void>;
 }
 
 export function CollapsibleMonth({
@@ -24,6 +27,7 @@ export function CollapsibleMonth({
   photos,
   isExpanded: externalExpanded,
   onToggle,
+  onDeletePhoto,
 }: CollapsibleMonthProps) {
   const [internalExpanded, setInternalExpanded] = useState(true);
   const [viewerOpen, setViewerOpen] = useState(false);
@@ -96,6 +100,7 @@ export function CollapsibleMonth({
         photos={photos}
         currentIndex={currentImageIndex}
         onIndexChange={setCurrentImageIndex}
+        onDeletePhoto={onDeletePhoto}
       />
     </div>
   );
