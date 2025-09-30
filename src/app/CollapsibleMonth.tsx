@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { MdExpandMore, MdExpandLess } from "react-icons/md";
+import { ImageViewer } from "./components/ImageViewer";
 
 interface PhotoWithDate {
   filename: string;
@@ -24,6 +25,8 @@ export function CollapsibleMonth({
   onToggle,
 }: CollapsibleMonthProps) {
   const [internalExpanded, setInternalExpanded] = useState(true);
+  const [viewerOpen, setViewerOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Use external control if provided, otherwise use internal state
   const isExpanded =
@@ -35,6 +38,15 @@ export function CollapsibleMonth({
     } else {
       setInternalExpanded(!internalExpanded);
     }
+  };
+
+  const openImageViewer = (index: number) => {
+    setCurrentImageIndex(index);
+    setViewerOpen(true);
+  };
+
+  const closeImageViewer = () => {
+    setViewerOpen(false);
   };
 
   return (
@@ -55,9 +67,12 @@ export function CollapsibleMonth({
 
       {isExpanded && (
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 gap-y-8'>
-          {photos.map((photo) => (
+          {photos.map((photo, index) => (
             <div key={photo.filename} className='flex flex-col'>
-              <div className='relative w-full aspect-square mb-2 border border-white dark:border-black rounded overflow-hidden'>
+              <div
+                className='relative w-full aspect-square mb-2 border border-white dark:border-black rounded overflow-hidden cursor-pointer'
+                onClick={() => openImageViewer(index)}
+              >
                 <img
                   src={photo.url || `/photos/${photo.filename}`}
                   alt={photo.filename}
@@ -71,6 +86,15 @@ export function CollapsibleMonth({
           ))}
         </div>
       )}
+
+      {/* Image Viewer Modal */}
+      <ImageViewer
+        isOpen={viewerOpen}
+        onClose={closeImageViewer}
+        photos={photos}
+        currentIndex={currentImageIndex}
+        onIndexChange={setCurrentImageIndex}
+      />
     </div>
   );
 }
