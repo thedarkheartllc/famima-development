@@ -9,6 +9,7 @@ import {
   FaHome,
 } from "react-icons/fa";
 import Link from "next/link";
+import { Logo } from "./Logo";
 
 interface HeaderProps {
   photoCount: number;
@@ -26,12 +27,16 @@ export function Header({
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <header className='flex justify-between items-center mb-5'>
+    <header className='sticky top-0 z-50 bg-black dark:bg-white flex justify-between items-center mb-4 p-4 -mx-4'>
       <div>
-        <h1 className='text-3xl text-white dark:text-black capitalize'>
+        <h1 className='text-2xl text-white dark:text-black capitalize'>
           {personName ? `${personName}'s Gallery` : "Photo Gallery"}
         </h1>
         <p className='text-white dark:text-black'>{photoCount} photos</p>
+      </div>
+
+      <div className='flex-1 flex justify-center'>
+        <Logo size='md' showTagline={false} linkToHome={true} />
       </div>
 
       <div className='flex gap-3'>
