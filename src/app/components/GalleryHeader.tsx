@@ -8,9 +8,11 @@ import {
   FaChevronDown,
   FaMoon,
   FaSun,
+  FaEdit,
 } from "react-icons/fa";
 import Link from "next/link";
 import { UploadModal } from "./UploadModal";
+import { EditUserForm } from "./EditUserForm";
 import { usePeople } from "../../hooks/usePeople";
 import { Button } from "./Button";
 
@@ -32,6 +34,7 @@ export function GalleryHeader({
   const { theme, toggleTheme } = useTheme();
   const { people } = usePeople();
   const [showUploadModal, setShowUploadModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   const person = people.find(
     (p) => p.name.toLowerCase() === personName?.toLowerCase()
@@ -61,6 +64,17 @@ export function GalleryHeader({
 
             {/* Right: Action Buttons */}
             <div className='flex items-center gap-3'>
+              <Button
+                onClick={() => setShowEditModal(true)}
+                disabled={!person}
+                variant='ghost'
+                size='sm'
+                title='Edit person details'
+              >
+                <FaEdit />
+                <span>Edit</span>
+              </Button>
+
               <Button
                 onClick={() => setShowUploadModal(true)}
                 disabled={!person}
@@ -120,13 +134,20 @@ export function GalleryHeader({
       </header>
 
       {person && (
-        <UploadModal
-          isOpen={showUploadModal}
-          onClose={() => setShowUploadModal(false)}
-          personId={person.id}
-          personName={person.name}
-          onUploadComplete={onUploadComplete}
-        />
+        <>
+          <UploadModal
+            isOpen={showUploadModal}
+            onClose={() => setShowUploadModal(false)}
+            personId={person.id}
+            personName={person.name}
+            onUploadComplete={onUploadComplete}
+          />
+          <EditUserForm
+            isOpen={showEditModal}
+            onClose={() => setShowEditModal(false)}
+            person={person}
+          />
+        </>
       )}
     </>
   );

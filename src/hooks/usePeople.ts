@@ -7,6 +7,8 @@ import {
   getDocs,
   query,
   orderBy,
+  updateDoc,
+  doc,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { Person } from "@/types/person";
@@ -63,11 +65,31 @@ export function usePeople() {
     }
   };
 
+  const updatePerson = async (
+    personId: string,
+    personData: Partial<Person>
+  ) => {
+    try {
+      setError(null);
+
+      const personRef = doc(db, "people", personId);
+      await updateDoc(personRef, personData);
+
+      // Refresh the people list
+      await fetchPeople();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to update person");
+      console.error("Error updating person:", err);
+      throw err;
+    }
+  };
+
   return {
     people,
     loading,
     error,
     addPerson,
+    updatePerson,
     refetch: fetchPeople,
   };
 }

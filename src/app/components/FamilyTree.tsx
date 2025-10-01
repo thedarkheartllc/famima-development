@@ -31,37 +31,6 @@ export function FamilyTree() {
     (person) => person.relationshipType === "other" || !person.relationshipType
   );
 
-  // Earthy color palette
-  const earthyColors = [
-    "from-sky-200 to-sky-300", // Sky blue
-    "from-emerald-200 to-emerald-300", // Grass green
-    "from-amber-200 to-amber-300", // Sand/earth
-    "from-rose-200 to-rose-300", // Soft rose
-    "from-violet-200 to-violet-300", // Soft lavender
-    "from-teal-200 to-teal-300", // Ocean
-    "from-blue-200 to-blue-300", // Water
-    "from-lime-200 to-lime-300", // Fresh grass
-    "from-orange-200 to-orange-300", // Sunset
-    "from-cyan-200 to-cyan-300", // Clear water
-    "from-stone-200 to-stone-300", // Cloud/stone
-    "from-slate-200 to-slate-300", // Storm cloud
-    "from-yellow-200 to-yellow-300", // Sunlight
-    "from-pink-200 to-pink-300", // Flower
-    "from-indigo-200 to-indigo-300", // Twilight
-  ];
-
-  // Assign unique color to each person based on their ID
-  const getPersonColor = (personId: string) => {
-    // Create a simple hash from the person ID
-    let hash = 0;
-    for (let i = 0; i < personId.length; i++) {
-      hash = (hash << 5) - hash + personId.charCodeAt(i);
-      hash = hash & hash;
-    }
-    const index = Math.abs(hash) % earthyColors.length;
-    return earthyColors[index];
-  };
-
   const renderPersonCard = (
     person: { id: string; name: string; color: string; birthDate?: string },
     size: "large" | "medium" | "small" = "medium"
@@ -72,7 +41,7 @@ export function FamilyTree() {
       small: "w-20 h-20 text-sm",
     };
 
-    const earthyColor = getPersonColor(person.id);
+    const personColor = person.color || "from-sky-200 to-sky-300";
 
     return (
       <Link
@@ -82,7 +51,7 @@ export function FamilyTree() {
       >
         <div className='flex flex-col items-center gap-2'>
           <div
-            className={`${sizeClasses[size]} rounded-full bg-gradient-to-br ${earthyColor} flex flex-col items-center justify-center text-gray-700 font-light shadow-sm group-hover:shadow-lg transition-all duration-300`}
+            className={`${sizeClasses[size]} rounded-full bg-gradient-to-br ${personColor} flex flex-col items-center justify-center text-gray-700 font-light shadow-sm group-hover:shadow-lg transition-all duration-300`}
           >
             <div>{person.name}</div>
             {person.birthDate && (
