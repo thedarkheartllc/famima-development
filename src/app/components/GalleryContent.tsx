@@ -80,11 +80,16 @@ export function GalleryContent({
       />
 
       {files.length === 0 ? (
-        <p className='text-white dark:text-black'>
-          No photos found for this person.
-        </p>
+        <div className='flex flex-col items-center justify-center py-20 px-6'>
+          <p className='text-lg text-gray-600 font-light text-center'>
+            No photos found for this person.
+          </p>
+          <p className='text-sm text-gray-500 font-light mt-2'>
+            Upload some photos to get started!
+          </p>
+        </div>
       ) : (
-        <div className='space-y-10 mx-32'>
+        <div className='max-w-7xl mx-auto px-6 space-y-12'>
           {sortedGroupKeys.map((groupKey) => (
             <CollapsibleMonth
               key={groupKey}

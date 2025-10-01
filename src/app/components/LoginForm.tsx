@@ -25,44 +25,58 @@ export function LoginForm() {
   };
 
   return (
-    <div className='bg-white p-8 rounded-lg shadow-lg max-w-md w-full'>
-      <h2 className='text-2xl font-bold text-black mb-6 text-center'>Login</h2>
-
-      <form onSubmit={handleSubmit} className='space-y-4'>
+    <form onSubmit={handleSubmit} className='space-y-6'>
+      <div className='space-y-4'>
         <div>
+          <label
+            htmlFor='email'
+            className='block text-sm font-light text-gray-600 mb-2'
+          >
+            Email
+          </label>
           <input
+            id='email'
             type='email'
-            placeholder='Email'
+            placeholder='you@example.com'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className='w-full p-3 border border-gray-300 rounded-lg bg-white text-black'
+            className='w-full px-4 py-3 border border-gray-100 rounded-2xl bg-white text-gray-900 font-light placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-200 transition-all'
             required
           />
         </div>
 
         <div>
+          <label
+            htmlFor='password'
+            className='block text-sm font-light text-gray-600 mb-2'
+          >
+            Password
+          </label>
           <input
+            id='password'
             type='password'
-            placeholder='Password'
+            placeholder='••••••••'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className='w-full p-3 border border-gray-300 rounded-lg bg-white text-black'
+            className='w-full px-4 py-3 border border-gray-100 rounded-2xl bg-white text-gray-900 font-light placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-200 transition-all'
             required
           />
         </div>
+      </div>
 
-        {error && (
-          <div className='text-red-500 text-sm text-center'>{error}</div>
-        )}
+      {error && (
+        <div className='text-sm font-light text-red-600 text-center bg-red-50 py-2 px-4 rounded-2xl'>
+          {error}
+        </div>
+      )}
 
-        <button
-          type='submit'
-          disabled={loading}
-          className='w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white p-3 rounded-lg font-semibold transition-colors'
-        >
-          {loading ? "Signing in..." : "Sign In"}
-        </button>
-      </form>
-    </div>
+      <button
+        type='submit'
+        disabled={loading}
+        className='w-full bg-gray-900 hover:bg-gray-800 disabled:bg-gray-400 disabled:cursor-not-allowed text-white py-3 px-6 rounded-full font-light transition-all hover:scale-[1.02] shadow-lg'
+      >
+        {loading ? "Signing in..." : "Sign In"}
+      </button>
+    </form>
   );
 }

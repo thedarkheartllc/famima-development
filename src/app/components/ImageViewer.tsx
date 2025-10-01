@@ -9,6 +9,7 @@ import {
   FaTrash,
 } from "react-icons/fa";
 import { useAuth } from "../contexts/AuthContext";
+import { Button } from "./Button";
 
 interface PhotoWithDate {
   id?: string;
@@ -114,11 +115,11 @@ export function ImageViewer({
   if (!isOpen || !currentPhoto) return null;
 
   return (
-    <div className='fixed inset-0 z-50 bg-black bg-opacity-95 flex items-center justify-center'>
+    <div className='fixed inset-0 z-50 flex items-center justify-center p-12'>
       {/* Close button */}
       <button
         onClick={onClose}
-        className='absolute top-4 right-4 z-10 p-2 bg-black bg-opacity-50 hover:bg-opacity-70 rounded-full text-white transition-colors'
+        className='absolute top-6 right-6 z-10 p-3 bg-gradient-to-br from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 rounded-full text-gray-700 transition-all shadow-lg'
         aria-label='Close image viewer'
       >
         <FaTimes className='text-xl' />
@@ -131,7 +132,7 @@ export function ImageViewer({
         onDeletePhoto && (
           <button
             onClick={() => setShowDeleteConfirm(true)}
-            className='absolute top-4 right-16 z-10 p-2 bg-red-600 bg-opacity-50 hover:bg-opacity-70 rounded-full text-white transition-colors'
+            className='absolute top-6 right-20 z-10 p-3 bg-gradient-to-br from-red-200 to-red-300 hover:from-red-300 hover:to-red-400 rounded-full text-red-700 transition-all shadow-lg'
             aria-label='Delete photo'
           >
             <FaTrash className='text-xl' />
@@ -142,53 +143,55 @@ export function ImageViewer({
       {currentIndex > 0 && (
         <button
           onClick={goToPrevious}
-          className='absolute left-4 top-1/2 transform -translate-y-1/2 z-10 p-3 bg-black bg-opacity-50 hover:bg-opacity-70 rounded-full text-white transition-colors'
+          className='absolute left-6 top-1/2 transform -translate-y-1/2 z-10 p-4 bg-gradient-to-br from-sky-200 to-sky-300 hover:from-sky-300 hover:to-sky-400 rounded-full text-gray-700 transition-all shadow-lg'
           aria-label='Previous image'
         >
-          <FaChevronLeft className='text-xl' />
+          <FaChevronLeft className='text-2xl' />
         </button>
       )}
 
       {currentIndex < photos.length - 1 && (
         <button
           onClick={goToNext}
-          className='absolute right-4 top-1/2 transform -translate-y-1/2 z-10 p-3 bg-black bg-opacity-50 hover:bg-opacity-70 rounded-full text-white transition-colors'
+          className='absolute right-6 top-1/2 transform -translate-y-1/2 z-10 p-4 bg-gradient-to-br from-sky-200 to-sky-300 hover:from-sky-300 hover:to-sky-400 rounded-full text-gray-700 transition-all shadow-lg'
           aria-label='Next image'
         >
-          <FaChevronRight className='text-xl' />
+          <FaChevronRight className='text-2xl' />
         </button>
       )}
 
-      {/* Image container */}
-      <div className='relative w-full h-full flex items-center justify-center p-8'>
+      {/* Image container with backdrop */}
+      <div className='relative bg-white/90 backdrop-blur rounded-3xl shadow-2xl p-8'>
         {imageLoading && (
           <div className='absolute inset-0 flex items-center justify-center'>
-            <div className='text-white text-lg'>Loading...</div>
+            <div className='text-gray-600 text-lg font-light'>Loading...</div>
           </div>
         )}
 
         <Image
           src={currentPhoto.url || `/photos/${currentPhoto.filename}`}
           alt={currentPhoto.filename}
-          width={800}
-          height={600}
-          className={`max-w-full max-h-full object-contain transition-opacity duration-300 ${
+          width={1200}
+          height={900}
+          className={`rounded-2xl object-contain transition-opacity duration-300 ${
             imageLoading ? "opacity-0" : "opacity-100"
           }`}
-          style={{ maxHeight: "calc(100vh - 8rem)" }}
+          style={{ maxHeight: "80vh", maxWidth: "85vw" }}
           onLoad={() => setImageLoading(false)}
           onError={() => setImageLoading(false)}
         />
       </div>
 
       {/* Image info */}
-      <div className='absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-lg'>
-        <div className='text-center'>
-          <div className='font-semibold'>{currentPhoto.filename}</div>
+      <div className='absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-white/80 backdrop-blur-md text-gray-700 px-6 py-3 rounded-full shadow-lg'>
+        <div className='text-center space-y-1'>
+          <div className='font-light text-sm'>{currentPhoto.filename}</div>
           {currentPhoto.date && (
-            <div className='text-sm opacity-75'>{currentPhoto.date}</div>
+            <div className='text-xs font-light text-gray-500'>
+              {currentPhoto.date}
+            </div>
           )}
-          <div className='text-sm opacity-75'>
+          <div className='text-xs font-light text-gray-500'>
             {currentIndex + 1} of {photos.length}
           </div>
         </div>
@@ -210,30 +213,33 @@ export function ImageViewer({
 
       {/* Delete confirmation dialog */}
       {showDeleteConfirm && (
-        <div className='fixed inset-0 z-60 bg-black bg-opacity-75 flex items-center justify-center'>
-          <div className='bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md mx-4'>
-            <h3 className='text-lg font-semibold text-gray-900 dark:text-white mb-4'>
+        <div className='fixed inset-0 z-60 bg-black/20 backdrop-blur-sm flex items-center justify-center p-4'>
+          <div className='bg-white rounded-3xl p-8 max-w-md w-full shadow-xl'>
+            <h3 className='text-2xl font-light text-gray-900 mb-3'>
               Delete Photo
             </h3>
-            <p className='text-gray-600 dark:text-gray-400 mb-6'>
+            <p className='text-gray-600 font-light mb-6'>
               Are you sure you want to delete &ldquo;{currentPhoto.filename}
               &rdquo;? This action cannot be undone.
             </p>
-            <div className='flex space-x-3'>
-              <button
+            <div className='flex gap-3'>
+              <Button
                 onClick={() => setShowDeleteConfirm(false)}
-                className='flex-1 px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors'
+                variant='secondary'
                 disabled={isDeleting}
+                className='flex-1'
               >
                 Cancel
-              </button>
-              <button
+              </Button>
+              <Button
                 onClick={handleDeletePhoto}
-                className='flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50'
+                variant='primary'
+                loading={isDeleting}
                 disabled={isDeleting}
+                className='flex-1 !bg-red-600 hover:!bg-red-700'
               >
-                {isDeleting ? "Deleting..." : "Delete"}
-              </button>
+                Delete
+              </Button>
             </div>
           </div>
         </div>

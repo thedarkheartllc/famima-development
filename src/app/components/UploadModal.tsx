@@ -80,19 +80,19 @@ export function UploadModal({
   // Check if user is authenticated
   if (!user || !isAdmin) {
     return (
-      <div className='fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4'>
-        <div className='bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full p-6'>
-          <div className='text-center'>
-            <div className='text-4xl mb-4'>🔒</div>
-            <h2 className='text-xl font-bold text-gray-900 dark:text-white mb-2'>
+      <div className='fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-50 p-4'>
+        <div className='bg-white rounded-3xl shadow-xl max-w-md w-full p-8'>
+          <div className='text-center space-y-4'>
+            <div className='text-5xl'>🔒</div>
+            <h2 className='text-2xl font-light text-gray-900'>
               Authentication Required
             </h2>
-            <p className='text-gray-600 dark:text-gray-400 mb-4'>
+            <p className='text-gray-600 font-light'>
               You need to be logged in to upload photos.
             </p>
             <button
               onClick={onClose}
-              className='px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors'
+              className='px-8 py-3 bg-gray-900 text-white rounded-full hover:bg-gray-800 transition-all hover:scale-[1.02] shadow-lg font-light'
             >
               Close
             </button>
@@ -103,19 +103,19 @@ export function UploadModal({
   }
 
   return (
-    <div className='fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4'>
-      <div className='bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto'>
+    <div className='fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-50 p-4'>
+      <div className='bg-white rounded-3xl shadow-xl max-w-2xl w-full'>
         {/* Header */}
-        <div className='flex items-center justify-between p-6 border-b border-gray-200'>
+        <div className='flex items-center justify-between p-6 border-b border-gray-100'>
           <div>
-            <h2 className='text-2xl font-bold text-gray-900'>Upload Photos</h2>
-            <p className='text-gray-600'>
+            <h2 className='text-2xl font-light text-gray-900'>Upload Photos</h2>
+            <p className='text-sm text-gray-600 font-light mt-1'>
               Add photos to {personName}&apos;s gallery
             </p>
           </div>
           <button
             onClick={onClose}
-            className='p-2 hover:bg-gray-100 rounded-full transition-colors'
+            className='p-2 hover:bg-gray-50 rounded-full transition-colors'
             aria-label='Close modal'
           >
             <FaTimes className='text-gray-500 text-xl' />
@@ -127,58 +127,59 @@ export function UploadModal({
           <div
             {...getRootProps()}
             className={`
-              border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors
+              border-2 border-dashed rounded-3xl p-8 text-center cursor-pointer transition-all
               ${
                 isDragActive
-                  ? "border-blue-500 bg-blue-50"
-                  : "border-gray-300 hover:border-gray-400"
+                  ? "border-green-300 bg-green-50/50"
+                  : "border-gray-200 hover:border-gray-300"
               }
               ${
-                uploading ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-50"
+                uploading
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:bg-gray-50/50"
               }
             `}
           >
             <input {...getInputProps()} />
 
             {uploading ? (
-              <div className='space-y-4'>
+              <div className='space-y-3'>
                 {uploadComplete ? (
-                  <div className='space-y-4'>
+                  <div className='space-y-3'>
                     <div className='text-4xl'>✅</div>
-                    <div className='text-lg font-medium text-green-600'>
+                    <div className='text-lg font-light text-green-600'>
                       Upload Complete!
                     </div>
-                    <div className='text-sm text-gray-600'>
-                      Successfully uploaded {uploadedCount} photo(s) to{" "}
-                      {personName}&apos;s gallery
+                    <div className='text-sm font-light text-gray-600'>
+                      Successfully uploaded {uploadedCount} photo(s)
                     </div>
                   </div>
                 ) : (
-                  <div className='space-y-4'>
-                    <div className='text-lg font-medium text-gray-900'>
+                  <div className='space-y-3'>
+                    <div className='text-base font-light text-gray-700'>
                       Uploading photos... ({uploadedCount} of {totalFiles})
                     </div>
-                    <div className='w-full bg-gray-200 rounded-full h-2'>
+                    <div className='w-full bg-gray-100 rounded-full h-2'>
                       <div
-                        className='bg-blue-600 h-2 rounded-full transition-all duration-300'
+                        className='bg-gray-900 h-2 rounded-full transition-all duration-300'
                         style={{ width: `${uploadProgress}%` }}
                       />
                     </div>
-                    <div className='text-sm text-gray-600'>
+                    <div className='text-sm font-light text-gray-600'>
                       {Math.round(uploadProgress)}% complete
                     </div>
                   </div>
                 )}
               </div>
             ) : (
-              <div className='space-y-4'>
+              <div className='space-y-3'>
                 <div className='text-4xl'>📸</div>
-                <div className='text-lg font-medium text-gray-900'>
+                <div className='text-base font-light text-gray-700'>
                   {isDragActive
                     ? "Drop photos here..."
                     : "Drag & drop photos here, or click to select"}
                 </div>
-                <div className='text-sm text-gray-600'>
+                <div className='text-sm font-light text-gray-500'>
                   Supports JPG, PNG, HEIC, HEIF formats
                 </div>
               </div>
@@ -187,31 +188,36 @@ export function UploadModal({
 
           {/* Error Display */}
           {error && (
-            <div className='mt-4 p-3 bg-red-50 border border-red-200 rounded-lg'>
-              <div className='text-red-800 text-sm'>{error}</div>
+            <div className='mt-4 p-3 bg-red-50 border border-red-100 rounded-2xl'>
+              <div className='text-red-600 text-sm font-light'>{error}</div>
             </div>
           )}
 
           {/* Instructions */}
-          <div className='mt-6 text-sm text-gray-600'>
-            <h3 className='font-medium mb-2 text-gray-900'>
-              Upload Instructions:
-            </h3>
-            <ul className='list-disc list-inside space-y-1'>
-              <li>Drag and drop photos or click to browse</li>
-              <li>You can upload multiple photos at once</li>
-              <li>Photos will be added to {personName}&apos;s gallery</li>
-              <li>Photos are automatically organized by date</li>
+          <div className='mt-4 text-xs font-light text-gray-600 bg-white/60 backdrop-blur-sm rounded-2xl p-4'>
+            <ul className='space-y-1.5'>
+              <li className='flex items-start gap-2'>
+                <span className='text-green-600 mt-0.5'>✓</span>
+                <span>Drag and drop photos or click to browse</span>
+              </li>
+              <li className='flex items-start gap-2'>
+                <span className='text-green-600 mt-0.5'>✓</span>
+                <span>Upload multiple photos at once</span>
+              </li>
+              <li className='flex items-start gap-2'>
+                <span className='text-green-600 mt-0.5'>✓</span>
+                <span>Automatically organized by date</span>
+              </li>
             </ul>
           </div>
         </div>
 
         {/* Footer */}
-        <div className='flex justify-end gap-3 p-6 border-t border-gray-200'>
+        <div className='flex justify-end gap-3 p-6 border-t border-gray-100'>
           <button
             onClick={onClose}
             disabled={uploading}
-            className='px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors'
+            className='px-6 py-2 text-gray-600 hover:text-gray-900 font-light transition-colors disabled:opacity-50'
           >
             Cancel
           </button>

@@ -57,18 +57,20 @@ export function PhotoUpload({ onUploadComplete }: PhotoUploadProps) {
   });
 
   if (peopleLoading) {
-    return <div className='p-4'>Loading people...</div>;
+    return (
+      <div className='p-4 text-gray-600 font-light'>Loading people...</div>
+    );
   }
 
   return (
     <div className='max-w-2xl mx-auto p-6'>
-      <h2 className='text-2xl font-bold mb-6'>Upload Photos</h2>
+      <h2 className='text-3xl font-light text-gray-900 mb-8'>Upload Photos</h2>
 
       {/* Person Selection */}
       <div className='mb-6'>
         <label
           htmlFor='person-select'
-          className='block text-sm font-medium mb-2'
+          className='block text-sm font-light text-gray-600 mb-2'
         >
           Select Person
         </label>
@@ -76,7 +78,7 @@ export function PhotoUpload({ onUploadComplete }: PhotoUploadProps) {
           id='person-select'
           value={selectedPersonId}
           onChange={(e) => setSelectedPersonId(e.target.value)}
-          className='w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+          className='w-full px-4 py-3 border border-gray-100 rounded-2xl bg-white text-gray-900 font-light focus:outline-none focus:ring-2 focus:ring-green-200 transition-all'
           disabled={uploading}
         >
           <option value=''>Choose a person...</option>
@@ -92,16 +94,16 @@ export function PhotoUpload({ onUploadComplete }: PhotoUploadProps) {
       <div
         {...getRootProps()}
         className={`
-          border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors
+          border-2 border-dashed rounded-3xl p-12 text-center cursor-pointer transition-all
           ${
             isDragActive
-              ? "border-blue-500 bg-blue-50"
-              : "border-gray-300 hover:border-gray-400"
+              ? "border-green-300 bg-green-50/50"
+              : "border-gray-200 hover:border-gray-300"
           }
           ${
             uploading || !selectedPersonId
               ? "opacity-50 cursor-not-allowed"
-              : "hover:bg-gray-50"
+              : "hover:bg-gray-50/50"
           }
         `}
       >
@@ -109,30 +111,32 @@ export function PhotoUpload({ onUploadComplete }: PhotoUploadProps) {
 
         {uploading ? (
           <div className='space-y-4'>
-            <div className='text-lg font-medium'>Uploading photos...</div>
-            <div className='w-full bg-gray-200 rounded-full h-2'>
+            <div className='text-lg font-light text-gray-700'>
+              Uploading photos...
+            </div>
+            <div className='w-full bg-gray-100 rounded-full h-2'>
               <div
-                className='bg-blue-600 h-2 rounded-full transition-all duration-300'
+                className='bg-gray-900 h-2 rounded-full transition-all duration-300'
                 style={{ width: `${uploadProgress}%` }}
               />
             </div>
-            <div className='text-sm text-gray-600'>
+            <div className='text-sm font-light text-gray-600'>
               {uploadProgress}% complete
             </div>
           </div>
         ) : (
           <div className='space-y-4'>
-            <div className='text-4xl'>📸</div>
-            <div className='text-lg font-medium'>
+            <div className='text-5xl'>📸</div>
+            <div className='text-lg font-light text-gray-700'>
               {isDragActive
                 ? "Drop photos here..."
                 : "Drag & drop photos here, or click to select"}
             </div>
-            <div className='text-sm text-gray-600'>
+            <div className='text-sm font-light text-gray-500'>
               Supports JPG, PNG, HEIC, HEIF formats
             </div>
             {!selectedPersonId && (
-              <div className='text-sm text-red-600'>
+              <div className='text-sm font-light text-red-600 bg-red-50 py-2 px-4 rounded-2xl inline-block'>
                 Please select a person first
               </div>
             )}
@@ -142,19 +146,31 @@ export function PhotoUpload({ onUploadComplete }: PhotoUploadProps) {
 
       {/* Error Display */}
       {error && (
-        <div className='mt-4 p-3 bg-red-50 border border-red-200 rounded-lg'>
-          <div className='text-red-800 text-sm'>{error}</div>
+        <div className='mt-4 p-4 bg-red-50 border border-red-100 rounded-2xl'>
+          <div className='text-red-600 text-sm font-light'>{error}</div>
         </div>
       )}
 
       {/* Instructions */}
-      <div className='mt-6 text-sm text-gray-600'>
-        <h3 className='font-medium mb-2'>Upload Instructions:</h3>
-        <ul className='list-disc list-inside space-y-1'>
-          <li>Select a person from the dropdown above</li>
-          <li>Drag and drop photos or click to browse</li>
-          <li>You can upload multiple photos at once</li>
-          <li>Photos will be automatically organized by person</li>
+      <div className='mt-8 text-sm font-light text-gray-600 bg-white/60 backdrop-blur-sm rounded-2xl p-6'>
+        <h3 className='font-light text-gray-900 mb-3'>Upload Instructions:</h3>
+        <ul className='space-y-2'>
+          <li className='flex items-start gap-2'>
+            <span className='text-green-600 mt-0.5'>✓</span>
+            <span>Select a person from the dropdown above</span>
+          </li>
+          <li className='flex items-start gap-2'>
+            <span className='text-green-600 mt-0.5'>✓</span>
+            <span>Drag and drop photos or click to browse</span>
+          </li>
+          <li className='flex items-start gap-2'>
+            <span className='text-green-600 mt-0.5'>✓</span>
+            <span>You can upload multiple photos at once</span>
+          </li>
+          <li className='flex items-start gap-2'>
+            <span className='text-green-600 mt-0.5'>✓</span>
+            <span>Photos will be automatically organized by person</span>
+          </li>
         </ul>
       </div>
     </div>
