@@ -40,9 +40,11 @@ export default function Gallery({
 
   if (peopleLoading || photosLoading) {
     return (
-      <main className='bg-black dark:bg-white min-h-screen p-4'>
+      <main className='bg-gradient-to-b from-white to-green-50/30 dark:from-gray-900 dark:to-gray-800 min-h-screen'>
         <div className='flex justify-center items-center min-h-[60vh]'>
-          <div className='text-white dark:text-black'>Loading...</div>
+          <div className='text-gray-600 dark:text-gray-400 font-light'>
+            Loading...
+          </div>
         </div>
       </main>
     );
@@ -50,9 +52,11 @@ export default function Gallery({
 
   if (error) {
     return (
-      <main className='bg-black dark:bg-white min-h-screen p-4'>
+      <main className='bg-gradient-to-b from-white to-green-50/30 dark:from-gray-900 dark:to-gray-800 min-h-screen'>
         <div className='flex justify-center items-center min-h-[60vh]'>
-          <div className='text-red-500'>Error loading photos: {error}</div>
+          <div className='text-red-600 dark:text-red-400 font-light'>
+            Error loading photos: {error}
+          </div>
         </div>
       </main>
     );
@@ -60,9 +64,11 @@ export default function Gallery({
 
   if (!person) {
     return (
-      <main className='bg-black dark:bg-white min-h-screen p-4'>
+      <main className='bg-gradient-to-b from-white to-green-50/30 dark:from-gray-900 dark:to-gray-800 min-h-screen'>
         <div className='flex justify-center items-center min-h-[60vh]'>
-          <div className='text-white dark:text-black'>Person not found</div>
+          <div className='text-gray-600 dark:text-gray-400 font-light'>
+            Person not found
+          </div>
         </div>
       </main>
     );
@@ -103,16 +109,14 @@ export default function Gallery({
     return b.localeCompare(a); // Most recent first
   });
 
-  // Always use GalleryContent component to get the proper header with upload button
-
   return (
-    <main className='bg-black dark:bg-white min-h-screen p-4'>
+    <main className='bg-gradient-to-b from-white to-green-50/30 dark:from-gray-900 dark:to-gray-800 min-h-screen'>
       <GalleryContent
         files={photos.map((p) => p.filename)}
         sortedGroupKeys={sortedGroupKeys}
         groupedPhotos={groupedPhotos}
         personName={resolvedParams.name}
-        photos={photos} // Pass Firebase photos for URL access
+        photos={photos}
         onUploadComplete={handleUploadComplete}
         onDeletePhoto={deletePhoto}
       />

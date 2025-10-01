@@ -42,37 +42,39 @@ export function GalleryHeader({
 
   return (
     <>
-      <header className='sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 mb-6'>
-        <div className='max-w-7xl mx-auto px-6 py-4'>
-          <div className='flex justify-between items-center'>
+      <header className='sticky top-0 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 mb-6'>
+        <div className='max-w-7xl mx-auto px-4 sm:px-6 py-4'>
+          <div className='flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4'>
             {/* Left: Title and Count */}
             <div className='flex-1'>
               <Link
                 href='/family'
-                className='inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 font-light transition-colors mb-2'
+                className='inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 font-light transition-colors mb-2'
               >
                 <span>←</span>
-                <span>Back to Family</span>
+                <span className='hidden sm:inline'>Back to Family</span>
+                <span className='sm:hidden'>Back</span>
               </Link>
-              <h1 className='text-2xl md:text-3xl font-light text-gray-900 capitalize'>
+              <h1 className='text-xl sm:text-2xl md:text-3xl font-light text-gray-900 dark:text-white capitalize'>
                 {personName ? `${personName}'s Gallery` : "Photo Gallery"}
               </h1>
-              <p className='text-sm text-gray-600 font-light'>
+              <p className='text-sm text-gray-600 dark:text-gray-400 font-light'>
                 {photoCount} photos
               </p>
             </div>
 
             {/* Right: Action Buttons */}
-            <div className='flex items-center gap-3'>
+            <div className='flex items-center gap-2 sm:gap-3 flex-wrap'>
               <Button
                 onClick={() => setShowEditModal(true)}
                 disabled={!person}
                 variant='ghost'
                 size='sm'
                 title='Edit person details'
+                className='flex-shrink-0'
               >
                 <FaEdit />
-                <span>Edit</span>
+                <span className='hidden sm:inline'>Edit</span>
               </Button>
 
               <Button
@@ -85,9 +87,10 @@ export function GalleryHeader({
                     ? `No person found for "${personName}" - upload disabled`
                     : "Upload photos"
                 }
+                className='flex-shrink-0'
               >
                 <FaUpload />
-                <span>Upload</span>
+                <span className='hidden sm:inline'>Upload</span>
               </Button>
 
               <Button
@@ -97,34 +100,35 @@ export function GalleryHeader({
                 aria-label={
                   allExpanded ? "Collapse all months" : "Expand all months"
                 }
+                className='flex-shrink-0'
               >
                 {allExpanded ? (
                   <>
                     <FaChevronUp />
-                    <span>Collapse All</span>
+                    <span className='hidden sm:inline'>Collapse All</span>
                   </>
                 ) : (
                   <>
                     <FaChevronDown />
-                    <span>Expand All</span>
+                    <span className='hidden sm:inline'>Expand All</span>
                   </>
                 )}
               </Button>
 
               <button
                 onClick={toggleTheme}
-                className='flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors text-sm font-light text-gray-700'
+                className='flex items-center gap-2 px-3 sm:px-4 py-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full transition-colors text-sm font-light text-gray-700 dark:text-gray-300 flex-shrink-0'
                 aria-label='Toggle theme'
               >
                 {theme === "dark" ? (
                   <>
                     <FaSun className='text-yellow-500' />
-                    <span>Light</span>
+                    <span className='hidden sm:inline'>Light</span>
                   </>
                 ) : (
                   <>
-                    <FaMoon className='text-gray-600' />
-                    <span>Dark</span>
+                    <FaMoon className='text-gray-600 dark:text-gray-400' />
+                    <span className='hidden sm:inline'>Dark</span>
                   </>
                 )}
               </button>

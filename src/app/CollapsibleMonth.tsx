@@ -58,24 +58,24 @@ export function CollapsibleMonth({
     <div className='space-y-6'>
       <button
         onClick={toggleExpanded}
-        className='w-full text-gray-900 text-3xl md:text-4xl font-light text-center border-b border-gray-100 pb-4 hover:border-gray-200 transition-colors'
+        className='w-full text-gray-900 dark:text-white text-2xl sm:text-3xl md:text-4xl font-light text-center border-b border-gray-100 dark:border-gray-800 pb-4 hover:border-gray-200 dark:hover:border-gray-700 transition-colors'
       >
         <div className='flex items-center justify-center gap-3'>
           <span>{monthName}</span>
           {isExpanded ? (
-            <MdExpandLess className='text-2xl text-gray-600' />
+            <MdExpandLess className='text-xl sm:text-2xl text-gray-600 dark:text-gray-400' />
           ) : (
-            <MdExpandMore className='text-2xl text-gray-600' />
+            <MdExpandMore className='text-xl sm:text-2xl text-gray-600 dark:text-gray-400' />
           )}
         </div>
       </button>
 
       {isExpanded && (
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
+        <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6'>
           {photos.map((photo, index) => (
             <div key={photo.filename} className='flex flex-col space-y-2'>
               <div
-                className='relative w-full aspect-square bg-gray-50 rounded-2xl overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition-all group'
+                className='relative w-full aspect-square bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition-all group'
                 onClick={() => openImageViewer(index)}
               >
                 <Image
@@ -85,7 +85,7 @@ export function CollapsibleMonth({
                   className='object-cover transition-transform duration-300 group-hover:scale-105'
                 />
               </div>
-              <p className='text-gray-600 text-sm font-light text-right'>
+              <p className='text-gray-600 dark:text-gray-400 text-xs sm:text-sm font-light text-right'>
                 {photo.date || "?"}
               </p>
             </div>
