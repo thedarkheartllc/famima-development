@@ -3,23 +3,23 @@ import { Footer } from "../components/Footer";
 
 export default function TermsPage() {
   return (
-    <div className='bg-white min-h-screen'>
+    <div className='bg-white  min-h-screen'>
       <AppHeader showSignIn fixed />
 
       <main className='pt-32 pb-20 px-6'>
         <div className='max-w-4xl mx-auto space-y-12'>
           <div className='text-center space-y-4'>
-            <h1 className='text-5xl md:text-6xl font-light text-gray-900'>
+            <h1 className='text-5xl md:text-6xl font-light text-gray-900 '>
               Terms & Conditions
             </h1>
-            <p className='text-lg text-gray-600'>
+            <p className='text-lg text-gray-600 '>
               Last updated: October 1, 2025
             </p>
           </div>
 
-          <div className='space-y-8 text-gray-700 leading-relaxed'>
+          <div className='space-y-8 text-gray-700  leading-relaxed'>
             <section className='space-y-4'>
-              <h2 className='text-2xl font-light text-gray-900'>
+              <h2 className='text-2xl font-light text-gray-900 '>
                 1. What Famima Is
               </h2>
               <p>
@@ -32,7 +32,7 @@ export default function TermsPage() {
             </section>
 
             <section className='space-y-4'>
-              <h2 className='text-2xl font-light text-gray-900'>
+              <h2 className='text-2xl font-light text-gray-900 '>
                 2. Acceptable Use
               </h2>
               <p>By using Famima, you agree to:</p>
@@ -51,7 +51,7 @@ export default function TermsPage() {
             </section>
 
             <section className='space-y-4'>
-              <h2 className='text-2xl font-light text-gray-900'>
+              <h2 className='text-2xl font-light text-gray-900 '>
                 3. Your Content
               </h2>
               <p>
@@ -66,7 +66,7 @@ export default function TermsPage() {
             </section>
 
             <section className='space-y-4'>
-              <h2 className='text-2xl font-light text-gray-900'>
+              <h2 className='text-2xl font-light text-gray-900 '>
                 4. What We Don&apos;t Do
               </h2>
               <ul className='list-disc pl-6 space-y-2'>
@@ -81,7 +81,7 @@ export default function TermsPage() {
             </section>
 
             <section className='space-y-4'>
-              <h2 className='text-2xl font-light text-gray-900'>
+              <h2 className='text-2xl font-light text-gray-900 '>
                 5. Account Security
               </h2>
               <p>
@@ -92,7 +92,7 @@ export default function TermsPage() {
             </section>
 
             <section className='space-y-4'>
-              <h2 className='text-2xl font-light text-gray-900'>
+              <h2 className='text-2xl font-light text-gray-900 '>
                 6. Service Availability
               </h2>
               <p>
@@ -103,7 +103,7 @@ export default function TermsPage() {
             </section>
 
             <section className='space-y-4'>
-              <h2 className='text-2xl font-light text-gray-900'>
+              <h2 className='text-2xl font-light text-gray-900 '>
                 7. Termination
               </h2>
               <p>
@@ -114,7 +114,7 @@ export default function TermsPage() {
             </section>
 
             <section className='space-y-4'>
-              <h2 className='text-2xl font-light text-gray-900'>
+              <h2 className='text-2xl font-light text-gray-900 '>
                 8. Changes to Terms
               </h2>
               <p>
@@ -125,7 +125,7 @@ export default function TermsPage() {
             </section>
 
             <section className='space-y-4'>
-              <h2 className='text-2xl font-light text-gray-900'>
+              <h2 className='text-2xl font-light text-gray-900 '>
                 9. Limitation of Liability
               </h2>
               <p>
@@ -137,7 +137,7 @@ export default function TermsPage() {
             </section>
 
             <section className='space-y-4'>
-              <h2 className='text-2xl font-light text-gray-900'>
+              <h2 className='text-2xl font-light text-gray-900 '>
                 10. Contact Us
               </h2>
               <p>
@@ -147,7 +147,7 @@ export default function TermsPage() {
             </section>
 
             <div className='pt-8 border-t border-gray-200 text-center'>
-              <p className='text-gray-600 font-light'>
+              <p className='text-gray-600  font-light'>
                 These terms reflect our commitment to keeping Famima simple,
                 safe, and respectful of your privacy.
               </p>

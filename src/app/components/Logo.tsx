@@ -28,14 +28,14 @@ export function Logo({
   const logoContent = (
     <div className='text-center'>
       <h1
-        className={`${sizeClasses[size]} font-bold text-white dark:text-black`}
+        className={`${sizeClasses[size]} font-bold text-white`}
         style={{ fontFamily: '"Style Script", cursive' }}
       >
         Famima
       </h1>
       {showTagline && (
         <p
-          className={`${taglineSizeClasses[size]} text-white dark:text-black opacity-80`}
+          className={`${taglineSizeClasses[size]} text-white opacity-80`}
         >
           a family memory book{" "}
         </p>

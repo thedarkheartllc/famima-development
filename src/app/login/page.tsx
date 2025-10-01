@@ -1,13 +1,12 @@
 "use client";
 
-import { ThemeProvider } from "../contexts/ThemeContext";
 import { LoginForm } from "../components/LoginForm";
 import { AppHeader } from "../components/AppHeader";
 import { useAuth } from "../contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-function LoginContent() {
+export default function LoginPage() {
   const { isAdmin } = useAuth();
   const router = useRouter();
 
@@ -18,14 +17,14 @@ function LoginContent() {
   }, [isAdmin, router]);
 
   return (
-    <main className='bg-gradient-to-b from-white to-green-50/30 min-h-screen'>
+    <main className='bg-gradient-to-b from-white to-green-50/30   min-h-screen'>
       <AppHeader />
 
       <div className='flex flex-col items-center justify-center min-h-[80vh] px-6'>
         <div className='w-full max-w-md'>
           <div className='text-center mb-8 space-y-3'>
-            <h1 className='text-4xl font-light text-gray-900'>Welcome back</h1>
-            <p className='text-gray-600 font-light'>
+            <h1 className='text-4xl font-light text-gray-900 '>Welcome back</h1>
+            <p className='text-gray-600  font-light'>
               Sign in to access your family photos
             </p>
           </div>
@@ -35,13 +34,5 @@ function LoginContent() {
         </div>
       </div>
     </main>
-  );
-}
-
-export default function LoginPage() {
-  return (
-    <ThemeProvider>
-      <LoginContent />
-    </ThemeProvider>
   );
 }

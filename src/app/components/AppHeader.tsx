@@ -31,8 +31,8 @@ export function AppHeader({
   };
 
   const headerClasses = fixed
-    ? "fixed top-0 left-0 right-0 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 z-50"
-    : "border-b border-gray-100 dark:border-gray-800";
+    ? "fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md border-b border-gray-100 z-50"
+    : "border-b border-gray-100";
 
   return (
     <>
@@ -48,7 +48,7 @@ export function AppHeader({
                   F
                 </span>
               </div>
-              <span className='text-lg sm:text-xl font-light text-gray-900 dark:text-white'>
+              <span className='text-lg sm:text-xl font-light text-gray-900'>
                 Famima
               </span>
             </Link>
@@ -70,7 +70,7 @@ export function AppHeader({
             {showSignIn && (
               <Link
                 href='/login'
-                className='px-4 sm:px-6 py-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-light transition-colors'
+                className='px-4 sm:px-6 py-2 text-gray-700 hover:text-gray-900 font-light transition-colors'
               >
                 Sign In
               </Link>
@@ -79,7 +79,7 @@ export function AppHeader({
             {showSignOut && isAdmin && (
               <button
                 onClick={handleLogout}
-                className='px-4 sm:px-6 py-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-light transition-colors'
+                className='px-4 sm:px-6 py-2 text-gray-700 hover:text-gray-900 font-light transition-colors'
               >
                 Sign Out
               </button>

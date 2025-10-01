@@ -40,11 +40,9 @@ export default function Gallery({
 
   if (peopleLoading || photosLoading) {
     return (
-      <main className='bg-gradient-to-b from-white to-green-50/30 dark:from-gray-900 dark:to-gray-800 min-h-screen'>
+      <main className='bg-gradient-to-b from-white to-green-50/30   min-h-screen'>
         <div className='flex justify-center items-center min-h-[60vh]'>
-          <div className='text-gray-600 dark:text-gray-400 font-light'>
-            Loading...
-          </div>
+          <div className='text-gray-600  font-light'>Loading...</div>
         </div>
       </main>
     );
@@ -52,9 +50,9 @@ export default function Gallery({
 
   if (error) {
     return (
-      <main className='bg-gradient-to-b from-white to-green-50/30 dark:from-gray-900 dark:to-gray-800 min-h-screen'>
+      <main className='bg-gradient-to-b from-white to-green-50/30   min-h-screen'>
         <div className='flex justify-center items-center min-h-[60vh]'>
-          <div className='text-red-600 dark:text-red-400 font-light'>
+          <div className='text-red-600 font-light'>
             Error loading photos: {error}
           </div>
         </div>
@@ -64,11 +62,9 @@ export default function Gallery({
 
   if (!person) {
     return (
-      <main className='bg-gradient-to-b from-white to-green-50/30 dark:from-gray-900 dark:to-gray-800 min-h-screen'>
+      <main className='bg-gradient-to-b from-white to-green-50/30   min-h-screen'>
         <div className='flex justify-center items-center min-h-[60vh]'>
-          <div className='text-gray-600 dark:text-gray-400 font-light'>
-            Person not found
-          </div>
+          <div className='text-gray-600  font-light'>Person not found</div>
         </div>
       </main>
     );
@@ -110,7 +106,7 @@ export default function Gallery({
   });
 
   return (
-    <main className='bg-gradient-to-b from-white to-green-50/30 dark:from-gray-900 dark:to-gray-800 min-h-screen'>
+    <main className='bg-gradient-to-b from-white to-green-50/30   min-h-screen'>
       <GalleryContent
         files={photos.map((p) => p.filename)}
         sortedGroupKeys={sortedGroupKeys}

@@ -3,26 +3,26 @@ import { Footer } from "../components/Footer";
 
 export default function PrivacyPage() {
   return (
-    <div className='bg-white min-h-screen'>
+    <div className='bg-white  min-h-screen'>
       <AppHeader showSignIn fixed />
 
       <main className='pt-32 pb-20 px-6'>
         <div className='max-w-4xl mx-auto space-y-12'>
           <div className='text-center space-y-4'>
-            <h1 className='text-5xl md:text-6xl font-light text-gray-900'>
+            <h1 className='text-5xl md:text-6xl font-light text-gray-900 '>
               Privacy Policy
             </h1>
-            <p className='text-lg text-gray-600'>
+            <p className='text-lg text-gray-600 '>
               Last updated: October 1, 2025
             </p>
           </div>
 
           <div className='bg-green-50/50 rounded-2xl p-8 text-center space-y-3'>
             <div className='text-4xl'>🔒</div>
-            <h2 className='text-2xl font-light text-gray-900'>
+            <h2 className='text-2xl font-light text-gray-900 '>
               Privacy First, Always
             </h2>
-            <p className='text-gray-700'>
+            <p className='text-gray-700 '>
               Your photos belong to you. Not to advertisers. Not to data
               brokers. Just you.
             </p>

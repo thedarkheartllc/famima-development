@@ -81,10 +81,10 @@ export function GalleryContent({
 
       {files.length === 0 ? (
         <div className='flex flex-col items-center justify-center py-20 px-6'>
-          <p className='text-lg text-gray-600 dark:text-gray-400 font-light text-center'>
+          <p className='text-lg text-gray-600  font-light text-center'>
             No photos found for this person.
           </p>
-          <p className='text-sm text-gray-500 dark:text-gray-500 font-light mt-2'>
+          <p className='text-sm text-gray-500  font-light mt-2'>
             Upload some photos to get started!
           </p>
         </div>
