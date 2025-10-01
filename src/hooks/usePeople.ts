@@ -9,8 +9,11 @@ import {
   orderBy,
   updateDoc,
   doc,
+  where,
+  deleteDoc,
 } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { ref, deleteObject } from "firebase/storage";
+import { db, storage } from "@/lib/firebase";
 import { Person } from "@/types/person";
 
 export function usePeople() {
@@ -45,13 +48,20 @@ export function usePeople() {
     }
   };
 
-  const addPerson = async (personData: Omit<Person, "id" | "createdAt">) => {
+  const addPerson = async (
+    personData: Omit<Person, "id" | "personId" | "createdAt">
+  ) => {
     try {
       setError(null);
 
       const docRef = await addDoc(collection(db, "people"), {
         ...personData,
         createdAt: new Date(),
+      });
+
+      // Update the document with its own ID as personId
+      await updateDoc(docRef, {
+        personId: docRef.id,
       });
 
       // Refresh the people list
@@ -84,12 +94,52 @@ export function usePeople() {
     }
   };
 
+  const deletePerson = async (personId: string) => {
+    try {
+      setError(null);
+
+      // 1. Find all photos for this person
+      const photosQuery = query(
+        collection(db, "photos"),
+        where("personId", "==", personId)
+      );
+      const photosSnapshot = await getDocs(photosQuery);
+
+      // 2. Delete all photo files from Storage and Firestore documents
+      await Promise.all(
+        photosSnapshot.docs.map(async (photoDoc) => {
+          const photoData = photoDoc.data();
+
+          // Delete from Storage
+          if (photoData.storagePath) {
+            const storageRef = ref(storage, photoData.storagePath);
+            await deleteObject(storageRef);
+          }
+
+          // Delete from Firestore
+          await deleteDoc(photoDoc.ref);
+        })
+      );
+
+      // 3. Delete the person document
+      await deleteDoc(doc(db, "people", personId));
+
+      // Refresh the people list
+      await fetchPeople();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to delete person");
+      console.error("Error deleting person:", err);
+      throw err;
+    }
+  };
+
   return {
     people,
     loading,
     error,
     addPerson,
     updatePerson,
+    deletePerson,
     refetch: fetchPeople,
   };
 }

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { AppHeader } from "./components/AppHeader";
+import { Footer } from "./components/Footer";
 
 export default function LandingPage() {
   return (
@@ -177,23 +178,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className='py-12 px-6 bg-white border-t border-gray-100'>
-        <div className='max-w-6xl mx-auto'>
-          <div className='flex flex-col md:flex-row justify-between items-center gap-6'>
-            <div className='flex items-center gap-3'>
-              <div className='w-8 h-8 bg-gradient-to-br from-green-100 to-green-200 rounded-full flex items-center justify-center'>
-                <span className='text-gray-700 font-light'>F</span>
-              </div>
-              <span className='text-lg font-light text-gray-600'>Famima</span>
-            </div>
-            <p className='text-sm text-gray-500'>
-              Your photos. Your family. Your peace of mind.
-            </p>
-            <p className='text-sm text-gray-400'>© 2025 Famima</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

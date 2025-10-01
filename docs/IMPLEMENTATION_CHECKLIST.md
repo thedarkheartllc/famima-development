@@ -85,8 +85,8 @@
 
 ### 3. Content Management ⏳
 
-- [ ] Photo deletion/editing interface
-- [ ] Person profile management (names, dates, colors)
+- [x] Photo deletion/editing interface
+- [x] Person profile management (names, dates, colors)
 - [ ] Bulk operations (move photos between people)
 
 ### 4. Performance & UX ⏳
@@ -201,3 +201,12 @@ src/
 **Last Updated**: December 2024  
 **Completion Status**: 85% Complete  
 **Next Milestone**: Photo Management & Migration
+
+
+
+other ideas 4 digit passcode for upload/delete your own user profile images
+delete family (all users and images)
+
+
+terms and conds
+privacy policy page

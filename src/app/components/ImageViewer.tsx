@@ -115,7 +115,7 @@ export function ImageViewer({
   if (!isOpen || !currentPhoto) return null;
 
   return (
-    <div className='fixed inset-0 z-50 flex items-center justify-center p-12'>
+    <div className='fixed inset-0 z-50 flex items-center justify-center bg-white md:bg-transparent p-4 md:p-12'>
       {/* Close button */}
       <button
         onClick={onClose}
@@ -161,7 +161,7 @@ export function ImageViewer({
       )}
 
       {/* Image container with backdrop */}
-      <div className='relative bg-white/90 backdrop-blur rounded-3xl shadow-2xl p-8'>
+      <div className='relative bg-white md:bg-white/90 md:backdrop-blur rounded-none md:rounded-3xl shadow-none md:shadow-2xl p-2 md:p-8'>
         {imageLoading && (
           <div className='absolute inset-0 flex items-center justify-center'>
             <div className='text-gray-600 text-lg font-light'>Loading...</div>
@@ -173,10 +173,10 @@ export function ImageViewer({
           alt={currentPhoto.filename}
           width={1200}
           height={900}
-          className={`rounded-2xl object-contain transition-opacity duration-300 ${
+          className={`rounded-lg md:rounded-2xl object-contain transition-opacity duration-300 ${
             imageLoading ? "opacity-0" : "opacity-100"
           }`}
-          style={{ maxHeight: "80vh", maxWidth: "85vw" }}
+          style={{ maxHeight: "85vh", maxWidth: "95vw" }}
           onLoad={() => setImageLoading(false)}
           onError={() => setImageLoading(false)}
         />

@@ -49,7 +49,7 @@ export function AddUserForm({ onClose }: AddUserFormProps) {
     setError("");
 
     try {
-      const personData: Omit<Person, "id" | "createdAt"> = {
+      const personData: Omit<Person, "id" | "personId" | "createdAt"> = {
         name:
           name.trim().charAt(0).toUpperCase() +
           name.trim().slice(1).toLowerCase(),

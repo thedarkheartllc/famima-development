@@ -36,8 +36,10 @@ export function EditUserForm({ isOpen, onClose, person }: EditUserFormProps) {
   >(person.relationshipType || "other");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
-  const { updatePerson } = usePeople();
+  const { updatePerson, deletePerson } = usePeople();
 
   if (!isOpen) return null;
 
@@ -68,6 +70,21 @@ export function EditUserForm({ isOpen, onClose, person }: EditUserFormProps) {
       setError(err instanceof Error ? err.message : "Failed to update person");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    setDeleting(true);
+    setError("");
+
+    try {
+      await deletePerson(person.id);
+      onClose();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to delete person");
+      setShowDeleteConfirm(false);
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -188,7 +205,56 @@ export function EditUserForm({ isOpen, onClose, person }: EditUserFormProps) {
             </Button>
           </div>
         </form>
+
+        {/* Delete Section */}
+        <div className='mt-6 pt-6 border-t border-gray-100'>
+          <button
+            type='button'
+            onClick={() => setShowDeleteConfirm(true)}
+            disabled={deleting}
+            className='text-sm font-light text-red-600 hover:text-red-700 transition-colors disabled:opacity-50'
+          >
+            Delete {person.name}
+          </button>
+        </div>
       </div>
+
+      {/* Delete Confirmation Dialog */}
+      {showDeleteConfirm && (
+        <div className='fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[60] p-4'>
+          <div className='bg-white rounded-3xl p-8 w-full max-w-sm shadow-xl'>
+            <div className='text-center space-y-4'>
+              <div className='text-5xl'>⚠️</div>
+              <h3 className='text-xl font-light text-gray-900'>
+                Delete {person.name}?
+              </h3>
+              <p className='text-sm font-light text-gray-600'>
+                This will permanently delete {person.name} and all their photos.
+                This action cannot be undone.
+              </p>
+
+              <div className='flex gap-3 pt-4'>
+                <Button
+                  type='button'
+                  variant='secondary'
+                  onClick={() => setShowDeleteConfirm(false)}
+                  disabled={deleting}
+                  className='flex-1'
+                >
+                  Cancel
+                </Button>
+                <button
+                  onClick={handleDelete}
+                  disabled={deleting}
+                  className='flex-1 px-6 py-3 bg-red-600 text-white rounded-full hover:bg-red-700 transition-all hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed font-light'
+                >
+                  {deleting ? "Deleting..." : "Delete Forever"}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
