@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import { usePeople } from "@/hooks/usePeople";
-import { Person } from "@/types/person";
+import { Person } from "@/types";
 import { Button } from "./Button";
 
 interface EditUserFormProps {
