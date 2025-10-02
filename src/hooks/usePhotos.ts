@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   collection,
   query,
@@ -28,7 +28,7 @@ export function usePhotos(personId?: string) {
   const { user } = useAuth();
 
   // Fetch photos for a specific person
-  const fetchPhotos = async (personId: string) => {
+  const fetchPhotos = useCallback(async (personId: string) => {
     if (!user) return;
 
     try {
@@ -71,7 +71,7 @@ export function usePhotos(personId?: string) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
 
   // Upload a photo
   const uploadPhoto = async (
@@ -99,7 +99,7 @@ export function usePhotos(personId?: string) {
 
       // Create storage reference
       const photoId = Date.now().toString();
-      const storagePath = `families/${user?.uid}/photos/${personId}/${photoId}.jpg`;
+      const storagePath = `families/${user?.uid}/${personId}/${photoId}.jpg`;
       const storageRef = ref(storage, storagePath);
 
       // Upload compressed file to Firebase Storage with progress tracking
@@ -127,7 +127,7 @@ export function usePhotos(personId?: string) {
                 personId,
                 familyId: user?.uid,
                 filename: file.name,
-                storagePath: `families/${user?.uid}/photos/${personId}/${photoId}.jpg`,
+                storagePath: `families/${user?.uid}/${personId}/${photoId}.jpg`,
                 uploadedAt: Timestamp.now(),
                 size: compressedFile.size,
                 url: downloadURL,
@@ -144,7 +144,7 @@ export function usePhotos(personId?: string) {
                 personId,
                 familyId: user?.uid || "",
                 filename: file.name,
-                storagePath: `families/${user?.uid}/photos/${personId}/${photoId}.jpg`,
+                storagePath: `families/${user?.uid}/${personId}/${photoId}.jpg`,
                 uploadedAt: new Date(),
                 size: compressedFile.size,
                 url: downloadURL,
@@ -192,7 +192,7 @@ export function usePhotos(personId?: string) {
       setPhotos([]);
       setLoading(false);
     }
-  }, [personId]);
+  }, [personId, fetchPhotos]);
 
   return {
     photos,

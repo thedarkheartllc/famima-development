@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   collection,
   addDoc,
@@ -24,13 +24,7 @@ export function usePeople() {
   const [error, setError] = useState<string | null>(null);
   const { user } = useAuth();
 
-  useEffect(() => {
-    if (user) {
-      fetchPeople();
-    }
-  }, [user]);
-
-  const fetchPeople = async () => {
+  const fetchPeople = useCallback(async () => {
     if (!user) {
       console.log("❌ fetchPeople: No user found");
       return;
@@ -74,10 +68,16 @@ export function usePeople() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      fetchPeople();
+    }
+  }, [user, fetchPeople]);
 
   const addPerson = async (
-    personData: Omit<Person, "id" | "personId" | "createdAt">
+    personData: Omit<Person, "id" | "personId" | "createdAt" | "familyId">
   ) => {
     try {
       setError(null);

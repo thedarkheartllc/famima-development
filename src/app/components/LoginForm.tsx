@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 
 export function LoginForm() {
-  const [email, setEmail] = useState("admin@famima.com");
+  const [email, setEmail] = useState("test@famima.com");
   const [password, setPassword] = useState("password123");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);

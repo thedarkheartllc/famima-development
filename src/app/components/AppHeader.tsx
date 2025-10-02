@@ -5,13 +5,16 @@ import { useAuth } from "../contexts/AuthContext";
 import { useState } from "react";
 import { AddFamilyMemberForm } from "./AddFamilyMemberForm";
 import { Button } from "./Button";
+import { Person } from "@/types";
 
 interface AppHeaderProps {
   showSignIn?: boolean;
   showSignOut?: boolean;
   showAddFamily?: boolean;
   fixed?: boolean;
-  addPerson?: (personData: any) => Promise<string>;
+  addPerson?: (
+    personData: Omit<Person, "id" | "personId" | "createdAt" | "familyId">
+  ) => Promise<string>;
   refetch?: () => Promise<void>;
 }
 
@@ -92,7 +95,7 @@ export function AppHeader({
         </nav>
       </header>
 
-      {showAddForm && (
+      {showAddForm && addPerson && refetch && (
         <AddFamilyMemberForm
           onClose={() => setShowAddForm(false)}
           addPerson={addPerson}

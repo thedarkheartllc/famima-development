@@ -8,7 +8,7 @@ import { Button } from "./Button";
 interface AddFamilyMemberFormProps {
   onClose: () => void;
   addPerson: (
-    personData: Omit<Person, "id" | "personId" | "createdAt">
+    personData: Omit<Person, "id" | "personId" | "createdAt" | "familyId">
   ) => Promise<string>;
   refetch: () => Promise<void>;
 }
@@ -54,7 +54,10 @@ export function AddFamilyMemberForm({
     setError("");
 
     try {
-      const personData: Omit<Person, "id" | "personId" | "createdAt"> = {
+      const personData: Omit<
+        Person,
+        "id" | "personId" | "createdAt" | "familyId"
+      > = {
         name:
           name.trim().charAt(0).toUpperCase() +
           name.trim().slice(1).toLowerCase(),

@@ -2,14 +2,7 @@
 
 import { useState } from "react";
 import { useTheme } from "../contexts/ThemeContext";
-import {
-  FaUpload,
-  FaChevronUp,
-  FaChevronDown,
-  FaMoon,
-  FaSun,
-  FaEdit,
-} from "react-icons/fa";
+import { FaUpload, FaChevronUp, FaChevronDown, FaEdit } from "react-icons/fa";
 import Link from "next/link";
 import { UploadModal } from "./UploadModal";
 import { EditUserForm } from "./EditUserForm";
@@ -31,7 +24,7 @@ export function GalleryHeader({
   personName,
   onUploadComplete,
 }: GalleryHeaderProps) {
-  const { theme, toggleTheme } = useTheme();
+  const {} = useTheme();
   const { people } = usePeople();
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
