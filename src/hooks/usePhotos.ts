@@ -99,7 +99,8 @@ export function usePhotos(personId?: string) {
 
       // Create storage reference
       const photoId = Date.now().toString();
-      const storageRef = ref(storage, `photos/${personId}/${photoId}.jpg`);
+      const storagePath = `families/${user?.uid}/photos/${personId}/${photoId}.jpg`;
+      const storageRef = ref(storage, storagePath);
 
       // Upload compressed file to Firebase Storage with progress tracking
       const uploadTask = uploadBytesResumable(storageRef, compressedFile);

@@ -21,9 +21,22 @@ export default function Gallery({
 }) {
   const resolvedParams = use(params);
   const { people, loading: peopleLoading } = usePeople();
-  const person = people.find(
-    (p) => p.name.toLowerCase() === resolvedParams.name.toLowerCase()
+
+  // Decode the URL parameter to handle spaces and special characters
+  const decodedName = decodeURIComponent(resolvedParams.name);
+
+  console.log("🖼️ Gallery: Looking for person:", decodedName);
+  console.log("🖼️ Gallery: People available:", people.length);
+  console.log(
+    "🖼️ Gallery: People names:",
+    people.map((p) => p.name)
   );
+
+  const person = people.find(
+    (p) => p.name.toLowerCase() === decodedName.toLowerCase()
+  );
+
+  console.log("🖼️ Gallery: Person found:", person ? person.name : "NOT FOUND");
   const {
     photos,
     loading: photosLoading,
@@ -111,7 +124,7 @@ export default function Gallery({
         files={photos.map((p) => p.filename)}
         sortedGroupKeys={sortedGroupKeys}
         groupedPhotos={groupedPhotos}
-        personName={resolvedParams.name}
+        personName={decodedName}
         photos={photos}
         onUploadComplete={handleUploadComplete}
         onDeletePhoto={deletePhoto}

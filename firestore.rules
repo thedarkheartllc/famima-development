@@ -2,16 +2,18 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Allow read access to all people documents (for public gallery viewing)
+    // People documents - only family members can access their people
     match /people/{personId} {
-      allow read: if true;
-      allow write: if request.auth != null;
+      allow read, write: if request.auth != null &&
+        (resource.data.familyId == request.auth.uid || 
+         request.resource.data.familyId == request.auth.uid);
     }
     
     // Private family galleries - only family members can access their photos
     match /photos/{photoId} {
       allow read, write: if request.auth != null && 
-        resource.data.familyId == request.auth.uid;
+        (resource.data.familyId == request.auth.uid ||
+         request.resource.data.familyId == request.auth.uid);
     }
     
     // Allow authenticated users to create and read their own family documents

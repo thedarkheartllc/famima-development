@@ -454,3 +454,533 @@
 [debug] [2025-10-02T17:05:40.565Z] >>> [apiv2][query] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/cloud.firestore/(default) [none]
 [debug] [2025-10-02T17:05:40.565Z] >>> [apiv2][body] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/cloud.firestore/(default) {"release":{"name":"projects/famima-development/releases/cloud.firestore/(default)","rulesetName":"projects/famima-development/rulesets/6f524b67-bed3-4dfc-aff7-e168397a7476"}}
 [debug] [2025-10-02T17:05:41.397Z] <<< [apiv2][status] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/cloud.firestore/(default) 200
+[debug] [2025-10-02T18:34:11.934Z] ----------------------------------------------------------------------
+[debug] [2025-10-02T18:34:11.939Z] Command:       /Users/gunnarcurry/.nvm/versions/node/v20.12.2/bin/node /Users/gunnarcurry/.nvm/versions/node/v20.12.2/bin/firebase deploy --only firestore:rules,storage:rules
+[debug] [2025-10-02T18:34:11.939Z] CLI Version:   14.17.0
+[debug] [2025-10-02T18:34:11.939Z] Platform:      darwin
+[debug] [2025-10-02T18:34:11.939Z] Node Version:  v20.12.2
+[debug] [2025-10-02T18:34:11.939Z] Time:          Fri Oct 03 2025 01:34:11 GMT+0700 (Indochina Time)
+[debug] [2025-10-02T18:34:11.939Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-10-02T18:34:12.049Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-02T18:34:12.050Z] > authorizing via signed-in user (thedarkheartllc@gmail.com)
+[debug] [2025-10-02T18:34:12.050Z] [iam] checking project famima-development for permissions ["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]
+[debug] [2025-10-02T18:34:12.051Z] Checked if tokens are valid: false, expires at: 1759427127231
+[debug] [2025-10-02T18:34:12.051Z] Checked if tokens are valid: false, expires at: 1759427127231
+[debug] [2025-10-02T18:34:12.051Z] > refreshing access token with scopes: []
+[debug] [2025-10-02T18:34:12.052Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-10-02T18:34:12.052Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-02T18:34:17.303Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-10-02T18:34:17.303Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-02T18:34:17.312Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions [none]
+[debug] [2025-10-02T18:34:17.313Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions x-goog-quota-user=projects/famima-development
+[debug] [2025-10-02T18:34:17.313Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[debug] [2025-10-02T18:34:22.401Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions 200
+[debug] [2025-10-02T18:34:22.401Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[info] 
+[info] === Deploying to 'famima-development'...
+[info] 
+[info] i  deploying storage, firestore 
+[info] i  storage: ensuring required API firebasestorage.googleapis.com is enabled... 
+[debug] [2025-10-02T18:34:22.405Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:34:22.405Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:34:22.405Z] >>> [apiv2][query] GET https://firebasestorage.googleapis.com/v1alpha/projects/famima-development/defaultBucket [none]
+[debug] [2025-10-02T18:34:27.718Z] <<< [apiv2][status] GET https://firebasestorage.googleapis.com/v1alpha/projects/famima-development/defaultBucket 200
+[debug] [2025-10-02T18:34:27.718Z] <<< [apiv2][body] GET https://firebasestorage.googleapis.com/v1alpha/projects/famima-development/defaultBucket {"name":"projects/famima-development/defaultBucket","location":"US-CENTRAL1","bucket":{"name":"projects/famima-development/buckets/famima-development.firebasestorage.app"},"storageClass":"REGIONAL"}
+[error] 
+[error] Error: Could not find rules for the following storage targets: rules
+[debug] [2025-10-02T18:36:57.301Z] ----------------------------------------------------------------------
+[debug] [2025-10-02T18:36:57.302Z] Command:       /Users/gunnarcurry/.nvm/versions/node/v20.12.2/bin/node /Users/gunnarcurry/.nvm/versions/node/v20.12.2/bin/firebase deploy --only firestore:rules
+[debug] [2025-10-02T18:36:57.302Z] CLI Version:   14.17.0
+[debug] [2025-10-02T18:36:57.302Z] Platform:      darwin
+[debug] [2025-10-02T18:36:57.303Z] Node Version:  v20.12.2
+[debug] [2025-10-02T18:36:57.303Z] Time:          Fri Oct 03 2025 01:36:57 GMT+0700 (Indochina Time)
+[debug] [2025-10-02T18:36:57.303Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-10-02T18:36:57.405Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-02T18:36:57.405Z] > authorizing via signed-in user (thedarkheartllc@gmail.com)
+[debug] [2025-10-02T18:36:57.405Z] [iam] checking project famima-development for permissions ["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get"]
+[debug] [2025-10-02T18:36:57.406Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:36:57.406Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:36:57.406Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions [none]
+[debug] [2025-10-02T18:36:57.407Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions x-goog-quota-user=projects/famima-development
+[debug] [2025-10-02T18:36:57.407Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get"]}
+[debug] [2025-10-02T18:37:02.645Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions 200
+[debug] [2025-10-02T18:37:02.645Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get"]}
+[info] 
+[info] === Deploying to 'famima-development'...
+[info] 
+[info] i  deploying firestore 
+[info] i  firestore: reading indexes from firestore.indexes.json... 
+[info] i  cloud.firestore: checking firestore.rules for compilation errors... 
+[debug] [2025-10-02T18:37:02.649Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:37:02.649Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:37:02.649Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test [none]
+[debug] [2025-10-02T18:37:02.649Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test [omitted]
+[debug] [2025-10-02T18:37:08.147Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test 200
+[debug] [2025-10-02T18:37:08.147Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test {}
+[info] ✔  cloud.firestore: rules file firestore.rules compiled successfully 
+[debug] [2025-10-02T18:37:08.149Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:37:08.149Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:37:08.150Z] >>> [apiv2][query] GET https://firestore.googleapis.com/v1/projects/famima-development/databases/(default) [none]
+[debug] [2025-10-02T18:37:09.955Z] <<< [apiv2][status] GET https://firestore.googleapis.com/v1/projects/famima-development/databases/(default) 200
+[debug] [2025-10-02T18:37:09.955Z] <<< [apiv2][body] GET https://firestore.googleapis.com/v1/projects/famima-development/databases/(default) {"name":"projects/famima-development/databases/(default)","uid":"5aef64bf-ed93-4bb2-be87-f8f69592ca40","createTime":"2025-09-30T18:45:06.184637Z","updateTime":"2025-09-30T18:45:06.184637Z","locationId":"nam5","type":"FIRESTORE_NATIVE","concurrencyMode":"PESSIMISTIC","versionRetentionPeriod":"3600s","earliestVersionTime":"2025-10-02T17:37:10.023732Z","appEngineIntegrationMode":"DISABLED","keyPrefix":"s","pointInTimeRecoveryEnablement":"POINT_IN_TIME_RECOVERY_DISABLED","deleteProtectionState":"DELETE_PROTECTION_DISABLED","databaseEdition":"STANDARD","freeTier":true,"etag":"IOi3+K6UhpADMLPo2oqagZAD"}
+[debug] [2025-10-02T18:37:09.956Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:37:09.957Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:37:09.957Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/famima-development/releases pageSize=10&pageToken=
+[debug] [2025-10-02T18:37:10.364Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/famima-development/releases 200
+[debug] [2025-10-02T18:37:10.364Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/famima-development/releases {"releases":[{"name":"projects/famima-development/releases/cloud.firestore","rulesetName":"projects/famima-development/rulesets/6f524b67-bed3-4dfc-aff7-e168397a7476","createTime":"2025-09-30T18:45:08.002003Z","updateTime":"2025-10-02T17:05:41.230108Z"},{"name":"projects/famima-development/releases/firebase.storage/famima-development.firebasestorage.app","rulesetName":"projects/famima-development/rulesets/dd8ec2b0-0579-41cb-8722-cb9d323f8852","createTime":"2025-09-30T18:43:16.772140Z","updateTime":"2025-09-30T20:22:15.264504Z"}]}
+[debug] [2025-10-02T18:37:10.378Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:37:10.378Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:37:10.378Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets/6f524b67-bed3-4dfc-aff7-e168397a7476 [none]
+[debug] [2025-10-02T18:37:11.048Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets/6f524b67-bed3-4dfc-aff7-e168397a7476 200
+[debug] [2025-10-02T18:37:11.049Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets/6f524b67-bed3-4dfc-aff7-e168397a7476 [omitted]
+[info] i  firestore: uploading rules firestore.rules... 
+[debug] [2025-10-02T18:37:11.051Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:37:11.051Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:37:11.051Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets [none]
+[debug] [2025-10-02T18:37:11.051Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets [omitted]
+[debug] [2025-10-02T18:37:11.688Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets 200
+[debug] [2025-10-02T18:37:11.688Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets {"name":"projects/famima-development/rulesets/60675b96-478c-4511-9136-a928f331d07a","source":{"files":[{"content":"rules_version = '2';\n\nservice cloud.firestore {\n  match /databases/{database}/documents {\n    // People documents - only family members can access their people\n    match /people/{personId} {\n      allow read, write: if request.auth != null &&\n        resource.data.familyId == request.auth.uid;\n    }\n    \n    // Private family galleries - only family members can access their photos\n    match /photos/{photoId} {\n      allow read, write: if request.auth != null && \n        resource.data.familyId == request.auth.uid;\n    }\n    \n    // Allow authenticated users to create and read their own family documents\n    match /families/{familyId} {\n      allow read, write: if request.auth != null && request.auth.uid == familyId;\n    }\n    \n    // Default rule: deny all other access\n    match /{document=**} {\n      allow read, write: if false;\n    }\n  }\n}\n","name":"firestore.rules"}]},"createTime":"2025-10-02T18:37:11.510191Z","metadata":{"services":["cloud.firestore"]}}
+[debug] [2025-10-02T18:37:11.688Z] [rules] created ruleset projects/famima-development/rulesets/60675b96-478c-4511-9136-a928f331d07a
+[debug] [2025-10-02T18:37:11.689Z] [rules] releasing cloud.firestore/(default) with ruleset projects/famima-development/rulesets/60675b96-478c-4511-9136-a928f331d07a
+[debug] [2025-10-02T18:37:11.689Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:37:11.689Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:37:11.690Z] >>> [apiv2][query] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/cloud.firestore/(default) [none]
+[debug] [2025-10-02T18:37:11.690Z] >>> [apiv2][body] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/cloud.firestore/(default) {"release":{"name":"projects/famima-development/releases/cloud.firestore/(default)","rulesetName":"projects/famima-development/rulesets/60675b96-478c-4511-9136-a928f331d07a"}}
+[debug] [2025-10-02T18:37:12.324Z] <<< [apiv2][status] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/cloud.firestore/(default) 200
+[debug] [2025-10-02T18:37:51.047Z] ----------------------------------------------------------------------
+[debug] [2025-10-02T18:37:51.048Z] Command:       /Users/gunnarcurry/.nvm/versions/node/v20.12.2/bin/node /Users/gunnarcurry/.nvm/versions/node/v20.12.2/bin/firebase deploy --only storage:rules
+[debug] [2025-10-02T18:37:51.049Z] CLI Version:   14.17.0
+[debug] [2025-10-02T18:37:51.049Z] Platform:      darwin
+[debug] [2025-10-02T18:37:51.049Z] Node Version:  v20.12.2
+[debug] [2025-10-02T18:37:51.049Z] Time:          Fri Oct 03 2025 01:37:51 GMT+0700 (Indochina Time)
+[debug] [2025-10-02T18:37:51.049Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-10-02T18:37:51.166Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-02T18:37:51.167Z] > authorizing via signed-in user (thedarkheartllc@gmail.com)
+[debug] [2025-10-02T18:37:51.167Z] [iam] checking project famima-development for permissions ["firebase.projects.get","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]
+[debug] [2025-10-02T18:37:51.168Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:37:51.168Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:37:51.169Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions [none]
+[debug] [2025-10-02T18:37:51.169Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions x-goog-quota-user=projects/famima-development
+[debug] [2025-10-02T18:37:51.169Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions {"permissions":["firebase.projects.get","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[debug] [2025-10-02T18:37:56.484Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions 200
+[debug] [2025-10-02T18:37:56.484Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions {"permissions":["firebase.projects.get","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[info] 
+[info] === Deploying to 'famima-development'...
+[info] 
+[info] i  deploying storage 
+[info] i  storage: ensuring required API firebasestorage.googleapis.com is enabled... 
+[debug] [2025-10-02T18:37:56.486Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:37:56.486Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:37:56.486Z] >>> [apiv2][query] GET https://firebasestorage.googleapis.com/v1alpha/projects/famima-development/defaultBucket [none]
+[debug] [2025-10-02T18:38:01.592Z] <<< [apiv2][status] GET https://firebasestorage.googleapis.com/v1alpha/projects/famima-development/defaultBucket 200
+[debug] [2025-10-02T18:38:01.593Z] <<< [apiv2][body] GET https://firebasestorage.googleapis.com/v1alpha/projects/famima-development/defaultBucket {"name":"projects/famima-development/defaultBucket","location":"US-CENTRAL1","bucket":{"name":"projects/famima-development/buckets/famima-development.firebasestorage.app"},"storageClass":"REGIONAL"}
+[error] 
+[error] Error: Could not find rules for the following storage targets: rules
+[debug] [2025-10-02T18:38:21.028Z] ----------------------------------------------------------------------
+[debug] [2025-10-02T18:38:21.032Z] Command:       /Users/gunnarcurry/.nvm/versions/node/v20.12.2/bin/node /Users/gunnarcurry/.nvm/versions/node/v20.12.2/bin/firebase deploy --only firestore:rules,storage
+[debug] [2025-10-02T18:38:21.033Z] CLI Version:   14.17.0
+[debug] [2025-10-02T18:38:21.033Z] Platform:      darwin
+[debug] [2025-10-02T18:38:21.033Z] Node Version:  v20.12.2
+[debug] [2025-10-02T18:38:21.033Z] Time:          Fri Oct 03 2025 01:38:21 GMT+0700 (Indochina Time)
+[debug] [2025-10-02T18:38:21.034Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-10-02T18:38:21.291Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-02T18:38:21.293Z] > authorizing via signed-in user (thedarkheartllc@gmail.com)
+[debug] [2025-10-02T18:38:21.294Z] [iam] checking project famima-development for permissions ["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]
+[debug] [2025-10-02T18:38:21.296Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:38:21.296Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:38:21.298Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions [none]
+[debug] [2025-10-02T18:38:21.298Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions x-goog-quota-user=projects/famima-development
+[debug] [2025-10-02T18:38:21.298Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[debug] [2025-10-02T18:38:26.550Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions 200
+[debug] [2025-10-02T18:38:26.551Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[info] 
+[info] === Deploying to 'famima-development'...
+[info] 
+[info] i  deploying storage, firestore 
+[info] i  storage: ensuring required API firebasestorage.googleapis.com is enabled... 
+[debug] [2025-10-02T18:38:26.557Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:38:26.557Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:38:26.558Z] >>> [apiv2][query] GET https://firebasestorage.googleapis.com/v1alpha/projects/famima-development/defaultBucket [none]
+[debug] [2025-10-02T18:38:31.932Z] <<< [apiv2][status] GET https://firebasestorage.googleapis.com/v1alpha/projects/famima-development/defaultBucket 200
+[debug] [2025-10-02T18:38:31.933Z] <<< [apiv2][body] GET https://firebasestorage.googleapis.com/v1alpha/projects/famima-development/defaultBucket {"name":"projects/famima-development/defaultBucket","location":"US-CENTRAL1","bucket":{"name":"projects/famima-development/buckets/famima-development.firebasestorage.app"},"storageClass":"REGIONAL"}
+[info] i  firebase.storage: checking storage.rules for compilation errors... 
+[debug] [2025-10-02T18:38:31.938Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:38:31.938Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:38:31.939Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test [none]
+[debug] [2025-10-02T18:38:31.939Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test [omitted]
+[debug] [2025-10-02T18:38:36.967Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test 200
+[debug] [2025-10-02T18:38:36.967Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test {}
+[info] ✔  firebase.storage: rules file storage.rules compiled successfully 
+[info] i  firestore: reading indexes from firestore.indexes.json... 
+[info] i  cloud.firestore: checking firestore.rules for compilation errors... 
+[debug] [2025-10-02T18:38:36.971Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:38:36.971Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:38:36.972Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test [none]
+[debug] [2025-10-02T18:38:36.972Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test [omitted]
+[debug] [2025-10-02T18:38:37.310Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test 200
+[debug] [2025-10-02T18:38:37.310Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test {}
+[info] ✔  cloud.firestore: rules file firestore.rules compiled successfully 
+[debug] [2025-10-02T18:38:37.313Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:38:37.314Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:38:37.315Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/famima-development/releases pageSize=10&pageToken=
+[debug] [2025-10-02T18:38:38.016Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/famima-development/releases 200
+[debug] [2025-10-02T18:38:38.016Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/famima-development/releases {"releases":[{"name":"projects/famima-development/releases/cloud.firestore","rulesetName":"projects/famima-development/rulesets/60675b96-478c-4511-9136-a928f331d07a","createTime":"2025-09-30T18:45:08.002003Z","updateTime":"2025-10-02T18:37:12.165911Z"},{"name":"projects/famima-development/releases/firebase.storage/famima-development.firebasestorage.app","rulesetName":"projects/famima-development/rulesets/dd8ec2b0-0579-41cb-8722-cb9d323f8852","createTime":"2025-09-30T18:43:16.772140Z","updateTime":"2025-09-30T20:22:15.264504Z"}]}
+[debug] [2025-10-02T18:38:38.037Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:38:38.037Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:38:38.037Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets/dd8ec2b0-0579-41cb-8722-cb9d323f8852 [none]
+[debug] [2025-10-02T18:38:38.837Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets/dd8ec2b0-0579-41cb-8722-cb9d323f8852 200
+[debug] [2025-10-02T18:38:38.837Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets/dd8ec2b0-0579-41cb-8722-cb9d323f8852 [omitted]
+[info] i  storage: uploading rules storage.rules... 
+[debug] [2025-10-02T18:38:38.839Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:38:38.839Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:38:38.839Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets [none]
+[debug] [2025-10-02T18:38:38.840Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets [omitted]
+[debug] [2025-10-02T18:38:39.458Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets 200
+[debug] [2025-10-02T18:38:39.458Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets {"name":"projects/famima-development/rulesets/0d725e75-c50e-4f74-9a74-6668e1e0d807","source":{"files":[{"content":"rules_version = '2';\n\nservice firebase.storage {\n  match /b/{bucket}/o {\n    // Family-based photo storage - only family members can access their photos\n    match /families/{familyId}/photos/{personId}/{photoId} {\n      allow read, write: if request.auth != null && \n        familyId == request.auth.uid;\n    }\n    \n    // Default rule: deny all other access\n    match /{allPaths=**} {\n      allow read, write: if false;\n    }\n  }\n}\n","name":"storage.rules"}]},"createTime":"2025-10-02T18:38:39.292287Z","metadata":{"services":["firebase.storage"]}}
+[debug] [2025-10-02T18:38:39.458Z] [rules] created ruleset projects/famima-development/rulesets/0d725e75-c50e-4f74-9a74-6668e1e0d807
+[debug] [2025-10-02T18:38:39.459Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:38:39.459Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:38:39.459Z] >>> [apiv2][query] GET https://firestore.googleapis.com/v1/projects/famima-development/databases/(default) [none]
+[debug] [2025-10-02T18:38:40.909Z] <<< [apiv2][status] GET https://firestore.googleapis.com/v1/projects/famima-development/databases/(default) 200
+[debug] [2025-10-02T18:38:40.909Z] <<< [apiv2][body] GET https://firestore.googleapis.com/v1/projects/famima-development/databases/(default) {"name":"projects/famima-development/databases/(default)","uid":"5aef64bf-ed93-4bb2-be87-f8f69592ca40","createTime":"2025-09-30T18:45:06.184637Z","updateTime":"2025-09-30T18:45:06.184637Z","locationId":"nam5","type":"FIRESTORE_NATIVE","concurrencyMode":"PESSIMISTIC","versionRetentionPeriod":"3600s","earliestVersionTime":"2025-10-02T17:38:40.764095Z","appEngineIntegrationMode":"DISABLED","keyPrefix":"s","pointInTimeRecoveryEnablement":"POINT_IN_TIME_RECOVERY_DISABLED","deleteProtectionState":"DELETE_PROTECTION_DISABLED","databaseEdition":"STANDARD","freeTier":true,"etag":"IInkmtqUhpADMLPo2oqagZAD"}
+[debug] [2025-10-02T18:38:40.909Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:38:40.909Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:38:40.909Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/famima-development/releases pageSize=10&pageToken=
+[debug] [2025-10-02T18:38:41.297Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/famima-development/releases 200
+[debug] [2025-10-02T18:38:41.297Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/famima-development/releases {"releases":[{"name":"projects/famima-development/releases/cloud.firestore","rulesetName":"projects/famima-development/rulesets/60675b96-478c-4511-9136-a928f331d07a","createTime":"2025-09-30T18:45:08.002003Z","updateTime":"2025-10-02T18:37:12.165911Z"},{"name":"projects/famima-development/releases/firebase.storage/famima-development.firebasestorage.app","rulesetName":"projects/famima-development/rulesets/dd8ec2b0-0579-41cb-8722-cb9d323f8852","createTime":"2025-09-30T18:43:16.772140Z","updateTime":"2025-09-30T20:22:15.264504Z"}]}
+[debug] [2025-10-02T18:38:41.298Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:38:41.298Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:38:41.298Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets/60675b96-478c-4511-9136-a928f331d07a [none]
+[debug] [2025-10-02T18:38:41.940Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets/60675b96-478c-4511-9136-a928f331d07a 200
+[debug] [2025-10-02T18:38:41.941Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets/60675b96-478c-4511-9136-a928f331d07a [omitted]
+[info] i  firestore: latest version of firestore.rules already up to date, skipping upload... 
+[debug] [2025-10-02T18:38:41.942Z] [rules] releasing firebase.storage/famima-development.firebasestorage.app with ruleset projects/famima-development/rulesets/0d725e75-c50e-4f74-9a74-6668e1e0d807
+[debug] [2025-10-02T18:38:41.944Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:38:41.944Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:38:41.945Z] >>> [apiv2][query] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/firebase.storage/famima-development.firebasestorage.app [none]
+[debug] [2025-10-02T18:38:41.945Z] >>> [apiv2][body] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/firebase.storage/famima-development.firebasestorage.app {"release":{"name":"projects/famima-development/releases/firebase.storage/famima-development.firebasestorage.app","rulesetName":"projects/famima-development/rulesets/0d725e75-c50e-4f74-9a74-6668e1e0d807"}}
+[debug] [2025-10-02T18:38:42.621Z] <<< [apiv2][status] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/firebase.storage/famima-development.firebasestorage.app 200
+[debug] [2025-10-02T18:38:42.621Z] <<< [apiv2][body] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/firebase.storage/famima-development.firebasestorage.app {"name":"projects/famima-development/releases/firebase.storage/famima-development.firebasestorage.app","rulesetName":"projects/famima-development/rulesets/0d725e75-c50e-4f74-9a74-6668e1e0d807","createTime":"2025-09-30T18:43:16.772140Z","updateTime":"2025-10-02T18:38:42.420958Z"}
+[debug] [2025-10-02T18:38:42.622Z] [rules] updated release projects/famima-development/releases/firebase.storage/famima-development.firebasestorage.app
+[info] ✔  storage: released rules storage.rules to firebase.storage 
+[debug] [2025-10-02T18:38:42.622Z] [rules] releasing cloud.firestore/(default) with ruleset projects/famima-development/rulesets/60675b96-478c-4511-9136-a928f331d07a
+[debug] [2025-10-02T18:38:42.623Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:38:42.623Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:38:42.623Z] >>> [apiv2][query] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/cloud.firestore/(default) [none]
+[debug] [2025-10-02T18:38:42.623Z] >>> [apiv2][body] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/cloud.firestore/(default) {"release":{"name":"projects/famima-development/releases/cloud.firestore/(default)","rulesetName":"projects/famima-development/rulesets/60675b96-478c-4511-9136-a928f331d07a"}}
+[debug] [2025-10-02T18:38:43.277Z] <<< [apiv2][status] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/cloud.firestore/(default) 200
+[debug] [2025-10-02T18:42:54.328Z] ----------------------------------------------------------------------
+[debug] [2025-10-02T18:42:54.332Z] Command:       /Users/gunnarcurry/.nvm/versions/node/v20.12.2/bin/node /Users/gunnarcurry/.nvm/versions/node/v20.12.2/bin/firebase deploy --only storage:rules
+[debug] [2025-10-02T18:42:54.333Z] CLI Version:   14.17.0
+[debug] [2025-10-02T18:42:54.333Z] Platform:      darwin
+[debug] [2025-10-02T18:42:54.333Z] Node Version:  v20.12.2
+[debug] [2025-10-02T18:42:54.333Z] Time:          Fri Oct 03 2025 01:42:54 GMT+0700 (Indochina Time)
+[debug] [2025-10-02T18:42:54.334Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-10-02T18:42:54.790Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-02T18:42:54.793Z] > authorizing via signed-in user (thedarkheartllc@gmail.com)
+[debug] [2025-10-02T18:42:54.796Z] [iam] checking project famima-development for permissions ["firebase.projects.get","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]
+[debug] [2025-10-02T18:42:54.799Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:42:54.799Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:42:54.801Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions [none]
+[debug] [2025-10-02T18:42:54.802Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions x-goog-quota-user=projects/famima-development
+[debug] [2025-10-02T18:42:54.802Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions {"permissions":["firebase.projects.get","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[debug] [2025-10-02T18:43:00.174Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions 200
+[debug] [2025-10-02T18:43:00.174Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions {"permissions":["firebase.projects.get","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[info] 
+[info] === Deploying to 'famima-development'...
+[info] 
+[info] i  deploying storage 
+[info] i  storage: ensuring required API firebasestorage.googleapis.com is enabled... 
+[debug] [2025-10-02T18:43:00.181Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:43:00.182Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:43:00.182Z] >>> [apiv2][query] GET https://firebasestorage.googleapis.com/v1alpha/projects/famima-development/defaultBucket [none]
+[debug] [2025-10-02T18:43:05.534Z] <<< [apiv2][status] GET https://firebasestorage.googleapis.com/v1alpha/projects/famima-development/defaultBucket 200
+[debug] [2025-10-02T18:43:05.535Z] <<< [apiv2][body] GET https://firebasestorage.googleapis.com/v1alpha/projects/famima-development/defaultBucket {"name":"projects/famima-development/defaultBucket","location":"US-CENTRAL1","bucket":{"name":"projects/famima-development/buckets/famima-development.firebasestorage.app"},"storageClass":"REGIONAL"}
+[error] 
+[error] Error: Could not find rules for the following storage targets: rules
+[debug] [2025-10-02T18:43:33.618Z] ----------------------------------------------------------------------
+[debug] [2025-10-02T18:43:33.621Z] Command:       /Users/gunnarcurry/.nvm/versions/node/v20.12.2/bin/node /Users/gunnarcurry/.nvm/versions/node/v20.12.2/bin/firebase deploy --only storage
+[debug] [2025-10-02T18:43:33.621Z] CLI Version:   14.17.0
+[debug] [2025-10-02T18:43:33.621Z] Platform:      darwin
+[debug] [2025-10-02T18:43:33.621Z] Node Version:  v20.12.2
+[debug] [2025-10-02T18:43:33.621Z] Time:          Fri Oct 03 2025 01:43:33 GMT+0700 (Indochina Time)
+[debug] [2025-10-02T18:43:33.622Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-10-02T18:43:33.803Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-02T18:43:33.804Z] > authorizing via signed-in user (thedarkheartllc@gmail.com)
+[debug] [2025-10-02T18:43:33.805Z] [iam] checking project famima-development for permissions ["firebase.projects.get","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]
+[debug] [2025-10-02T18:43:33.806Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:43:33.806Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:43:33.807Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions [none]
+[debug] [2025-10-02T18:43:33.807Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions x-goog-quota-user=projects/famima-development
+[debug] [2025-10-02T18:43:33.808Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions {"permissions":["firebase.projects.get","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[debug] [2025-10-02T18:43:38.793Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions 200
+[debug] [2025-10-02T18:43:38.794Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions {"permissions":["firebase.projects.get","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[info] 
+[info] === Deploying to 'famima-development'...
+[info] 
+[info] i  deploying storage 
+[info] i  storage: ensuring required API firebasestorage.googleapis.com is enabled... 
+[debug] [2025-10-02T18:43:38.800Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:43:38.800Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:43:38.800Z] >>> [apiv2][query] GET https://firebasestorage.googleapis.com/v1alpha/projects/famima-development/defaultBucket [none]
+[debug] [2025-10-02T18:43:43.798Z] <<< [apiv2][status] GET https://firebasestorage.googleapis.com/v1alpha/projects/famima-development/defaultBucket 200
+[debug] [2025-10-02T18:43:43.799Z] <<< [apiv2][body] GET https://firebasestorage.googleapis.com/v1alpha/projects/famima-development/defaultBucket {"name":"projects/famima-development/defaultBucket","location":"US-CENTRAL1","bucket":{"name":"projects/famima-development/buckets/famima-development.firebasestorage.app"},"storageClass":"REGIONAL"}
+[info] i  firebase.storage: checking storage.rules for compilation errors... 
+[debug] [2025-10-02T18:43:43.802Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:43:43.802Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:43:43.803Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test [none]
+[debug] [2025-10-02T18:43:43.803Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test [omitted]
+[debug] [2025-10-02T18:43:48.766Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test 200
+[debug] [2025-10-02T18:43:48.767Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test {}
+[info] ✔  firebase.storage: rules file storage.rules compiled successfully 
+[debug] [2025-10-02T18:43:48.768Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:43:48.769Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:43:48.769Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/famima-development/releases pageSize=10&pageToken=
+[debug] [2025-10-02T18:43:49.369Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/famima-development/releases 200
+[debug] [2025-10-02T18:43:49.369Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/famima-development/releases {"releases":[{"name":"projects/famima-development/releases/cloud.firestore","rulesetName":"projects/famima-development/rulesets/60675b96-478c-4511-9136-a928f331d07a","createTime":"2025-09-30T18:45:08.002003Z","updateTime":"2025-10-02T18:38:43.101266Z"},{"name":"projects/famima-development/releases/firebase.storage/famima-development.firebasestorage.app","rulesetName":"projects/famima-development/rulesets/0d725e75-c50e-4f74-9a74-6668e1e0d807","createTime":"2025-09-30T18:43:16.772140Z","updateTime":"2025-10-02T18:38:42.420958Z"}]}
+[debug] [2025-10-02T18:43:49.381Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:43:49.381Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:43:49.381Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets/0d725e75-c50e-4f74-9a74-6668e1e0d807 [none]
+[debug] [2025-10-02T18:43:50.034Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets/0d725e75-c50e-4f74-9a74-6668e1e0d807 200
+[debug] [2025-10-02T18:43:50.035Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets/0d725e75-c50e-4f74-9a74-6668e1e0d807 [omitted]
+[info] i  storage: uploading rules storage.rules... 
+[debug] [2025-10-02T18:43:50.043Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:43:50.044Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:43:50.045Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets [none]
+[debug] [2025-10-02T18:43:50.045Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets [omitted]
+[debug] [2025-10-02T18:43:50.684Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets 200
+[debug] [2025-10-02T18:43:50.685Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets {"name":"projects/famima-development/rulesets/13ca5078-7f81-4736-afee-e701f9dbf9e5","source":{"files":[{"content":"rules_version = '2';\n\nservice firebase.storage {\n  match /b/{bucket}/o {\n    // Family-based photo storage - only family members can access their photos\n    match /families/{familyId}/photos/{personId}/{photoId} {\n      allow read, write: if request.auth != null && \n        familyId == request.auth.uid;\n    }\n    \n    // Temporary: Allow all authenticated users to upload (for debugging)\n    match /{allPaths=**} {\n      allow read, write: if request.auth != null;\n    }\n  }\n}\n","name":"storage.rules"}]},"createTime":"2025-10-02T18:43:50.497599Z","metadata":{"services":["firebase.storage"]}}
+[debug] [2025-10-02T18:43:50.685Z] [rules] created ruleset projects/famima-development/rulesets/13ca5078-7f81-4736-afee-e701f9dbf9e5
+[debug] [2025-10-02T18:43:50.686Z] [rules] releasing firebase.storage/famima-development.firebasestorage.app with ruleset projects/famima-development/rulesets/13ca5078-7f81-4736-afee-e701f9dbf9e5
+[debug] [2025-10-02T18:43:50.686Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:43:50.686Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:43:50.686Z] >>> [apiv2][query] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/firebase.storage/famima-development.firebasestorage.app [none]
+[debug] [2025-10-02T18:43:50.686Z] >>> [apiv2][body] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/firebase.storage/famima-development.firebasestorage.app {"release":{"name":"projects/famima-development/releases/firebase.storage/famima-development.firebasestorage.app","rulesetName":"projects/famima-development/rulesets/13ca5078-7f81-4736-afee-e701f9dbf9e5"}}
+[debug] [2025-10-02T18:43:51.332Z] <<< [apiv2][status] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/firebase.storage/famima-development.firebasestorage.app 200
+[debug] [2025-10-02T18:45:38.684Z] ----------------------------------------------------------------------
+[debug] [2025-10-02T18:45:38.689Z] Command:       /Users/gunnarcurry/.nvm/versions/node/v20.12.2/bin/node /Users/gunnarcurry/.nvm/versions/node/v20.12.2/bin/firebase deploy --only firestore:rules
+[debug] [2025-10-02T18:45:38.691Z] CLI Version:   14.17.0
+[debug] [2025-10-02T18:45:38.691Z] Platform:      darwin
+[debug] [2025-10-02T18:45:38.692Z] Node Version:  v20.12.2
+[debug] [2025-10-02T18:45:38.692Z] Time:          Fri Oct 03 2025 01:45:38 GMT+0700 (Indochina Time)
+[debug] [2025-10-02T18:45:38.692Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-10-02T18:45:39.138Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-02T18:45:39.141Z] > authorizing via signed-in user (thedarkheartllc@gmail.com)
+[debug] [2025-10-02T18:45:39.141Z] [iam] checking project famima-development for permissions ["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get"]
+[debug] [2025-10-02T18:45:39.144Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:45:39.144Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:45:39.146Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions [none]
+[debug] [2025-10-02T18:45:39.147Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions x-goog-quota-user=projects/famima-development
+[debug] [2025-10-02T18:45:39.147Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get"]}
+[debug] [2025-10-02T18:45:45.242Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions 200
+[debug] [2025-10-02T18:45:45.243Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get"]}
+[info] 
+[info] === Deploying to 'famima-development'...
+[info] 
+[info] i  deploying firestore 
+[info] i  firestore: reading indexes from firestore.indexes.json... 
+[info] i  cloud.firestore: checking firestore.rules for compilation errors... 
+[debug] [2025-10-02T18:45:45.264Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:45:45.264Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:45:45.264Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test [none]
+[debug] [2025-10-02T18:45:45.264Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test [omitted]
+[debug] [2025-10-02T18:45:50.248Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test 200
+[debug] [2025-10-02T18:45:50.248Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test {}
+[info] ✔  cloud.firestore: rules file firestore.rules compiled successfully 
+[debug] [2025-10-02T18:45:50.256Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:45:50.256Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:45:50.256Z] >>> [apiv2][query] GET https://firestore.googleapis.com/v1/projects/famima-development/databases/(default) [none]
+[debug] [2025-10-02T18:45:51.767Z] <<< [apiv2][status] GET https://firestore.googleapis.com/v1/projects/famima-development/databases/(default) 200
+[debug] [2025-10-02T18:45:51.767Z] <<< [apiv2][body] GET https://firestore.googleapis.com/v1/projects/famima-development/databases/(default) {"name":"projects/famima-development/databases/(default)","uid":"5aef64bf-ed93-4bb2-be87-f8f69592ca40","createTime":"2025-09-30T18:45:06.184637Z","updateTime":"2025-09-30T18:45:06.184637Z","locationId":"nam5","type":"FIRESTORE_NATIVE","concurrencyMode":"PESSIMISTIC","versionRetentionPeriod":"3600s","earliestVersionTime":"2025-10-02T17:45:51.692554Z","appEngineIntegrationMode":"DISABLED","keyPrefix":"s","pointInTimeRecoveryEnablement":"POINT_IN_TIME_RECOVERY_DISABLED","deleteProtectionState":"DELETE_PROTECTION_DISABLED","databaseEdition":"STANDARD","freeTier":true,"etag":"IM7I2KeWhpADMLPo2oqagZAD"}
+[debug] [2025-10-02T18:45:51.768Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:45:51.768Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:45:51.768Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/famima-development/releases pageSize=10&pageToken=
+[debug] [2025-10-02T18:45:52.368Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/famima-development/releases 200
+[debug] [2025-10-02T18:45:52.368Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/famima-development/releases {"releases":[{"name":"projects/famima-development/releases/cloud.firestore","rulesetName":"projects/famima-development/rulesets/60675b96-478c-4511-9136-a928f331d07a","createTime":"2025-09-30T18:45:08.002003Z","updateTime":"2025-10-02T18:38:43.101266Z"},{"name":"projects/famima-development/releases/firebase.storage/famima-development.firebasestorage.app","rulesetName":"projects/famima-development/rulesets/13ca5078-7f81-4736-afee-e701f9dbf9e5","createTime":"2025-09-30T18:43:16.772140Z","updateTime":"2025-10-02T18:43:51.143332Z"}]}
+[debug] [2025-10-02T18:45:52.387Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:45:52.387Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:45:52.387Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets/60675b96-478c-4511-9136-a928f331d07a [none]
+[debug] [2025-10-02T18:45:53.012Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets/60675b96-478c-4511-9136-a928f331d07a 200
+[debug] [2025-10-02T18:45:53.013Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets/60675b96-478c-4511-9136-a928f331d07a [omitted]
+[info] i  firestore: uploading rules firestore.rules... 
+[debug] [2025-10-02T18:45:53.015Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:45:53.015Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:45:53.016Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets [none]
+[debug] [2025-10-02T18:45:53.016Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets [omitted]
+[debug] [2025-10-02T18:45:53.659Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets 200
+[debug] [2025-10-02T18:45:53.662Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets {"name":"projects/famima-development/rulesets/b8151340-17cb-416b-b9ce-b0d73164293b","source":{"files":[{"content":"rules_version = '2';\n\nservice cloud.firestore {\n  match /databases/{database}/documents {\n    // People documents - only family members can access their people\n    match /people/{personId} {\n      allow read, write: if request.auth != null &&\n        resource.data.familyId == request.auth.uid;\n    }\n    \n    // Private family galleries - only family members can access their photos\n    match /photos/{photoId} {\n      allow read, write: if request.auth != null && \n        resource.data.familyId == request.auth.uid;\n    }\n    \n    // Temporary: Allow all authenticated users to write to photos (for debugging)\n    match /photos/{photoId} {\n      allow write: if request.auth != null;\n    }\n    \n    // Allow authenticated users to create and read their own family documents\n    match /families/{familyId} {\n      allow read, write: if request.auth != null && request.auth.uid == familyId;\n    }\n    \n    // Default rule: deny all other access\n    match /{document=**} {\n      allow read, write: if false;\n    }\n  }\n}\n","name":"firestore.rules"}]},"createTime":"2025-10-02T18:45:53.569743Z","metadata":{"services":["cloud.firestore"]}}
+[debug] [2025-10-02T18:45:53.662Z] [rules] created ruleset projects/famima-development/rulesets/b8151340-17cb-416b-b9ce-b0d73164293b
+[debug] [2025-10-02T18:45:53.667Z] [rules] releasing cloud.firestore/(default) with ruleset projects/famima-development/rulesets/b8151340-17cb-416b-b9ce-b0d73164293b
+[debug] [2025-10-02T18:45:53.668Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:45:53.668Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:45:53.669Z] >>> [apiv2][query] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/cloud.firestore/(default) [none]
+[debug] [2025-10-02T18:45:53.669Z] >>> [apiv2][body] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/cloud.firestore/(default) {"release":{"name":"projects/famima-development/releases/cloud.firestore/(default)","rulesetName":"projects/famima-development/rulesets/b8151340-17cb-416b-b9ce-b0d73164293b"}}
+[debug] [2025-10-02T18:45:54.030Z] <<< [apiv2][status] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/cloud.firestore/(default) 200
+[debug] [2025-10-02T18:47:14.189Z] ----------------------------------------------------------------------
+[debug] [2025-10-02T18:47:14.193Z] Command:       /Users/gunnarcurry/.nvm/versions/node/v20.12.2/bin/node /Users/gunnarcurry/.nvm/versions/node/v20.12.2/bin/firebase deploy --only firestore:rules,storage
+[debug] [2025-10-02T18:47:14.193Z] CLI Version:   14.17.0
+[debug] [2025-10-02T18:47:14.194Z] Platform:      darwin
+[debug] [2025-10-02T18:47:14.194Z] Node Version:  v20.12.2
+[debug] [2025-10-02T18:47:14.194Z] Time:          Fri Oct 03 2025 01:47:14 GMT+0700 (Indochina Time)
+[debug] [2025-10-02T18:47:14.194Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-10-02T18:47:14.467Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-02T18:47:14.468Z] > authorizing via signed-in user (thedarkheartllc@gmail.com)
+[debug] [2025-10-02T18:47:14.469Z] [iam] checking project famima-development for permissions ["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]
+[debug] [2025-10-02T18:47:14.471Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:47:14.471Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:47:14.473Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions [none]
+[debug] [2025-10-02T18:47:14.473Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions x-goog-quota-user=projects/famima-development
+[debug] [2025-10-02T18:47:14.474Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[debug] [2025-10-02T18:47:19.611Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions 200
+[debug] [2025-10-02T18:47:19.612Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[info] 
+[info] === Deploying to 'famima-development'...
+[info] 
+[info] i  deploying storage, firestore 
+[info] i  storage: ensuring required API firebasestorage.googleapis.com is enabled... 
+[debug] [2025-10-02T18:47:19.615Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:47:19.615Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:47:19.615Z] >>> [apiv2][query] GET https://firebasestorage.googleapis.com/v1alpha/projects/famima-development/defaultBucket [none]
+[debug] [2025-10-02T18:47:24.638Z] <<< [apiv2][status] GET https://firebasestorage.googleapis.com/v1alpha/projects/famima-development/defaultBucket 200
+[debug] [2025-10-02T18:47:24.638Z] <<< [apiv2][body] GET https://firebasestorage.googleapis.com/v1alpha/projects/famima-development/defaultBucket {"name":"projects/famima-development/defaultBucket","location":"US-CENTRAL1","bucket":{"name":"projects/famima-development/buckets/famima-development.firebasestorage.app"},"storageClass":"REGIONAL"}
+[info] i  firebase.storage: checking storage.rules for compilation errors... 
+[debug] [2025-10-02T18:47:24.643Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:47:24.643Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:47:24.643Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test [none]
+[debug] [2025-10-02T18:47:24.643Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test [omitted]
+[debug] [2025-10-02T18:47:29.612Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test 200
+[debug] [2025-10-02T18:47:29.613Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test {}
+[info] ✔  firebase.storage: rules file storage.rules compiled successfully 
+[info] i  firestore: reading indexes from firestore.indexes.json... 
+[info] i  cloud.firestore: checking firestore.rules for compilation errors... 
+[debug] [2025-10-02T18:47:29.618Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:47:29.618Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:47:29.619Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test [none]
+[debug] [2025-10-02T18:47:29.619Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test [omitted]
+[debug] [2025-10-02T18:47:30.227Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test 200
+[debug] [2025-10-02T18:47:30.228Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test {}
+[info] ✔  cloud.firestore: rules file firestore.rules compiled successfully 
+[debug] [2025-10-02T18:47:30.229Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:47:30.229Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:47:30.230Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/famima-development/releases pageSize=10&pageToken=
+[debug] [2025-10-02T18:47:30.863Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/famima-development/releases 200
+[debug] [2025-10-02T18:47:30.863Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/famima-development/releases {"releases":[{"name":"projects/famima-development/releases/cloud.firestore","rulesetName":"projects/famima-development/rulesets/b8151340-17cb-416b-b9ce-b0d73164293b","createTime":"2025-09-30T18:45:08.002003Z","updateTime":"2025-10-02T18:45:54.221001Z"},{"name":"projects/famima-development/releases/firebase.storage/famima-development.firebasestorage.app","rulesetName":"projects/famima-development/rulesets/13ca5078-7f81-4736-afee-e701f9dbf9e5","createTime":"2025-09-30T18:43:16.772140Z","updateTime":"2025-10-02T18:43:51.143332Z"}]}
+[debug] [2025-10-02T18:47:30.877Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:47:30.877Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:47:30.878Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets/13ca5078-7f81-4736-afee-e701f9dbf9e5 [none]
+[debug] [2025-10-02T18:47:31.471Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets/13ca5078-7f81-4736-afee-e701f9dbf9e5 200
+[debug] [2025-10-02T18:47:31.471Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets/13ca5078-7f81-4736-afee-e701f9dbf9e5 [omitted]
+[info] i  storage: uploading rules storage.rules... 
+[debug] [2025-10-02T18:47:31.472Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:47:31.472Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:47:31.473Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets [none]
+[debug] [2025-10-02T18:47:31.473Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets [omitted]
+[debug] [2025-10-02T18:47:32.106Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets 200
+[debug] [2025-10-02T18:47:32.106Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets {"name":"projects/famima-development/rulesets/2a24c87f-a2ad-4ea5-8ca2-2ec11039b5b3","source":{"files":[{"content":"rules_version = '2';\n\nservice firebase.storage {\n  match /b/{bucket}/o {\n    // Family-based photo storage - only family members can access their photos\n    match /families/{familyId}/photos/{personId}/{photoId} {\n      allow read, write: if request.auth != null && \n        familyId == request.auth.uid;\n    }\n    \n    // Default rule: deny all other access\n    match /{allPaths=**} {\n      allow read, write: if false;\n    }\n  }\n}\n","name":"storage.rules"}]},"createTime":"2025-10-02T18:47:32.021215Z","metadata":{"services":["firebase.storage"]}}
+[debug] [2025-10-02T18:47:32.106Z] [rules] created ruleset projects/famima-development/rulesets/2a24c87f-a2ad-4ea5-8ca2-2ec11039b5b3
+[debug] [2025-10-02T18:47:32.107Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:47:32.107Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:47:32.107Z] >>> [apiv2][query] GET https://firestore.googleapis.com/v1/projects/famima-development/databases/(default) [none]
+[debug] [2025-10-02T18:47:33.638Z] <<< [apiv2][status] GET https://firestore.googleapis.com/v1/projects/famima-development/databases/(default) 200
+[debug] [2025-10-02T18:47:33.638Z] <<< [apiv2][body] GET https://firestore.googleapis.com/v1/projects/famima-development/databases/(default) {"name":"projects/famima-development/databases/(default)","uid":"5aef64bf-ed93-4bb2-be87-f8f69592ca40","createTime":"2025-09-30T18:45:06.184637Z","updateTime":"2025-09-30T18:45:06.184637Z","locationId":"nam5","type":"FIRESTORE_NATIVE","concurrencyMode":"PESSIMISTIC","versionRetentionPeriod":"3600s","earliestVersionTime":"2025-10-02T17:47:33.563721Z","appEngineIntegrationMode":"DISABLED","keyPrefix":"s","pointInTimeRecoveryEnablement":"POINT_IN_TIME_RECOVERY_DISABLED","deleteProtectionState":"DELETE_PROTECTION_DISABLED","databaseEdition":"STANDARD","freeTier":true,"etag":"IMOmotiWhpADMLPo2oqagZAD"}
+[debug] [2025-10-02T18:47:33.639Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:47:33.639Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:47:33.639Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/famima-development/releases pageSize=10&pageToken=
+[debug] [2025-10-02T18:47:34.224Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/famima-development/releases 200
+[debug] [2025-10-02T18:47:34.225Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/famima-development/releases {"releases":[{"name":"projects/famima-development/releases/cloud.firestore","rulesetName":"projects/famima-development/rulesets/b8151340-17cb-416b-b9ce-b0d73164293b","createTime":"2025-09-30T18:45:08.002003Z","updateTime":"2025-10-02T18:45:54.221001Z"},{"name":"projects/famima-development/releases/firebase.storage/famima-development.firebasestorage.app","rulesetName":"projects/famima-development/rulesets/13ca5078-7f81-4736-afee-e701f9dbf9e5","createTime":"2025-09-30T18:43:16.772140Z","updateTime":"2025-10-02T18:43:51.143332Z"}]}
+[debug] [2025-10-02T18:47:34.225Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:47:34.225Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:47:34.228Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets/b8151340-17cb-416b-b9ce-b0d73164293b [none]
+[debug] [2025-10-02T18:47:34.820Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets/b8151340-17cb-416b-b9ce-b0d73164293b 200
+[debug] [2025-10-02T18:47:34.820Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets/b8151340-17cb-416b-b9ce-b0d73164293b [omitted]
+[info] i  firestore: uploading rules firestore.rules... 
+[debug] [2025-10-02T18:47:34.821Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:47:34.821Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:47:34.821Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets [none]
+[debug] [2025-10-02T18:47:34.821Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets [omitted]
+[debug] [2025-10-02T18:47:35.427Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets 200
+[debug] [2025-10-02T18:47:35.427Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets {"name":"projects/famima-development/rulesets/3ea2c835-1ebc-465b-bedc-04cbf9560489","source":{"files":[{"content":"rules_version = '2';\n\nservice cloud.firestore {\n  match /databases/{database}/documents {\n    // People documents - only family members can access their people\n    match /people/{personId} {\n      allow read, write: if request.auth != null &&\n        resource.data.familyId == request.auth.uid;\n    }\n    \n    // Private family galleries - only family members can access their photos\n    match /photos/{photoId} {\n      allow read, write: if request.auth != null && \n        resource.data.familyId == request.auth.uid;\n    }\n    \n    // Allow authenticated users to create and read their own family documents\n    match /families/{familyId} {\n      allow read, write: if request.auth != null && request.auth.uid == familyId;\n    }\n    \n    // Default rule: deny all other access\n    match /{document=**} {\n      allow read, write: if false;\n    }\n  }\n}\n","name":"firestore.rules"}]},"createTime":"2025-10-02T18:47:35.341855Z","metadata":{"services":["cloud.firestore"]}}
+[debug] [2025-10-02T18:47:35.427Z] [rules] created ruleset projects/famima-development/rulesets/3ea2c835-1ebc-465b-bedc-04cbf9560489
+[debug] [2025-10-02T18:47:35.428Z] [rules] releasing firebase.storage/famima-development.firebasestorage.app with ruleset projects/famima-development/rulesets/2a24c87f-a2ad-4ea5-8ca2-2ec11039b5b3
+[debug] [2025-10-02T18:47:35.428Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:47:35.429Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:47:35.429Z] >>> [apiv2][query] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/firebase.storage/famima-development.firebasestorage.app [none]
+[debug] [2025-10-02T18:47:35.430Z] >>> [apiv2][body] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/firebase.storage/famima-development.firebasestorage.app {"release":{"name":"projects/famima-development/releases/firebase.storage/famima-development.firebasestorage.app","rulesetName":"projects/famima-development/rulesets/2a24c87f-a2ad-4ea5-8ca2-2ec11039b5b3"}}
+[debug] [2025-10-02T18:47:36.056Z] <<< [apiv2][status] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/firebase.storage/famima-development.firebasestorage.app 200
+[debug] [2025-10-02T18:47:36.056Z] <<< [apiv2][body] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/firebase.storage/famima-development.firebasestorage.app {"name":"projects/famima-development/releases/firebase.storage/famima-development.firebasestorage.app","rulesetName":"projects/famima-development/rulesets/2a24c87f-a2ad-4ea5-8ca2-2ec11039b5b3","createTime":"2025-09-30T18:43:16.772140Z","updateTime":"2025-10-02T18:47:35.965031Z"}
+[debug] [2025-10-02T18:47:36.056Z] [rules] updated release projects/famima-development/releases/firebase.storage/famima-development.firebasestorage.app
+[info] ✔  storage: released rules storage.rules to firebase.storage 
+[debug] [2025-10-02T18:47:36.057Z] [rules] releasing cloud.firestore/(default) with ruleset projects/famima-development/rulesets/3ea2c835-1ebc-465b-bedc-04cbf9560489
+[debug] [2025-10-02T18:47:36.058Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:47:36.058Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:47:36.058Z] >>> [apiv2][query] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/cloud.firestore/(default) [none]
+[debug] [2025-10-02T18:47:36.058Z] >>> [apiv2][body] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/cloud.firestore/(default) {"release":{"name":"projects/famima-development/releases/cloud.firestore/(default)","rulesetName":"projects/famima-development/rulesets/3ea2c835-1ebc-465b-bedc-04cbf9560489"}}
+[debug] [2025-10-02T18:47:36.684Z] <<< [apiv2][status] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/cloud.firestore/(default) 200
+[debug] [2025-10-02T18:48:59.919Z] ----------------------------------------------------------------------
+[debug] [2025-10-02T18:48:59.923Z] Command:       /Users/gunnarcurry/.nvm/versions/node/v20.12.2/bin/node /Users/gunnarcurry/.nvm/versions/node/v20.12.2/bin/firebase deploy --only firestore:rules
+[debug] [2025-10-02T18:48:59.924Z] CLI Version:   14.17.0
+[debug] [2025-10-02T18:48:59.924Z] Platform:      darwin
+[debug] [2025-10-02T18:48:59.924Z] Node Version:  v20.12.2
+[debug] [2025-10-02T18:48:59.925Z] Time:          Fri Oct 03 2025 01:48:59 GMT+0700 (Indochina Time)
+[debug] [2025-10-02T18:48:59.925Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-10-02T18:49:00.204Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-02T18:49:00.206Z] > authorizing via signed-in user (thedarkheartllc@gmail.com)
+[debug] [2025-10-02T18:49:00.206Z] [iam] checking project famima-development for permissions ["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get"]
+[debug] [2025-10-02T18:49:00.208Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:49:00.208Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:49:00.210Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions [none]
+[debug] [2025-10-02T18:49:00.211Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions x-goog-quota-user=projects/famima-development
+[debug] [2025-10-02T18:49:00.211Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get"]}
+[debug] [2025-10-02T18:49:05.828Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions 200
+[debug] [2025-10-02T18:49:05.829Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/famima-development:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get"]}
+[info] 
+[info] === Deploying to 'famima-development'...
+[info] 
+[info] i  deploying firestore 
+[info] i  firestore: reading indexes from firestore.indexes.json... 
+[info] i  cloud.firestore: checking firestore.rules for compilation errors... 
+[debug] [2025-10-02T18:49:05.833Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:49:05.833Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:49:05.833Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test [none]
+[debug] [2025-10-02T18:49:05.833Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test [omitted]
+[debug] [2025-10-02T18:49:10.803Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test 200
+[debug] [2025-10-02T18:49:10.803Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development:test {}
+[info] ✔  cloud.firestore: rules file firestore.rules compiled successfully 
+[debug] [2025-10-02T18:49:10.805Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:49:10.805Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:49:10.805Z] >>> [apiv2][query] GET https://firestore.googleapis.com/v1/projects/famima-development/databases/(default) [none]
+[debug] [2025-10-02T18:49:12.363Z] <<< [apiv2][status] GET https://firestore.googleapis.com/v1/projects/famima-development/databases/(default) 200
+[debug] [2025-10-02T18:49:12.363Z] <<< [apiv2][body] GET https://firestore.googleapis.com/v1/projects/famima-development/databases/(default) {"name":"projects/famima-development/databases/(default)","uid":"5aef64bf-ed93-4bb2-be87-f8f69592ca40","createTime":"2025-09-30T18:45:06.184637Z","updateTime":"2025-09-30T18:45:06.184637Z","locationId":"nam5","type":"FIRESTORE_NATIVE","concurrencyMode":"PESSIMISTIC","versionRetentionPeriod":"3600s","earliestVersionTime":"2025-10-02T17:49:12.228864Z","appEngineIntegrationMode":"DISABLED","keyPrefix":"s","pointInTimeRecoveryEnablement":"POINT_IN_TIME_RECOVERY_DISABLED","deleteProtectionState":"DELETE_PROTECTION_DISABLED","databaseEdition":"STANDARD","freeTier":true,"etag":"IPuqqIeXhpADMLPo2oqagZAD"}
+[debug] [2025-10-02T18:49:12.365Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:49:12.365Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:49:12.366Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/famima-development/releases pageSize=10&pageToken=
+[debug] [2025-10-02T18:49:12.978Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/famima-development/releases 200
+[debug] [2025-10-02T18:49:12.978Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/famima-development/releases {"releases":[{"name":"projects/famima-development/releases/cloud.firestore","rulesetName":"projects/famima-development/rulesets/3ea2c835-1ebc-465b-bedc-04cbf9560489","createTime":"2025-09-30T18:45:08.002003Z","updateTime":"2025-10-02T18:47:36.586825Z"},{"name":"projects/famima-development/releases/firebase.storage/famima-development.firebasestorage.app","rulesetName":"projects/famima-development/rulesets/2a24c87f-a2ad-4ea5-8ca2-2ec11039b5b3","createTime":"2025-09-30T18:43:16.772140Z","updateTime":"2025-10-02T18:47:35.965031Z"}]}
+[debug] [2025-10-02T18:49:12.994Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:49:12.994Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:49:12.994Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets/3ea2c835-1ebc-465b-bedc-04cbf9560489 [none]
+[debug] [2025-10-02T18:49:13.591Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets/3ea2c835-1ebc-465b-bedc-04cbf9560489 200
+[debug] [2025-10-02T18:49:13.591Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets/3ea2c835-1ebc-465b-bedc-04cbf9560489 [omitted]
+[info] i  firestore: uploading rules firestore.rules... 
+[debug] [2025-10-02T18:49:13.593Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:49:13.593Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:49:13.593Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets [none]
+[debug] [2025-10-02T18:49:13.593Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets [omitted]
+[debug] [2025-10-02T18:49:14.251Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets 200
+[debug] [2025-10-02T18:49:14.251Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/famima-development/rulesets {"name":"projects/famima-development/rulesets/29ea1d63-3ff1-4fb8-8b92-e33b35470dd4","source":{"files":[{"content":"rules_version = '2';\n\nservice cloud.firestore {\n  match /databases/{database}/documents {\n    // People documents - only family members can access their people\n    match /people/{personId} {\n      allow read, write: if request.auth != null &&\n        (resource.data.familyId == request.auth.uid || \n         request.resource.data.familyId == request.auth.uid);\n    }\n    \n    // Private family galleries - only family members can access their photos\n    match /photos/{photoId} {\n      allow read, write: if request.auth != null && \n        (resource.data.familyId == request.auth.uid ||\n         request.resource.data.familyId == request.auth.uid);\n    }\n    \n    // Allow authenticated users to create and read their own family documents\n    match /families/{familyId} {\n      allow read, write: if request.auth != null && request.auth.uid == familyId;\n    }\n    \n    // Default rule: deny all other access\n    match /{document=**} {\n      allow read, write: if false;\n    }\n  }\n}\n","name":"firestore.rules"}]},"createTime":"2025-10-02T18:49:14.133807Z","metadata":{"services":["cloud.firestore"]}}
+[debug] [2025-10-02T18:49:14.251Z] [rules] created ruleset projects/famima-development/rulesets/29ea1d63-3ff1-4fb8-8b92-e33b35470dd4
+[debug] [2025-10-02T18:49:14.251Z] [rules] releasing cloud.firestore/(default) with ruleset projects/famima-development/rulesets/29ea1d63-3ff1-4fb8-8b92-e33b35470dd4
+[debug] [2025-10-02T18:49:14.252Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:49:14.252Z] Checked if tokens are valid: true, expires at: 1759433656303
+[debug] [2025-10-02T18:49:14.252Z] >>> [apiv2][query] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/cloud.firestore/(default) [none]
+[debug] [2025-10-02T18:49:14.252Z] >>> [apiv2][body] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/cloud.firestore/(default) {"release":{"name":"projects/famima-development/releases/cloud.firestore/(default)","rulesetName":"projects/famima-development/rulesets/29ea1d63-3ff1-4fb8-8b92-e33b35470dd4"}}
+[debug] [2025-10-02T18:49:14.883Z] <<< [apiv2][status] PATCH https://firebaserules.googleapis.com/v1/projects/famima-development/releases/cloud.firestore/(default) 200
