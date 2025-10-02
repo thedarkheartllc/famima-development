@@ -1,12 +1,12 @@
 "use client";
 
-import { LoginForm } from "../components/LoginForm";
+import { SignUpForm } from "../components/SignUpForm";
 import { AppHeader } from "../components/AppHeader";
 import { useAuth } from "../contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-export default function LoginPage() {
+export default function SignUpPage() {
   const { isAdmin } = useAuth();
   const router = useRouter();
 
@@ -17,27 +17,27 @@ export default function LoginPage() {
   }, [isAdmin, router]);
 
   return (
-    <main className='bg-gradient-to-b from-white to-green-50/30   min-h-screen'>
+    <main className='bg-gradient-to-b from-white to-green-50/30 min-h-screen'>
       <AppHeader />
 
       <div className='flex flex-col items-center justify-center min-h-[80vh] px-6'>
         <div className='w-full max-w-md'>
           <div className='text-center mb-8 space-y-3'>
-            <h1 className='text-4xl font-light text-gray-900 '>Welcome back</h1>
-            <p className='text-gray-600  font-light'>
-              Sign in to access your family photos
+            <h1 className='text-4xl font-light text-gray-900'>Join Famima</h1>
+            <p className='text-gray-600 font-light'>
+              Create your family account to start sharing memories
             </p>
           </div>
           <div className='bg-white/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm'>
-            <LoginForm />
+            <SignUpForm />
             <div className='mt-6 text-center'>
               <p className='text-gray-600 font-light'>
-                Don't have an account?{" "}
+                Already have an account?{" "}
                 <a
-                  href='/signup'
+                  href='/login'
                   className='text-gray-900 hover:text-gray-700 font-light transition-colors'
                 >
-                  Create one here
+                  Sign in here
                 </a>
               </p>
             </div>

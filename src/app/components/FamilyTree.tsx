@@ -1,32 +1,30 @@
 "use client";
 
 import Link from "next/link";
-import { usePeople } from "@/hooks/usePeople";
+import { Person } from "@/types";
 
-export function FamilyTree() {
-  const { people, loading } = usePeople();
+interface FamilyTreeProps {
+  people: Person[];
+}
 
-  if (loading) {
-    return (
-      <div className='flex flex-col items-center space-y-8'>
-        <div className='text-gray-600 font-light'>Loading family tree...</div>
-      </div>
-    );
-  }
-
+export function FamilyTree({ people }: FamilyTreeProps) {
   // Organize people by relationship type
   const parents = people.filter(
     (person) => person.relationshipType === "parent"
   );
+
   const children = people.filter(
     (person) => person.relationshipType === "child"
   );
+
   const partners = people.filter(
     (person) => person.relationshipType === "partner"
   );
+
   const grandchildren = people.filter(
     (person) => person.relationshipType === "grandchild"
   );
+
   const others = people.filter(
     (person) => person.relationshipType === "other" || !person.relationshipType
   );

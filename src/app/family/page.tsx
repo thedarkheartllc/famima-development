@@ -3,11 +3,13 @@
 import { FamilyTree } from "../components/FamilyTree";
 import { AppHeader } from "../components/AppHeader";
 import { useAuth } from "../contexts/AuthContext";
+import { usePeople } from "@/hooks/usePeople";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function FamilyPage() {
   const { isAdmin } = useAuth();
+  const { people, loading, addPerson, refetch } = usePeople(); // Get data AND functions from hook
   const router = useRouter();
 
   useEffect(() => {
@@ -22,7 +24,12 @@ export default function FamilyPage() {
 
   return (
     <main className='bg-gradient-to-b from-white to-green-50/30   min-h-screen'>
-      <AppHeader showSignOut showAddFamily />
+      <AppHeader
+        showSignOut
+        showAddFamily
+        addPerson={addPerson}
+        refetch={refetch}
+      />
 
       {/* Family Tree Content */}
       <div className='max-w-7xl mx-auto px-6 py-12'>
@@ -35,7 +42,15 @@ export default function FamilyPage() {
           </p>
         </div>
 
-        <FamilyTree />
+        {loading ? (
+          <div className='flex flex-col items-center space-y-8'>
+            <div className='text-gray-600 font-light'>
+              Loading family tree...
+            </div>
+          </div>
+        ) : (
+          <FamilyTree people={people} />
+        )}
       </div>
     </main>
   );

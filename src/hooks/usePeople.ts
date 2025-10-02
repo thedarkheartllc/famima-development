@@ -14,24 +14,47 @@ import {
 } from "firebase/firestore";
 import { ref, deleteObject } from "firebase/storage";
 import { db, storage } from "@/lib/firebase";
-import { Person } from "@/types/person";
+import { Person } from "@/types";
+import { useAuth } from "@/app/contexts/AuthContext";
+import { COLLECTIONS, PERSON_FIELDS } from "@/lib/firestoreConstants";
 
 export function usePeople() {
   const [people, setPeople] = useState<Person[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { user } = useAuth();
 
   useEffect(() => {
-    fetchPeople();
-  }, []);
+    if (user) {
+      fetchPeople();
+    }
+  }, [user]);
 
   const fetchPeople = async () => {
+    if (!user) {
+      console.log("❌ fetchPeople: No user found");
+      return;
+    }
+
+    console.log("🔄 fetchPeople: Starting fetch for user:", user.uid);
+
     try {
       setLoading(true);
       setError(null);
 
-      const q = query(collection(db, "people"), orderBy("createdAt", "asc"));
+      const q = query(
+        collection(db, COLLECTIONS.PEOPLE),
+        where(PERSON_FIELDS.FAMILY_ID, "==", user.uid),
+        orderBy(PERSON_FIELDS.CREATED_AT, "asc")
+      );
+
+      console.log("📡 fetchPeople: Executing query...");
       const querySnapshot = await getDocs(q);
+      console.log(
+        "📊 fetchPeople: Query returned",
+        querySnapshot.docs.length,
+        "documents"
+      );
 
       const peopleData: Person[] = querySnapshot.docs.map((doc) => ({
         id: doc.id,
@@ -39,10 +62,15 @@ export function usePeople() {
         createdAt: doc.data().createdAt?.toDate() || new Date(),
       })) as Person[];
 
+      console.log("👥 fetchPeople: Setting people data:", peopleData);
       setPeople(peopleData);
+      console.log(
+        "✅ fetchPeople: People state updated, count:",
+        peopleData.length
+      );
     } catch (err) {
+      console.error("❌ fetchPeople: Error:", err);
       setError(err instanceof Error ? err.message : "Failed to fetch people");
-      console.error("Error fetching people:", err);
     } finally {
       setLoading(false);
     }
@@ -54,8 +82,9 @@ export function usePeople() {
     try {
       setError(null);
 
-      const docRef = await addDoc(collection(db, "people"), {
+      const docRef = await addDoc(collection(db, COLLECTIONS.PEOPLE), {
         ...personData,
+        familyId: user?.uid,
         createdAt: new Date(),
       });
 
@@ -63,9 +92,6 @@ export function usePeople() {
       await updateDoc(docRef, {
         personId: docRef.id,
       });
-
-      // Refresh the people list
-      await fetchPeople();
 
       return docRef.id;
     } catch (err) {
@@ -82,7 +108,7 @@ export function usePeople() {
     try {
       setError(null);
 
-      const personRef = doc(db, "people", personId);
+      const personRef = doc(db, COLLECTIONS.PEOPLE, personId);
       await updateDoc(personRef, personData);
 
       // Refresh the people list
@@ -100,8 +126,8 @@ export function usePeople() {
 
       // 1. Find all photos for this person
       const photosQuery = query(
-        collection(db, "photos"),
-        where("personId", "==", personId)
+        collection(db, COLLECTIONS.PHOTOS),
+        where(PERSON_FIELDS.PERSON_ID, "==", personId)
       );
       const photosSnapshot = await getDocs(photosQuery);
 
@@ -122,7 +148,7 @@ export function usePeople() {
       );
 
       // 3. Delete the person document
-      await deleteDoc(doc(db, "people", personId));
+      await deleteDoc(doc(db, COLLECTIONS.PEOPLE, personId));
 
       // Refresh the people list
       await fetchPeople();

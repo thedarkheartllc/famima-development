@@ -2,12 +2,15 @@
 
 import { useState } from "react";
 import { FaTimes } from "react-icons/fa";
-import { usePeople } from "@/hooks/usePeople";
-import { Person } from "@/types/person";
+import { Person } from "@/types";
 import { Button } from "./Button";
 
-interface AddUserFormProps {
+interface AddFamilyMemberFormProps {
   onClose: () => void;
+  addPerson: (
+    personData: Omit<Person, "id" | "personId" | "createdAt">
+  ) => Promise<string>;
+  refetch: () => Promise<void>;
 }
 
 const COLOR_OPTIONS = [
@@ -25,17 +28,19 @@ const COLOR_OPTIONS = [
   { name: "Cloud", value: "from-slate-200 to-slate-300" },
 ];
 
-export function AddUserForm({ onClose }: AddUserFormProps) {
-  const [name, setName] = useState("");
-  const [birthDate, setBirthDate] = useState("");
+export function AddFamilyMemberForm({
+  onClose,
+  addPerson,
+  refetch,
+}: AddFamilyMemberFormProps) {
+  const [name, setName] = useState("John Smith");
+  const [birthDate, setBirthDate] = useState("1990-01-15");
   const [color, setColor] = useState("from-sky-200 to-sky-300");
   const [relationshipType, setRelationshipType] = useState<
     "parent" | "child" | "partner" | "grandchild" | "other"
-  >("other");
+  >("parent");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
-  const { addPerson } = usePeople();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,6 +64,10 @@ export function AddUserForm({ onClose }: AddUserFormProps) {
       };
 
       await addPerson(personData);
+
+      // Refetch people data to update the UI
+      await refetch();
+
       onClose();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to add person");

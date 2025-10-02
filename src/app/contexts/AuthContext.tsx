@@ -4,15 +4,22 @@ import { createContext, useContext, useEffect, useState } from "react";
 import {
   User,
   signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { auth, db } from "@/lib/firebase";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
+  signUp: (
+    email: string,
+    password: string,
+    familyName: string
+  ) => Promise<void>;
   logout: () => Promise<void>;
   isAdmin: boolean;
 }
@@ -36,6 +43,43 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await signInWithEmailAndPassword(auth, email, password);
   };
 
+  const signUp = async (
+    email: string,
+    password: string,
+    familyName: string
+  ) => {
+    console.log("Starting signUp process...", { email, familyName });
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      console.log("User created successfully:", user.uid);
+
+      // Create family document in Firestore
+      const familyId = user.uid; // Use user ID as family ID
+      console.log("Creating family document with ID:", familyId);
+
+      const familyData = {
+        Email: email,
+        FamilyID: familyId,
+        FamilyName: familyName,
+        CreatedAt: serverTimestamp(),
+      };
+
+      console.log("Family data to save:", familyData);
+
+      await setDoc(doc(db, "families", familyId), familyData);
+      console.log("Family document created successfully!");
+    } catch (error) {
+      console.error("Error in signUp process:", error);
+      throw error;
+    }
+  };
+
   const logout = async () => {
     await signOut(auth);
   };
@@ -43,7 +87,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const isAdmin = !!user;
 
   return (
-    <AuthContext.Provider value={{ user, loading, signIn, logout, isAdmin }}>
+    <AuthContext.Provider
+      value={{ user, loading, signIn, signUp, logout, isAdmin }}
+    >
       {children}
     </AuthContext.Provider>
   );

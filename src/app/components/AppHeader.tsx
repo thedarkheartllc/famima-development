@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useAuth } from "../contexts/AuthContext";
 import { useState } from "react";
-import { AddUserForm } from "./AddUserForm";
+import { AddFamilyMemberForm } from "./AddFamilyMemberForm";
 import { Button } from "./Button";
 
 interface AppHeaderProps {
@@ -11,6 +11,8 @@ interface AppHeaderProps {
   showSignOut?: boolean;
   showAddFamily?: boolean;
   fixed?: boolean;
+  addPerson?: (personData: any) => Promise<string>;
+  refetch?: () => Promise<void>;
 }
 
 export function AppHeader({
@@ -18,6 +20,8 @@ export function AppHeader({
   showSignOut = false,
   showAddFamily = false,
   fixed = false,
+  addPerson,
+  refetch,
 }: AppHeaderProps) {
   const { logout, isAdmin } = useAuth();
   const [showAddForm, setShowAddForm] = useState(false);
@@ -88,7 +92,13 @@ export function AppHeader({
         </nav>
       </header>
 
-      {showAddForm && <AddUserForm onClose={() => setShowAddForm(false)} />}
+      {showAddForm && (
+        <AddFamilyMemberForm
+          onClose={() => setShowAddForm(false)}
+          addPerson={addPerson}
+          refetch={refetch}
+        />
+      )}
     </>
   );
 }
