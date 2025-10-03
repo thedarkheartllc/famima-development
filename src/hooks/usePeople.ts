@@ -198,9 +198,9 @@ export function usePeople() {
     } catch (err) {
       console.error("❌ Error deleting person:", err);
       console.error("❌ Error details:", {
-        code: (err as any)?.code,
-        message: (err as any)?.message,
-        stack: (err as any)?.stack,
+        code: (err as Error & { code?: string })?.code,
+        message: (err as Error & { message?: string })?.message,
+        stack: (err as Error & { stack?: string })?.stack,
       });
       setError(err instanceof Error ? err.message : "Failed to delete person");
       throw err;
