@@ -4,6 +4,15 @@ import { AppHeader } from "../components/AppHeader";
 import { Button } from "../components/Button";
 import { Footer } from "../components/Footer";
 import Image from "next/image";
+import {
+  HiOutlineShieldCheck,
+  HiOutlineLockClosed,
+  HiOutlineSparkles,
+  HiOutlineHeart,
+  HiOutlineUsers,
+  HiOutlinePhoto,
+  HiOutlineFolder,
+} from "react-icons/hi2";
 
 export default function PricingPage() {
   return (
@@ -53,19 +62,19 @@ export default function PricingPage() {
 
             <ul className='space-y-3 mb-8'>
               <li className='flex items-center text-gray-700'>
-                <span className='w-2 h-2 bg-green-400 rounded-full mr-3'></span>
+                <HiOutlinePhoto className='text-green-600 mr-3' />
                 Up to 10,000 photos
               </li>
               <li className='flex items-center text-gray-700'>
-                <span className='w-2 h-2 bg-green-400 rounded-full mr-3'></span>
+                <HiOutlineUsers className='text-green-600 mr-3' />
                 Unlimited family members
               </li>
               <li className='flex items-center text-gray-700'>
-                <span className='w-2 h-2 bg-green-400 rounded-full mr-3'></span>
+                <HiOutlineLockClosed className='text-green-600 mr-3' />
                 Private galleries
               </li>
               <li className='flex items-center text-gray-700'>
-                <span className='w-2 h-2 bg-green-400 rounded-full mr-3'></span>
+                <HiOutlineSparkles className='text-green-600 mr-3' />
                 Family tree view
               </li>
             </ul>
@@ -95,14 +104,14 @@ export default function PricingPage() {
           <div className='grid md:grid-cols-2 gap-8'>
             <div className='space-y-4'>
               <div className='flex items-start'>
-                <span className='w-2 h-2 bg-green-400 rounded-full mr-3 mt-2'></span>
+                <HiOutlineShieldCheck className='text-green-600 mr-3 mt-1' />
                 <div>
                   <h4 className='font-medium text-gray-900'>Privacy First</h4>
                   <p className='text-gray-600'>Your data is yours, always.</p>
                 </div>
               </div>
               <div className='flex items-start'>
-                <span className='w-2 h-2 bg-green-400 rounded-full mr-3 mt-2'></span>
+                <HiOutlineHeart className='text-green-600 mr-3 mt-1' />
                 <div>
                   <h4 className='font-medium text-gray-900'>
                     No Ads or Algorithms
@@ -115,7 +124,7 @@ export default function PricingPage() {
             </div>
             <div className='space-y-4'>
               <div className='flex items-start'>
-                <span className='w-2 h-2 bg-green-400 rounded-full mr-3 mt-2'></span>
+                <HiOutlineLockClosed className='text-green-600 mr-3 mt-1' />
                 <div>
                   <h4 className='font-medium text-gray-900'>Simple & Secure</h4>
                   <p className='text-gray-600'>
@@ -124,7 +133,7 @@ export default function PricingPage() {
                 </div>
               </div>
               <div className='flex items-start'>
-                <span className='w-2 h-2 bg-green-400 rounded-full mr-3 mt-2'></span>
+                <HiOutlineFolder className='text-green-600 mr-3 mt-1' />
                 <div>
                   <h4 className='font-medium text-gray-900'>Legacy Archive</h4>
                   <p className='text-gray-600'>

@@ -17,7 +17,7 @@ export default function LandingPage() {
       <AppHeader showSignIn fixed />
 
       <HeroSection />
-      <HeroImageSection />
+      <HeroImageSection /> 
       <FeaturesSection />
       <TargetAudienceSection />
       <ComparisonSection />

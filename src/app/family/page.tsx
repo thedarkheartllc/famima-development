@@ -28,7 +28,7 @@ export default function FamilyPage() {
   }
 
   return (
-    <main className='bg-gradient-to-b from-white to-green-50/30   min-h-screen'>
+    <main className='bg-gradient-to-b from-white to-green-50/30 min-h-screen'>
       <AppHeader
         showSignOut
         showAddFamily
@@ -37,7 +37,7 @@ export default function FamilyPage() {
       />
 
       {/* Family Tree Content */}
-      <div className='max-w-7xl mx-auto px-6 py-12'>
+      <div className='max-w-7xl mx-auto px-6 py-12 min-h-screen'>
         <div className='text-center mb-12 space-y-3'>
           <div className='flex items-center justify-center gap-3'>
             <h1 className='text-4xl md:text-5xl font-light text-gray-900 '>
