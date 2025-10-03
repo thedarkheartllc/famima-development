@@ -1,3 +1,10 @@
+import {
+  HiOutlineShieldCheck,
+  HiOutlineLockClosed,
+  HiOutlineSparkles,
+  HiOutlineHeart,
+} from "react-icons/hi2";
+
 export function FeaturesSection() {
   return (
     <section className='py-20 px-6 bg-white '>
@@ -7,7 +14,7 @@ export function FeaturesSection() {
         </h2>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
           <div className='bg-green-50/50  rounded-2xl p-8 text-center space-y-3'>
-            <div className='text-3xl'>🛡️</div>
+            <HiOutlineShieldCheck className='text-3xl text-green-600 mx-auto' />
             <h3 className='text-lg font-light text-gray-900 '>Privacy First</h3>
             <p className='text-sm text-gray-600 '>
               Your data is yours, always. No noise, no politics, no rage
@@ -15,7 +22,7 @@ export function FeaturesSection() {
             </p>
           </div>
           <div className='bg-green-50/50  rounded-2xl p-8 text-center space-y-3'>
-            <div className='text-3xl'>🔒</div>
+            <HiOutlineLockClosed className='text-3xl text-green-600 mx-auto' />
             <h3 className='text-lg font-light text-gray-900 '>
               Private by Default
             </h3>
@@ -25,7 +32,7 @@ export function FeaturesSection() {
             </p>
           </div>
           <div className='bg-green-50/50  rounded-2xl p-8 text-center space-y-3'>
-            <div className='text-3xl'>✨</div>
+            <HiOutlineSparkles className='text-3xl text-green-600 mx-auto' />
             <h3 className='text-lg font-light text-gray-900 '>Simple to Use</h3>
             <p className='text-sm text-gray-600 '>
               No likes, no comments, no follower counts. Upload, share, and view
@@ -33,7 +40,7 @@ export function FeaturesSection() {
             </p>
           </div>
           <div className='bg-green-50/50  rounded-2xl p-8 text-center space-y-3'>
-            <div className='text-3xl'>🕊️</div>
+            <HiOutlineHeart className='text-3xl text-green-600 mx-auto' />
             <h3 className='text-lg font-light text-gray-900 '>Peace of Mind</h3>
             <p className='text-sm text-gray-600 '>
               Free from ads, algorithms, and distractions. No manipulation, no

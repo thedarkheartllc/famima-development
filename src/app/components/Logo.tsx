@@ -6,22 +6,68 @@ import Image from "next/image";
 interface LogoProps {
   href?: string;
   className?: string;
+  size?: "small" | "medium" | "large" | "xlarge";
 }
 
-export function Logo({ href = "/", className = "" }: LogoProps) {
+export function Logo({
+  href = "/",
+  className = "",
+  size = "medium",
+}: LogoProps) {
+  const sizeClasses = {
+    small: {
+      image: "w-6 sm:w-8 h-6 sm:h-8",
+      text: "text-base sm:text-lg",
+      gap: "gap-1",
+    },
+    medium: {
+      image: "w-8 sm:w-10 h-8 sm:h-10",
+      text: "text-lg sm:text-xl",
+      gap: "-space-x-3 sm:gap-2",
+    },
+    large: {
+      image: "w-12 sm:w-16 h-12 sm:h-16",
+      text: "text-2xl sm:text-3xl",
+      gap: "gap-3 sm:gap-4",
+    },
+    xlarge: {
+      image: "w-24 sm:w-32 h-24 sm:h-32",
+      text: "text-4xl sm:text-6xl",
+      gap: "gap-6 sm:gap-8",
+    },
+  };
+
+  const currentSize = sizeClasses[size];
+
   return (
     <Link
       href={href}
-      className={`flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-opacity ${className}`}
+      className={`flex items-center ${currentSize.gap} hover:opacity-80 transition-opacity ${className} -space-x-4`}
     >
       <Image
         src='/logo.png'
         alt='Famima Logo'
-        width={32}
-        height={32}
-        className='w-8 sm:w-10 h-8 sm:h-10'
+        width={
+          size === "xlarge"
+            ? 128
+            : size === "large"
+            ? 64
+            : size === "small"
+            ? 24
+            : 32
+        }
+        height={
+          size === "xlarge"
+            ? 128
+            : size === "large"
+            ? 64
+            : size === "small"
+            ? 24
+            : 32
+        }
+        className={currentSize.image}
       />
-      <span className='text-lg sm:text-xl font-light text-gray-900'>
+      <span className={`${currentSize.text} font-light text-gray-900`}>
         Famima
       </span>
     </Link>

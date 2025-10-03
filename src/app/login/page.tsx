@@ -2,6 +2,7 @@
 
 import { LoginForm } from "../components/LoginForm";
 import { AppHeader } from "../components/AppHeader";
+import { Footer } from "../components/Footer";
 import { useAuth } from "../contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -22,7 +23,12 @@ export default function LoginPage() {
 
       <div className='flex flex-col items-center justify-center min-h-[80vh] px-6'>
         <div className='w-full max-w-md'>
-          <div className='text-center mb-8 space-y-3'>
+          <div className='text-center mb-8 space-y-4'>
+            <img
+              src='/homepage/famima-7.jpg'
+              alt='Family moments'
+              className='w-24 h-24 rounded-full object-cover mx-auto shadow-lg'
+            />
             <h1 className='text-4xl font-light text-gray-900 '>Welcome back</h1>
             <p className='text-gray-600  font-light'>
               Sign in to access your family photos
@@ -44,6 +50,7 @@ export default function LoginPage() {
           </div>
         </div>
       </div>
+      <Footer />
     </main>
   );
 }

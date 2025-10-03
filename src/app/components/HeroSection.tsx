@@ -1,11 +1,13 @@
 import Link from "next/link";
+import { Logo } from "./Logo";
 
 export function HeroSection() {
   return (
     <section className='pt-32 pb-20 px-6 bg-gradient-to-b from-white to-green-50/30'>
-      <div className='max-w-6xl mx-auto text-center space-y-8'>
-        <h1 className='text-5xl md:text-7xl font-light tracking-wide text-gray-900 leading-tight'>
-          A safe, private, and beautiful space to share family memories
+      <div className='max-w-6xl mx-auto text-center space-y-8 flex flex-col items-center'>
+        <Logo size='xlarge' />
+        <h1 className='text-5xl md:text-6xl font-light tracking-wide text-gray-900 leading-tight'>
+          A safe and private space <br /> to share family memories
         </h1>
         <p className='text-xl md:text-2xl font-light text-gray-600 max-w-3xl mx-auto leading-relaxed'>
           No ads. No doomscrolling. No noise.

@@ -3,6 +3,7 @@
 import { FamilyTree } from "../components/FamilyTree";
 import { AppHeader } from "../components/AppHeader";
 import { EditFamilyForm } from "../components/EditFamilyForm";
+import { Footer } from "../components/Footer";
 import { useAuth } from "../contexts/AuthContext";
 import { usePeople } from "@/hooks/usePeople";
 import { useFamily } from "@/hooks/useFamily";
@@ -91,6 +92,7 @@ export default function FamilyPage() {
           onUpdate={updateFamily}
         />
       )}
+      <Footer />
     </main>
   );
 }

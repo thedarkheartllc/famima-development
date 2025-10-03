@@ -31,8 +31,12 @@ export function BenefitsSection() {
             </li>
           </ul>
         </div>
-        <div className='aspect-square bg-gradient-to-br from-green-100 to-green-50 rounded-3xl shadow-lg flex items-center justify-center'>
-          <p className='text-gray-400  font-light text-lg'>Feature Image</p>
+        <div className='aspect-square rounded-3xl shadow-lg overflow-hidden'>
+          <img
+            src='/homepage/famima-4.jpg'
+            alt='Family connection and memories'
+            className='w-full h-full object-cover'
+          />
         </div>
       </div>
     </section>

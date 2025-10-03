@@ -27,7 +27,7 @@ export function AppHeader({
   addPerson,
   refetch,
 }: AppHeaderProps) {
-  const { logout, isAdmin } = useAuth();
+  const { logout, isAdmin, user } = useAuth();
   const [showAddForm, setShowAddForm] = useState(false);
 
   const handleLogout = async () => {
@@ -63,19 +63,30 @@ export function AppHeader({
           </div>
 
           <div className='flex items-center gap-2 sm:gap-4'>
-            <Link
-              href='/pricing'
-              className='px-4 sm:px-6 py-2 text-gray-700 hover:text-gray-900 font-light transition-colors'
-            >
-              Pricing
-            </Link>
+            {!user && (
+              <Link
+                href='/pricing'
+                className='px-4 sm:px-6 py-2 text-gray-700 hover:text-gray-900 font-light transition-colors'
+              >
+                Pricing
+              </Link>
+            )}
 
-            {showSignIn && (
+            {showSignIn && !user && (
               <Link
                 href='/login'
                 className='px-4 sm:px-6 py-2 text-gray-700 hover:text-gray-900 font-light transition-colors'
               >
                 Sign In
+              </Link>
+            )}
+
+            {showSignIn && user && (
+              <Link
+                href='/family'
+                className='px-4 sm:px-6 py-2 text-gray-700 hover:text-gray-900 font-light transition-colors'
+              >
+                My Family Tree
               </Link>
             )}
 

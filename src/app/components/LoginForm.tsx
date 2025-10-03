@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { HiEye, HiEyeSlash } from "react-icons/hi2";
 
 export function LoginForm() {
   const [email, setEmail] = useState("gunnlukari@gmail.com");
-  const [password, setPassword] = useState("zelda2024");
+  const [password, setPassword] = useState("zelda2025!");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const { signIn } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -52,15 +54,24 @@ export function LoginForm() {
           >
             Password
           </label>
-          <input
-            id='password'
-            type='password'
-            placeholder='••••••••'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className='w-full px-4 py-3 border border-gray-100 rounded-2xl bg-white text-gray-900 font-light placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-200 transition-all'
-            required
-          />
+          <div className='relative'>
+            <input
+              id='password'
+              type={showPassword ? "text" : "password"}
+              placeholder='••••••••'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className='w-full px-4 py-3 pr-12 border border-gray-100 rounded-2xl bg-white text-gray-900 font-light placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-200 transition-all'
+              required
+            />
+            <button
+              type='button'
+              onClick={() => setShowPassword(!showPassword)}
+              className='absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors focus:outline-none'
+            >
+              {showPassword ? <HiEyeSlash size={18} /> : <HiEye size={18} />}
+            </button>
+          </div>
         </div>
       </div>
 

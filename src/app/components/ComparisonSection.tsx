@@ -1,10 +1,13 @@
+import { HiOutlineCamera } from "react-icons/hi2";
+
 export function ComparisonSection() {
   return (
     <section className='py-20 px-6 bg-gradient-to-b from-white to-green-50/20'>
       <div className='max-w-6xl mx-auto'>
         <div className='text-center mb-16'>
           <h2 className='text-4xl md:text-5xl font-light text-gray-900 mb-4'>
-            📸 Famima vs. Instagram
+            <HiOutlineCamera className='inline-block mr-3 text-green-600' />
+            Famima vs. Instagram
           </h2>
         </div>
 
@@ -67,14 +70,14 @@ export function ComparisonSection() {
           </div>
         </div>
 
-        <div className='text-center mt-12'>
+        {/* <div className='text-center mt-12'>
           <h3 className='text-2xl md:text-3xl font-light text-gray-900 mb-4'>
             🖤 Why choose Famima?
           </h3>
           <p className='text-lg text-gray-600'>
             Because family memories deserve better than an algorithm.
           </p>
-        </div>
+        </div> */}
       </div>
     </section>
   );

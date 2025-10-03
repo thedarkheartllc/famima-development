@@ -2,6 +2,7 @@
 
 import { SignUpForm } from "../components/SignUpForm";
 import { AppHeader } from "../components/AppHeader";
+import { Footer } from "../components/Footer";
 import { useAuth } from "../contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -44,6 +45,7 @@ export default function SignUpPage() {
           </div>
         </div>
       </div>
+      <Footer />
     </main>
   );
 }
