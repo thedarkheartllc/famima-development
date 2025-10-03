@@ -2,11 +2,18 @@
 
 import { useState } from "react";
 import { useTheme } from "../contexts/ThemeContext";
-import { FaUpload, FaChevronUp, FaChevronDown, FaEdit } from "react-icons/fa";
+import {
+  FaUpload,
+  FaChevronUp,
+  FaChevronDown,
+  FaEdit,
+  FaShare,
+} from "react-icons/fa";
 import Link from "next/link";
 import { UploadModal } from "./UploadModal";
 import { EditUserForm } from "./EditUserForm";
 import { usePeople } from "../../hooks/usePeople";
+import { useShareLinks } from "../../hooks/useShareLinks";
 import { Button } from "./Button";
 
 interface GalleryHeaderProps {
@@ -26,12 +33,43 @@ export function GalleryHeader({
 }: GalleryHeaderProps) {
   const {} = useTheme();
   const { people } = usePeople();
+  const { createShareLink } = useShareLinks();
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
 
   const person = people.find(
     (p) => p.name.toLowerCase() === personName?.toLowerCase()
   );
+
+  const handleShare = async () => {
+    console.log("Share button clicked");
+    console.log("Person found:", person);
+
+    if (!person) {
+      console.log("No person found, share disabled");
+      return;
+    }
+
+    try {
+      console.log("Creating share link for:", person.name, person.id);
+      const shareLink = await createShareLink(person.id, person.name);
+      console.log("Share link created:", shareLink);
+
+      if (shareLink) {
+        const shareUrl = `${window.location.origin}/share/${shareLink.shareId}`;
+        console.log("Share URL:", shareUrl);
+        await navigator.clipboard.writeText(shareUrl);
+        alert("Share link copied to clipboard!");
+      } else {
+        console.log("Share link creation returned null");
+        alert("Failed to create share link");
+      }
+    } catch (error) {
+      console.error("Failed to create share link:", error);
+      alert("Failed to create share link: " + error.message);
+    }
+  };
 
   return (
     <>
@@ -68,6 +106,18 @@ export function GalleryHeader({
               >
                 <FaEdit />
                 <span className='hidden sm:inline'>Edit</span>
+              </Button>
+
+              <Button
+                onClick={handleShare}
+                disabled={!person}
+                variant='ghost'
+                size='sm'
+                title='Share this gallery'
+                className='flex-shrink-0'
+              >
+                <FaShare />
+                <span className='hidden sm:inline'>Share</span>
               </Button>
 
               <Button

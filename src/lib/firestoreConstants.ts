@@ -3,6 +3,7 @@ export const COLLECTIONS = {
   FAMILIES: "families",
   PEOPLE: "people",
   PHOTOS: "photos",
+  SHARE_LINKS: "shareLinks",
 } as const;
 
 // Family Fields

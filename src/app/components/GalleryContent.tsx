@@ -22,6 +22,7 @@ interface GalleryContentProps {
   photos?: Array<{ url?: string; filename: string }>; // Firebase photos for URL access
   onUploadComplete?: () => void;
   onDeletePhoto?: (photoId: string, storagePath: string) => Promise<void>;
+  isPublicView?: boolean;
 }
 
 export function GalleryContent({
@@ -32,6 +33,7 @@ export function GalleryContent({
   personName,
   onUploadComplete,
   onDeletePhoto,
+  isPublicView = false,
 }: GalleryContentProps) {
   const formatMonthYear = (key: string) => {
     const [year, month] = key.split("-");
@@ -73,13 +75,15 @@ export function GalleryContent({
 
   return (
     <>
-      <GalleryHeader
-        photoCount={files.length}
-        onToggleAllMonths={toggleAllMonths}
-        allExpanded={allExpanded}
-        personName={personName}
-        onUploadComplete={onUploadComplete}
-      />
+      {!isPublicView && (
+        <GalleryHeader
+          photoCount={files.length}
+          onToggleAllMonths={toggleAllMonths}
+          allExpanded={allExpanded}
+          personName={personName}
+          onUploadComplete={onUploadComplete}
+        />
+      )}
 
       {files.length === 0 ? (
         <div className='flex flex-col items-center justify-center py-20 px-6'>
@@ -99,7 +103,7 @@ export function GalleryContent({
               photos={groupedPhotos[groupKey]}
               isExpanded={expandedMonths[groupKey] ?? allExpanded}
               onToggle={() => toggleMonth(groupKey)}
-              onDeletePhoto={onDeletePhoto}
+              onDeletePhoto={isPublicView ? undefined : onDeletePhoto}
             />
           ))}
 
@@ -110,7 +114,7 @@ export function GalleryContent({
               photos={photosWithUnknownDates}
               isExpanded={expandedMonths["date-unknown"] ?? allExpanded}
               onToggle={() => toggleMonth("date-unknown")}
-              onDeletePhoto={onDeletePhoto}
+              onDeletePhoto={isPublicView ? undefined : onDeletePhoto}
             />
           )}
         </div>

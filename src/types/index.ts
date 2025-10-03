@@ -35,3 +35,16 @@ export interface Photo {
   size: number;
   url?: string; // Firebase Storage download URL
 }
+
+export interface ShareLink {
+  id: string;
+  shareId: string; // Unique URL identifier
+  familyId: string;
+  personId: string;
+  personName: string;
+  createdBy: string;
+  createdAt: Date;
+  isActive: boolean;
+  viewCount: number;
+  lastViewedAt?: Date;
+}
