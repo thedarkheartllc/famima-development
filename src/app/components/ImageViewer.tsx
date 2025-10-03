@@ -10,6 +10,7 @@ import {
 } from "react-icons/fa";
 import { useAuth } from "../contexts/AuthContext";
 import { Button } from "./Button";
+import { Loading } from "./Loading";
 
 interface PhotoWithDate {
   id?: string;
@@ -164,7 +165,7 @@ export function ImageViewer({
       <div className='relative bg-white md:bg-white/90 md:backdrop-blur rounded-none md:rounded-3xl shadow-none md:shadow-2xl p-2 md:p-8'>
         {imageLoading && (
           <div className='absolute inset-0 flex items-center justify-center'>
-            <div className='text-gray-600 text-lg font-light'>Loading...</div>
+            <Loading size='small' showLogo={false} />
           </div>
         )}
 

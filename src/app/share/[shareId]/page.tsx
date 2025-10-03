@@ -7,6 +7,7 @@ import { useShareLinks } from "../../../hooks/useShareLinks";
 import { useEffect, useState, useRef } from "react";
 import { Logo } from "../../components/Logo";
 import { Footer } from "../../components/Footer";
+import { Loading } from "../../components/Loading";
 import { ShareLink } from "../../../types";
 
 interface PhotoWithDate {
@@ -85,7 +86,7 @@ export default function PublicShare({
     return (
       <main className='bg-gradient-to-b from-white to-green-50/30 min-h-screen'>
         <div className='flex justify-center items-center min-h-[60vh]'>
-          <div className='text-gray-600 font-light'>Loading...</div>
+          <Loading />
         </div>
       </main>
     );
@@ -117,7 +118,7 @@ export default function PublicShare({
     return (
       <main className='bg-gradient-to-b from-white to-green-50/30 min-h-screen'>
         <div className='flex justify-center items-center min-h-[60vh]'>
-          <div className='text-gray-600 font-light'>Loading photos...</div>
+          <Loading message='Loading photos...' />
         </div>
       </main>
     );

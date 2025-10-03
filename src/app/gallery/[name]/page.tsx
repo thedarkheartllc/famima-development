@@ -3,6 +3,7 @@
 import { use } from "react";
 import { GalleryContent } from "../../components/GalleryContent";
 import { Footer } from "../../components/Footer";
+import { Loading } from "../../components/Loading";
 import { usePhotos } from "../../../hooks/usePhotos";
 import { usePeople } from "../../../hooks/usePeople";
 
@@ -56,7 +57,7 @@ export default function Gallery({
     return (
       <main className='bg-gradient-to-b from-white to-green-50/30   min-h-screen'>
         <div className='flex justify-center items-center min-h-[60vh]'>
-          <div className='text-gray-600  font-light'>Loading...</div>
+          <Loading />
         </div>
       </main>
     );

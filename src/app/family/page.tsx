@@ -4,6 +4,7 @@ import { FamilyTree } from "../components/FamilyTree";
 import { AppHeader } from "../components/AppHeader";
 import { EditFamilyForm } from "../components/EditFamilyForm";
 import { Footer } from "../components/Footer";
+import { Loading } from "../components/Loading";
 import { useAuth } from "../contexts/AuthContext";
 import { usePeople } from "@/hooks/usePeople";
 import { useFamily } from "@/hooks/useFamily";
@@ -74,9 +75,7 @@ export default function FamilyPage() {
 
         {loading ? (
           <div className='flex flex-col items-center space-y-8'>
-            <div className='text-gray-600 font-light'>
-              Loading family tree...
-            </div>
+            <Loading message='Loading family tree...' />
           </div>
         ) : (
           <FamilyTree people={people} />
