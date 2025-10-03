@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import { Button } from "./Button";
+import { useFamily } from "@/hooks/useFamily";
 
 interface EditFamilyFormProps {
   isOpen: boolean;
@@ -20,6 +21,7 @@ export function EditFamilyForm({
   const [familyName, setFamilyName] = useState(currentFamilyName);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const { family } = useFamily();
 
   if (!isOpen) return null;
 
@@ -62,6 +64,15 @@ export function EditFamilyForm({
         </div>
 
         <form onSubmit={handleSubmit} className='space-y-6'>
+          <div>
+            <label className='block text-sm font-light text-gray-600 mb-2'>
+              Email Address
+            </label>
+            <div className='w-full px-4 py-3 border border-gray-100 rounded-2xl bg-gray-50 text-gray-700 font-light'>
+              {family?.email || "Loading..."}
+            </div>
+          </div>
+
           <div>
             <label className='block text-sm font-light text-gray-600 mb-2'>
               Family Name *
