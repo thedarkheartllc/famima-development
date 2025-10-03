@@ -19,12 +19,39 @@ export function ShareLinkManager({ isOpen, onClose }: ShareLinkManagerProps) {
 
   const copyToClipboard = async (shareId: string) => {
     const shareUrl = `${window.location.origin}/share/${shareId}`;
+
     try {
-      await navigator.clipboard.writeText(shareUrl);
-      setCopiedId(shareId);
-      setTimeout(() => setCopiedId(null), 2000);
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(shareUrl);
+        setCopiedId(shareId);
+        setTimeout(() => setCopiedId(null), 2000);
+      } else {
+        // Fallback for non-secure contexts or older browsers
+        const textArea = document.createElement("textarea");
+        textArea.value = shareUrl;
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        textArea.style.top = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+          document.execCommand("copy");
+          setCopiedId(shareId);
+          setTimeout(() => setCopiedId(null), 2000);
+        } catch (fallbackError) {
+          console.warn("Fallback copy failed:", fallbackError);
+          // Show the URL in an alert as last resort
+          alert(`Copy this URL: ${shareUrl}`);
+        }
+
+        document.body.removeChild(textArea);
+      }
     } catch (error) {
       console.error("Failed to copy to clipboard:", error);
+      // Show the URL in an alert as last resort
+      alert(`Copy this URL: ${shareUrl}`);
     }
   };
 

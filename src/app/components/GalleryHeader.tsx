@@ -54,8 +54,36 @@ export function GalleryHeader({
 
       if (shareLink) {
         const shareUrl = `${window.location.origin}/share/${shareLink.shareId}`;
-        await navigator.clipboard.writeText(shareUrl);
-        showSuccess("Share link created and copied to clipboard!");
+
+        // Try to copy to clipboard with fallback
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(shareUrl);
+            showSuccess("Share link created and copied to clipboard!");
+          } else {
+            // Fallback for non-secure contexts or older browsers
+            const textArea = document.createElement("textarea");
+            textArea.value = shareUrl;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-999999px";
+            textArea.style.top = "-999999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            try {
+              document.execCommand("copy");
+              showSuccess("Share link created and copied to clipboard!");
+            } catch {
+              showSuccess(`Share link created! Copy this URL: ${shareUrl}`);
+            }
+
+            document.body.removeChild(textArea);
+          }
+        } catch (clipboardError) {
+          console.warn("Clipboard copy failed:", clipboardError);
+          showSuccess(`Share link created! Copy this URL: ${shareUrl}`);
+        }
       } else {
         showError("Failed to create share link");
       }
