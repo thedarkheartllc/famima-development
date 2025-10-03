@@ -83,21 +83,12 @@ export function useShareLinks() {
     personId: string,
     personName: string
   ): Promise<ShareLink | null> => {
-    console.log("createShareLink called with:", {
-      personId,
-      personName,
-      user: !!user,
-    });
-
     if (!user) {
-      console.log("No user found, returning null");
       return null;
     }
 
     try {
       const shareId = generateShareId();
-      console.log("Generated shareId:", shareId);
-
       const shareLinkData = {
         shareId,
         familyId: user.uid,
@@ -109,14 +100,10 @@ export function useShareLinks() {
         viewCount: 0,
       };
 
-      console.log("Share link data:", shareLinkData);
-
       const docRef = await addDoc(
         collection(db, COLLECTIONS.SHARE_LINKS),
         shareLinkData
       );
-
-      console.log("Document created with ID:", docRef.id);
 
       const newShareLink: ShareLink = {
         id: docRef.id,
@@ -130,17 +117,10 @@ export function useShareLinks() {
         viewCount: 0,
       };
 
-      console.log("New share link object:", newShareLink);
-
       setShareLinks((prev) => [newShareLink, ...prev]);
       return newShareLink;
     } catch (err) {
       console.error("Error in createShareLink:", err);
-      console.error("Error details:", {
-        message: err instanceof Error ? err.message : "Unknown error",
-        code: (err as any)?.code,
-        stack: err instanceof Error ? err.stack : undefined,
-      });
       setError(
         err instanceof Error ? err.message : "Failed to create share link"
       );
@@ -188,6 +168,26 @@ export function useShareLinks() {
   // Track a view (increment view count)
   const trackView = async (shareId: string) => {
     try {
+      // Check if we've already tracked this view in this session
+      const sessionKey = `share_viewed_${shareId}`;
+      const alreadyTracked = sessionStorage.getItem(sessionKey);
+
+      console.log(
+        "trackView called for:",
+        shareId,
+        "already tracked:",
+        !!alreadyTracked
+      );
+
+      if (alreadyTracked) {
+        console.log("View already tracked in this session, skipping");
+        return; // Already tracked in this session
+      }
+
+      // Mark as tracked immediately to prevent race conditions
+      sessionStorage.setItem(sessionKey, "true");
+      console.log("Marking view as tracked for:", shareId);
+
       const shareLinksQuery = query(
         collection(db, COLLECTIONS.SHARE_LINKS),
         where("shareId", "==", shareId)
@@ -197,13 +197,18 @@ export function useShareLinks() {
 
       if (!querySnapshot.empty) {
         const docRef = querySnapshot.docs[0].ref;
+        console.log("Updating view count for share link:", shareId);
         await updateDoc(docRef, {
           viewCount: increment(1),
           lastViewedAt: serverTimestamp(),
         });
+        console.log("View count updated successfully");
       }
     } catch (err) {
       console.error("Failed to track view:", err);
+      // Remove the session marker if there was an error
+      const sessionKey = `share_viewed_${shareId}`;
+      sessionStorage.removeItem(sessionKey);
     }
   };
 

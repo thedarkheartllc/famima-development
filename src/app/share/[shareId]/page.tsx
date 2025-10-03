@@ -4,7 +4,7 @@ import { use } from "react";
 import { GalleryContent } from "../../components/GalleryContent";
 import { usePhotos } from "../../../hooks/usePhotos";
 import { useShareLinks } from "../../../hooks/useShareLinks";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 interface PhotoWithDate {
   id?: string;
@@ -25,6 +25,7 @@ export default function PublicShare({
   const [shareLink, setShareLink] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const hasTrackedView = useRef(false);
 
   const {
     photos,
@@ -52,8 +53,14 @@ export default function PublicShare({
 
         setShareLink(link);
 
-        // Track the view
-        await trackView(resolvedParams.shareId);
+        // Track the view only once per component instance
+        if (!hasTrackedView.current) {
+          console.log("Tracking view for share link:", resolvedParams.shareId);
+          hasTrackedView.current = true;
+          await trackView(resolvedParams.shareId);
+        } else {
+          console.log("View already tracked for this component instance");
+        }
       } catch (err) {
         setError("Failed to load share link");
         console.error("Error fetching share link:", err);

@@ -14,6 +14,7 @@ import { UploadModal } from "./UploadModal";
 import { EditUserForm } from "./EditUserForm";
 import { usePeople } from "../../hooks/usePeople";
 import { useShareLinks } from "../../hooks/useShareLinks";
+import { useToastContext } from "../contexts/ToastContext";
 import { Button } from "./Button";
 
 interface GalleryHeaderProps {
@@ -34,6 +35,7 @@ export function GalleryHeader({
   const {} = useTheme();
   const { people } = usePeople();
   const { createShareLink } = useShareLinks();
+  const { showSuccess, showError } = useToastContext();
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
@@ -43,31 +45,27 @@ export function GalleryHeader({
   );
 
   const handleShare = async () => {
-    console.log("Share button clicked");
-    console.log("Person found:", person);
-
     if (!person) {
-      console.log("No person found, share disabled");
+      showError("No person found - cannot create share link");
       return;
     }
 
     try {
-      console.log("Creating share link for:", person.name, person.id);
       const shareLink = await createShareLink(person.id, person.name);
-      console.log("Share link created:", shareLink);
 
       if (shareLink) {
         const shareUrl = `${window.location.origin}/share/${shareLink.shareId}`;
-        console.log("Share URL:", shareUrl);
         await navigator.clipboard.writeText(shareUrl);
-        alert("Share link copied to clipboard!");
+        showSuccess("Share link created and copied to clipboard!");
       } else {
-        console.log("Share link creation returned null");
-        alert("Failed to create share link");
+        showError("Failed to create share link");
       }
     } catch (error) {
       console.error("Failed to create share link:", error);
-      alert("Failed to create share link: " + error.message);
+      showError(
+        "Failed to create share link: " +
+          (error instanceof Error ? error.message : "Unknown error")
+      );
     }
   };
 
@@ -102,7 +100,7 @@ export function GalleryHeader({
                 variant='ghost'
                 size='sm'
                 title='Edit person details'
-                className='flex-shrink-0'
+                className='flex-shrink-0 hover:cursor-pointer disabled:cursor-not-allowed'
               >
                 <FaEdit />
                 <span className='hidden sm:inline'>Edit</span>
@@ -114,7 +112,7 @@ export function GalleryHeader({
                 variant='ghost'
                 size='sm'
                 title='Share this gallery'
-                className='flex-shrink-0'
+                className='flex-shrink-0 hover:cursor-pointer disabled:cursor-not-allowed'
               >
                 <FaShare />
                 <span className='hidden sm:inline'>Share</span>
@@ -130,7 +128,7 @@ export function GalleryHeader({
                     ? `No person found for "${personName}" - upload disabled`
                     : "Upload photos"
                 }
-                className='flex-shrink-0'
+                className='flex-shrink-0 hover:cursor-pointer disabled:cursor-not-allowed'
               >
                 <FaUpload />
                 <span className='hidden sm:inline'>Upload</span>
@@ -143,7 +141,7 @@ export function GalleryHeader({
                 aria-label={
                   allExpanded ? "Collapse all months" : "Expand all months"
                 }
-                className='flex-shrink-0'
+                className='flex-shrink-0 hover:cursor-pointer'
               >
                 {allExpanded ? (
                   <>
