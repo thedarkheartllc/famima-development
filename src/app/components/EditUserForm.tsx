@@ -89,8 +89,8 @@ export function EditUserForm({ isOpen, onClose, person }: EditUserFormProps) {
   };
 
   return (
-    <div className='fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-50 p-4'>
-      <div className='bg-white rounded-3xl p-8 w-full max-w-md shadow-xl'>
+    <div className='fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-50 p-4 sm:p-4'>
+      <div className='bg-white rounded-3xl p-6 sm:p-8 w-full max-w-md shadow-xl max-h-[90vh] overflow-y-auto sm:max-h-none sm:overflow-visible'>
         <div className='flex justify-between items-center mb-6'>
           <h2 className='text-2xl font-light text-gray-900'>
             Edit Family Member
@@ -103,7 +103,7 @@ export function EditUserForm({ isOpen, onClose, person }: EditUserFormProps) {
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className='space-y-6'>
+        <form onSubmit={handleSubmit} className='space-y-4 sm:space-y-6'>
           <div>
             <label className='block text-sm font-light text-gray-600 mb-2'>
               Name *
@@ -168,7 +168,7 @@ export function EditUserForm({ isOpen, onClose, person }: EditUserFormProps) {
                   key={option.value}
                   type='button'
                   onClick={() => setColor(option.value)}
-                  className={`p-3 rounded-2xl text-gray-700 text-xs font-light transition-all hover:scale-105 bg-gradient-to-br ${
+                  className={`p-2 sm:p-3 rounded-2xl text-gray-700 text-xs font-light transition-all hover:scale-105 bg-gradient-to-br ${
                     option.value
                   } ${
                     color === option.value
@@ -176,7 +176,10 @@ export function EditUserForm({ isOpen, onClose, person }: EditUserFormProps) {
                       : "shadow-sm"
                   }`}
                 >
-                  {option.name}
+                  <span className='hidden sm:inline'>{option.name}</span>
+                  <span className='sm:hidden text-[10px]'>
+                    {option.name.slice(0, 3)}
+                  </span>
                 </button>
               ))}
             </div>
@@ -203,7 +206,7 @@ export function EditUserForm({ isOpen, onClose, person }: EditUserFormProps) {
               loading={loading}
               className='flex-1'
             >
-              Save Changes
+              Save
             </Button>
           </div>
         </form>

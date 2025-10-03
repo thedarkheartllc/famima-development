@@ -17,6 +17,7 @@ interface GalleryContentProps {
   files: string[];
   sortedGroupKeys: string[];
   groupedPhotos: Record<string, PhotoWithDate[]>;
+  photosWithUnknownDates?: PhotoWithDate[];
   personName?: string;
   photos?: Array<{ url?: string; filename: string }>; // Firebase photos for URL access
   onUploadComplete?: () => void;
@@ -27,14 +28,15 @@ export function GalleryContent({
   files,
   sortedGroupKeys,
   groupedPhotos,
+  photosWithUnknownDates = [],
   personName,
   onUploadComplete,
   onDeletePhoto,
 }: GalleryContentProps) {
   const formatMonthYear = (key: string) => {
     const [year, month] = key.split("-");
-    const date = new Date(parseInt(year), parseInt(month));
-    return date.toLocaleDateString("en-US", { month: "long" });
+    const date = new Date(parseInt(year), parseInt(month) - 1);
+    return date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
   };
   const [allExpanded, setAllExpanded] = useState(true);
   const [expandedMonths, setExpandedMonths] = useState<Record<string, boolean>>(
@@ -100,6 +102,17 @@ export function GalleryContent({
               onDeletePhoto={onDeletePhoto}
             />
           ))}
+
+          {/* Date Unknown section */}
+          {photosWithUnknownDates.length > 0 && (
+            <CollapsibleMonth
+              monthName={`Date Unknown (${photosWithUnknownDates.length})`}
+              photos={photosWithUnknownDates}
+              isExpanded={expandedMonths["date-unknown"] ?? allExpanded}
+              onToggle={() => toggleMonth("date-unknown")}
+              onDeletePhoto={onDeletePhoto}
+            />
+          )}
         </div>
       )}
     </>

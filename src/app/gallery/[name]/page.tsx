@@ -89,15 +89,18 @@ export default function Gallery({
     filename: photo.filename,
     url: photo.url || "",
     storagePath: photo.storagePath,
-    date: photo.takenAt
-      ? formatDate(photo.takenAt)
-      : formatDate(photo.uploadedAt),
-    dateObj: photo.takenAt || photo.uploadedAt,
+    date: photo.takenAt ? formatDate(photo.takenAt) : undefined,
+    dateObj: photo.takenAt,
   }));
 
-  // Filter out photos without dates and sort by date (most recent first)
-  const photosWithValidDates = photosWithDates.filter((photo) => photo.date);
-  const sortedPhotos = photosWithValidDates.sort((a, b) => {
+  // Separate photos with known dates from those without
+  const photosWithKnownDates = photosWithDates.filter((photo) => photo.dateObj);
+  const photosWithUnknownDates = photosWithDates.filter(
+    (photo) => !photo.dateObj
+  );
+
+  // Sort photos with known dates by date (most recent first)
+  const sortedPhotos = photosWithKnownDates.sort((a, b) => {
     if (!a.dateObj || !b.dateObj) return 0;
     return b.dateObj.getTime() - a.dateObj.getTime(); // Most recent first
   });
@@ -105,7 +108,9 @@ export default function Gallery({
   // Group photos by month/year
   const groupedPhotos = sortedPhotos.reduce((groups, photo) => {
     if (!photo.dateObj) return groups;
-    const monthYear = `${photo.dateObj.getFullYear()}-${photo.dateObj.getMonth()}`;
+    const monthYear = `${photo.dateObj.getFullYear()}-${String(
+      photo.dateObj.getMonth() + 1
+    ).padStart(2, "0")}`;
     if (!groups[monthYear]) {
       groups[monthYear] = [];
     }
@@ -124,6 +129,7 @@ export default function Gallery({
         files={photos.map((p) => p.filename)}
         sortedGroupKeys={sortedGroupKeys}
         groupedPhotos={groupedPhotos}
+        photosWithUnknownDates={photosWithUnknownDates}
         personName={decodedName}
         photos={photos}
         onUploadComplete={handleUploadComplete}

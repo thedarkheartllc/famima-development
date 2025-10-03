@@ -97,7 +97,7 @@ export function EditFamilyForm({
               loading={loading}
               className='flex-1'
             >
-              Save Changes
+              Save
             </Button>
           </div>
         </form>
