@@ -104,11 +104,11 @@ export function usePhotos(personId?: string) {
 
       // Compress the image before uploading
       const compressedFile = await imageCompression(file, {
-        maxSizeMB: 0.25, // 250KB target
+        maxSizeMB: 0.5, // 500KB target (increased from 250KB)
         maxWidthOrHeight: 1920, // Max width or height
         useWebWorker: true,
         fileType: "image/jpeg",
-        initialQuality: 0.8, // Start with 80% quality
+        initialQuality: 0.9, // Start with 90% quality (increased from 80%)
       });
 
       console.log(
