@@ -66,8 +66,8 @@ export default function PricingPage() {
                 Up to 10,000 photos
               </li>
               <li className='flex items-center text-gray-700'>
-                <HiOutlineUsers className='text-green-600 mr-3' />
-                Unlimited family members
+                <HiOutlineUsers className='text-green-600 mr-3' />5 family
+                members
               </li>
               <li className='flex items-center text-gray-700'>
                 <HiOutlineLockClosed className='text-green-600 mr-3' />

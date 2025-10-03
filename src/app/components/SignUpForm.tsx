@@ -4,10 +4,10 @@ import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 
 export function SignUpForm() {
-  const [email, setEmail] = useState("gunnlukari@gmail.com");
-  const [password, setPassword] = useState("zelda2025!");
-  const [retypePassword, setRetypePassword] = useState("zelda2025!");
-  const [familyName, setFamilyName] = useState("Curry Family");
+  const [email, setEmail] = useState("family@test.com");
+  const [password, setPassword] = useState("pass12345");
+  const [retypePassword, setRetypePassword] = useState("pass12345");
+  const [familyName, setFamilyName] = useState("The Family");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { signUp } = useAuth();

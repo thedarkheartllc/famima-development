@@ -5,8 +5,8 @@ import { useAuth } from "../contexts/AuthContext";
 import { HiEye, HiEyeSlash } from "react-icons/hi2";
 
 export function LoginForm() {
-  const [email, setEmail] = useState("gunnlukari@gmail.com");
-  const [password, setPassword] = useState("zelda2025!");
+  const [email, setEmail] = useState("family@test.com");
+  const [password, setPassword] = useState("pass12345");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);

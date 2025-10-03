@@ -23,11 +23,6 @@ export function WhatYouWontFindSection() {
             <p className='text-gray-600 '>No addiction</p>
           </div>
         </div>
-        <div className='pt-8 space-y-3 text-gray-700  text-xl font-light'>
-          <p>Your photos.</p>
-          <p>Your family.</p>
-          <p>Your peace of mind.</p>
-        </div>
       </div>
     </section>
   );
