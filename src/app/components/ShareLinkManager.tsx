@@ -73,7 +73,7 @@ export function ShareLinkManager({ isOpen, onClose }: ShareLinkManagerProps) {
                 <div className='flex items-center justify-between'>
                   <div className='flex-1'>
                     <h3 className='font-medium text-gray-900'>
-                      {link.personName}'s Gallery
+                      {link.personName}&apos;s Gallery
                     </h3>
                     <p className='text-sm text-gray-600'>
                       Created {link.createdAt.toLocaleDateString()}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   collection,
   query,
@@ -10,7 +10,6 @@ import {
   deleteDoc,
   doc,
   getDocs,
-  getDoc,
   serverTimestamp,
   increment,
 } from "firebase/firestore";
@@ -37,7 +36,7 @@ export function useShareLinks() {
   };
 
   // Fetch all share links for the current family
-  const fetchShareLinks = async () => {
+  const fetchShareLinks = useCallback(async () => {
     if (!user) return;
 
     setLoading(true);
@@ -76,7 +75,7 @@ export function useShareLinks() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
 
   // Create a new share link
   const createShareLink = async (
@@ -249,7 +248,7 @@ export function useShareLinks() {
     if (user) {
       fetchShareLinks();
     }
-  }, [user]);
+  }, [user, fetchShareLinks]);
 
   return {
     shareLinks,

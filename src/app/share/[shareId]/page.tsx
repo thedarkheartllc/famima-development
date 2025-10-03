@@ -7,6 +7,7 @@ import { useShareLinks } from "../../../hooks/useShareLinks";
 import { useEffect, useState, useRef } from "react";
 import { Logo } from "../../components/Logo";
 import { Footer } from "../../components/Footer";
+import { ShareLink } from "../../../types";
 
 interface PhotoWithDate {
   id?: string;
@@ -24,7 +25,7 @@ export default function PublicShare({
 }) {
   const resolvedParams = use(params);
   const { getShareLink, trackView } = useShareLinks();
-  const [shareLink, setShareLink] = useState<any>(null);
+  const [shareLink, setShareLink] = useState<ShareLink | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const hasTrackedView = useRef(false);
@@ -173,7 +174,7 @@ export default function PublicShare({
                 <Logo href='/' size='small' />
               </div>
               <h1 className='text-xl sm:text-2xl md:text-3xl font-light text-gray-900 capitalize'>
-                {shareLink?.personName}'s Gallery
+                {shareLink?.personName}&apos;s Gallery
               </h1>
               <p className='text-sm text-gray-600 font-light'>
                 Shared by {shareLink?.familyId} • {photos.length} photos

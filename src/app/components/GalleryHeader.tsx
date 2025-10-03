@@ -38,7 +38,6 @@ export function GalleryHeader({
   const { showSuccess, showError } = useToastContext();
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [showShareModal, setShowShareModal] = useState(false);
 
   const person = people.find(
     (p) => p.name.toLowerCase() === personName?.toLowerCase()

@@ -1,6 +1,5 @@
 import {
   HiOutlineShieldCheck,
-  HiOutlineLockClosed,
   HiOutlineSparkles,
   HiOutlineHeart,
 } from "react-icons/hi2";
@@ -12,7 +11,7 @@ export function FeaturesSection() {
         <h2 className='text-3xl sm:text-4xl md:text-5xl font-light text-gray-900 text-center mb-12 sm:mb-16 px-2'>
           What Makes Famima Different
         </h2>
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6'>
+        <div className='flex flex-col md:flex-row gap-4'>
           <div className='bg-green-50/50 rounded-2xl p-6 sm:p-8 text-center space-y-3'>
             <HiOutlineShieldCheck className='text-2xl sm:text-3xl text-green-600 mx-auto' />
             <h3 className='text-base sm:text-lg font-light text-gray-900'>

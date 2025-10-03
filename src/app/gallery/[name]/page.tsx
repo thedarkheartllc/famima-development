@@ -2,6 +2,7 @@
 
 import { use } from "react";
 import { GalleryContent } from "../../components/GalleryContent";
+import { Footer } from "../../components/Footer";
 import { usePhotos } from "../../../hooks/usePhotos";
 import { usePeople } from "../../../hooks/usePeople";
 
@@ -124,18 +125,21 @@ export default function Gallery({
   });
 
   return (
-    <main className='bg-gradient-to-b from-white to-green-50/30   min-h-screen'>
-      <GalleryContent
-        files={photos.map((p) => p.filename)}
-        sortedGroupKeys={sortedGroupKeys}
-        groupedPhotos={groupedPhotos}
-        photosWithUnknownDates={photosWithUnknownDates}
-        personName={decodedName}
-        photos={photos}
-        onUploadComplete={handleUploadComplete}
-        onDeletePhoto={deletePhoto}
-      />
-    </main>
+    <>
+      <main className='bg-gradient-to-b from-white to-green-50/30   min-h-screen'>
+        <GalleryContent
+          files={photos.map((p) => p.filename)}
+          sortedGroupKeys={sortedGroupKeys}
+          groupedPhotos={groupedPhotos}
+          photosWithUnknownDates={photosWithUnknownDates}
+          personName={decodedName}
+          photos={photos}
+          onUploadComplete={handleUploadComplete}
+          onDeletePhoto={deletePhoto}
+        />
+      </main>
+      <Footer />
+    </>
   );
 }
 
