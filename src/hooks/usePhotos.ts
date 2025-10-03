@@ -16,6 +16,7 @@ import {
   deleteObject,
 } from "firebase/storage";
 import imageCompression from "browser-image-compression";
+import { parse } from "exifr";
 import { db, storage } from "../lib/firebase";
 import { Photo } from "../types";
 import { useAuth } from "../app/contexts/AuthContext";
@@ -28,50 +29,53 @@ export function usePhotos(personId?: string) {
   const { user } = useAuth();
 
   // Fetch photos for a specific person
-  const fetchPhotos = useCallback(async (personId: string) => {
-    if (!user) return;
+  const fetchPhotos = useCallback(
+    async (personId: string) => {
+      if (!user) return;
 
-    try {
-      setLoading(true);
-      setError(null);
+      try {
+        setLoading(true);
+        setError(null);
 
-      const photosRef = collection(db, COLLECTIONS.PHOTOS);
-      const q = query(
-        photosRef,
-        where(PHOTO_FIELDS.PERSON_ID, "==", personId),
-        where(PHOTO_FIELDS.FAMILY_ID, "==", user.uid)
-      );
+        const photosRef = collection(db, COLLECTIONS.PHOTOS);
+        const q = query(
+          photosRef,
+          where(PHOTO_FIELDS.PERSON_ID, "==", personId),
+          where(PHOTO_FIELDS.FAMILY_ID, "==", user.uid)
+        );
 
-      const querySnapshot = await getDocs(q);
-      const photosData: Photo[] = [];
+        const querySnapshot = await getDocs(q);
+        const photosData: Photo[] = [];
 
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        photosData.push({
-          id: doc.id,
-          personId: data.personId,
-          familyId: data.familyId,
-          filename: data.filename,
-          storagePath: data.storagePath,
-          uploadedAt: data.uploadedAt.toDate(),
-          takenAt: data.takenAt?.toDate(),
-          size: data.size,
-          url: data.url,
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          photosData.push({
+            id: doc.id,
+            personId: data.personId,
+            familyId: data.familyId,
+            filename: data.filename,
+            storagePath: data.storagePath,
+            uploadedAt: data.uploadedAt.toDate(),
+            takenAt: data.takenAt?.toDate(),
+            size: data.size,
+            url: data.url,
+          });
         });
-      });
 
-      // Sort by uploadedAt descending (most recent first)
-      photosData.sort(
-        (a, b) => b.uploadedAt.getTime() - a.uploadedAt.getTime()
-      );
+        // Sort by uploadedAt descending (most recent first)
+        photosData.sort(
+          (a, b) => b.uploadedAt.getTime() - a.uploadedAt.getTime()
+        );
 
-      setPhotos(photosData);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to fetch photos");
-    } finally {
-      setLoading(false);
-    }
-  }, [user]);
+        setPhotos(photosData);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to fetch photos");
+      } finally {
+        setLoading(false);
+      }
+    },
+    [user]
+  );
 
   // Upload a photo
   const uploadPhoto = async (
@@ -81,6 +85,22 @@ export function usePhotos(personId?: string) {
   ) => {
     try {
       setError(null);
+
+      // Extract EXIF data to get the original photo date
+      let takenAt: Date | undefined;
+      try {
+        const exifData = await parse(file);
+        if (exifData?.DateTimeOriginal) {
+          takenAt = new Date(exifData.DateTimeOriginal);
+        } else if (exifData?.DateTime) {
+          takenAt = new Date(exifData.DateTime);
+        } else if (exifData?.CreateDate) {
+          takenAt = new Date(exifData.CreateDate);
+        }
+      } catch (exifError) {
+        console.warn("Could not extract EXIF data:", exifError);
+        // Continue without EXIF data
+      }
 
       // Compress the image before uploading
       const compressedFile = await imageCompression(file, {
@@ -129,6 +149,7 @@ export function usePhotos(personId?: string) {
                 filename: file.name,
                 storagePath: `families/${user?.uid}/${personId}/${photoId}.jpg`,
                 uploadedAt: Timestamp.now(),
+                takenAt: takenAt ? Timestamp.fromDate(takenAt) : null,
                 size: compressedFile.size,
                 url: downloadURL,
               };
@@ -146,6 +167,7 @@ export function usePhotos(personId?: string) {
                 filename: file.name,
                 storagePath: `families/${user?.uid}/${personId}/${photoId}.jpg`,
                 uploadedAt: new Date(),
+                takenAt: takenAt,
                 size: compressedFile.size,
                 url: downloadURL,
               };
