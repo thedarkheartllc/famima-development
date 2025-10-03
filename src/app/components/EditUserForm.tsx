@@ -32,7 +32,7 @@ export function EditUserForm({ isOpen, onClose, person }: EditUserFormProps) {
   const [birthDate, setBirthDate] = useState(person.birthDate || "");
   const [color, setColor] = useState(person.color || "from-sky-200 to-sky-300");
   const [relationshipType, setRelationshipType] = useState<
-    "parent" | "child" | "partner" | "grandchild" | "other"
+    "parent" | "child" | "partner" | "grandchild" | "pet" | "other"
   >(person.relationshipType || "other");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -143,6 +143,7 @@ export function EditUserForm({ isOpen, onClose, person }: EditUserFormProps) {
                     | "child"
                     | "partner"
                     | "grandchild"
+                    | "pet"
                     | "other"
                 )
               }
@@ -152,6 +153,7 @@ export function EditUserForm({ isOpen, onClose, person }: EditUserFormProps) {
               <option value='child'>Child</option>
               <option value='partner'>Partner</option>
               <option value='grandchild'>Grandchild</option>
+              <option value='pet'>Pet</option>
               <option value='other'>Other</option>
             </select>
           </div>
