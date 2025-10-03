@@ -111,7 +111,7 @@ export default function PricingPage() {
                 <div>
                   <h4 className='font-medium text-gray-900'>Simple & Secure</h4>
                   <p className='text-gray-600'>
-                    End-to-end protection of your family's memories.
+                    End-to-end protection of your family&apos;s memories.
                   </p>
                 </div>
               </div>

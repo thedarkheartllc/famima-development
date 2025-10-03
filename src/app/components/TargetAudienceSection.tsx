@@ -17,8 +17,8 @@ export function TargetAudienceSection() {
             <div className='flex items-start gap-3'>
               <span className='text-green-600 text-xl mt-1'>👶</span>
               <p className='text-gray-600'>
-                Parents who don't want their kids' photos on Instagram,
-                Facebook, or Google.
+                Parents who don&apos;t want their kids&apos; photos on
+                Instagram, Facebook, or Google.
               </p>
             </div>
           </div>
