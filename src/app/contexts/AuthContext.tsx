@@ -10,6 +10,7 @@ import {
 } from "firebase/auth";
 import { auth, db } from "@/lib/firebase";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { COLLECTIONS, FAMILY_FIELDS } from "@/lib/firestoreConstants";
 
 interface AuthContextType {
   user: User | null;
@@ -64,15 +65,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       console.log("Creating family document with ID:", familyId);
 
       const familyData = {
-        Email: email,
-        FamilyID: familyId,
-        FamilyName: familyName,
-        CreatedAt: serverTimestamp(),
+        [FAMILY_FIELDS.EMAIL]: email,
+        [FAMILY_FIELDS.ID]: familyId,
+        [FAMILY_FIELDS.FAMILY_NAME]: familyName,
+        [FAMILY_FIELDS.CREATED_AT]: serverTimestamp(),
       };
 
       console.log("Family data to save:", familyData);
 
-      await setDoc(doc(db, "families", familyId), familyData);
+      await setDoc(doc(db, COLLECTIONS.FAMILIES, familyId), familyData);
       console.log("Family document created successfully!");
     } catch (error) {
       console.error("Error in signUp process:", error);

@@ -37,7 +37,7 @@ export function AddFamilyMemberForm({
   const [birthDate, setBirthDate] = useState("1990-01-15");
   const [color, setColor] = useState("from-sky-200 to-sky-300");
   const [relationshipType, setRelationshipType] = useState<
-    "parent" | "child" | "partner" | "grandchild" | "other"
+    "parent" | "child" | "partner" | "grandchild" | "pet" | "other"
   >("parent");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -134,6 +134,7 @@ export function AddFamilyMemberForm({
                     | "child"
                     | "partner"
                     | "grandchild"
+                    | "pet"
                     | "other"
                 )
               }
@@ -143,6 +144,7 @@ export function AddFamilyMemberForm({
               <option value='child'>Child</option>
               <option value='partner'>Partner</option>
               <option value='grandchild'>Grandchild</option>
+              <option value='pet'>Pet</option>
               <option value='other'>Other</option>
             </select>
           </div>

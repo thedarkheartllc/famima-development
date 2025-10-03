@@ -25,6 +25,8 @@ export function FamilyTree({ people }: FamilyTreeProps) {
     (person) => person.relationshipType === "grandchild"
   );
 
+  const pets = people.filter((person) => person.relationshipType === "pet");
+
   const others = people.filter(
     (person) => person.relationshipType === "other" || !person.relationshipType
   );
@@ -105,6 +107,16 @@ export function FamilyTree({ people }: FamilyTreeProps) {
           <h3 className='text-xl font-light text-gray-900'>Grandchildren</h3>
           <div className='flex flex-wrap justify-center gap-6'>
             {grandchildren.map((person) => renderPersonCard(person, "small"))}
+          </div>
+        </div>
+      )}
+
+      {/* Pets Section */}
+      {pets.length > 0 && (
+        <div className='flex flex-col items-center space-y-6'>
+          <h3 className='text-xl font-light text-gray-900'>Pets</h3>
+          <div className='flex flex-wrap justify-center gap-6'>
+            {pets.map((person) => renderPersonCard(person, "medium"))}
           </div>
         </div>
       )}

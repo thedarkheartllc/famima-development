@@ -1,55 +1,29 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 
 interface LogoProps {
-  size?: "sm" | "md" | "lg";
-  showTagline?: boolean;
-  linkToHome?: boolean;
+  href?: string;
+  className?: string;
 }
 
-export function Logo({
-  size = "md",
-  showTagline = true,
-  linkToHome = false,
-}: LogoProps) {
-  const sizeClasses = {
-    sm: "text-3xl",
-    md: "text-4xl",
-    lg: "text-6xl",
-  };
-
-  const taglineSizeClasses = {
-    sm: "text-sm",
-    md: "text-lg",
-    lg: "text-xl",
-  };
-
-  const logoContent = (
-    <div className='text-center'>
-      <h1
-        className={`${sizeClasses[size]} font-bold text-white`}
-        style={{ fontFamily: '"Style Script", cursive' }}
-      >
+export function Logo({ href = "/", className = "" }: LogoProps) {
+  return (
+    <Link
+      href={href}
+      className={`flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-opacity ${className}`}
+    >
+      <Image
+        src='/logo.png'
+        alt='Famima Logo'
+        width={32}
+        height={32}
+        className='w-8 sm:w-10 h-8 sm:h-10'
+      />
+      <span className='text-lg sm:text-xl font-light text-gray-900'>
         Famima
-      </h1>
-      {showTagline && (
-        <p
-          className={`${taglineSizeClasses[size]} text-white opacity-80`}
-        >
-          a family memory book{" "}
-        </p>
-      )}
-    </div>
+      </span>
+    </Link>
   );
-
-  if (linkToHome) {
-    return (
-      <Link href='/' className='hover:opacity-80 transition-opacity'>
-        {logoContent}
-      </Link>
-    );
-  }
-
-  return logoContent;
 }

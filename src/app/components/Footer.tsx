@@ -1,16 +1,12 @@
 import Link from "next/link";
+import { Logo } from "./Logo";
 
 export function Footer() {
   return (
     <footer className='py-12 px-6 bg-white  border-t border-gray-100 '>
       <div className='max-w-6xl mx-auto'>
         <div className='flex flex-col md:flex-row justify-between items-center gap-6'>
-          <div className='flex items-center gap-3'>
-            <div className='w-8 h-8 bg-gradient-to-br from-green-100 to-green-200 rounded-full flex items-center justify-center'>
-              <span className='text-gray-700  font-light'>F</span>
-            </div>
-            <span className='text-lg font-light text-gray-600 '>Famima</span>
-          </div>
+          <Logo />
           <div className='flex items-center gap-6'>
             <Link
               href='/terms'

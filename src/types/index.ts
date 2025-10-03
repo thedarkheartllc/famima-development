@@ -13,7 +13,13 @@ export interface Person {
   birthDate?: string;
   color: string;
   createdAt: Date;
-  relationshipType?: "parent" | "child" | "partner" | "grandchild" | "other";
+  relationshipType?:
+    | "parent"
+    | "child"
+    | "partner"
+    | "grandchild"
+    | "pet"
+    | "other";
   partnerId?: string; // ID of partner if this person has a partner
   parentIds?: string[]; // IDs of parents
 }
