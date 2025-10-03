@@ -11,12 +11,17 @@ import {
   doc,
   where,
   deleteDoc,
+  getDoc,
 } from "firebase/firestore";
 import { ref, deleteObject } from "firebase/storage";
 import { db, storage } from "@/lib/firebase";
 import { Person } from "@/types";
 import { useAuth } from "@/app/contexts/AuthContext";
-import { COLLECTIONS, PERSON_FIELDS } from "@/lib/firestoreConstants";
+import {
+  COLLECTIONS,
+  PERSON_FIELDS,
+  PHOTO_FIELDS,
+} from "@/lib/firestoreConstants";
 
 export function usePeople() {
   const [people, setPeople] = useState<Person[]>([]);
@@ -123,38 +128,81 @@ export function usePeople() {
   const deletePerson = async (personId: string) => {
     try {
       setError(null);
+      console.log("🗑️ Starting deletePerson for:", personId);
+      console.log("👤 Current user:", user?.uid);
+
+      // First, let's check if the person exists and get their data
+      const personRef = doc(db, COLLECTIONS.PEOPLE, personId);
+      const personSnapshot = await getDoc(personRef);
+      if (!personSnapshot.exists()) {
+        throw new Error("Person not found");
+      }
+      const personData = personSnapshot.data();
+      console.log("👤 Person data:", {
+        id: personId,
+        familyId: personData.familyId,
+        name: personData.name,
+        userUid: user?.uid,
+      });
+
+      // Verify the user owns this person
+      if (personData.familyId !== user?.uid) {
+        throw new Error("You don't have permission to delete this person");
+      }
 
       // 1. Find all photos for this person
+      console.log("📸 Step 1: Finding photos for person...");
       const photosQuery = query(
         collection(db, COLLECTIONS.PHOTOS),
-        where(PERSON_FIELDS.PERSON_ID, "==", personId)
+        where(PHOTO_FIELDS.PERSON_ID, "==", personId),
+        where(PHOTO_FIELDS.FAMILY_ID, "==", user?.uid)
       );
       const photosSnapshot = await getDocs(photosQuery);
+      console.log("📸 Found", photosSnapshot.docs.length, "photos to delete");
 
       // 2. Delete all photo files from Storage and Firestore documents
+      console.log("🗑️ Step 2: Deleting photos...");
       await Promise.all(
-        photosSnapshot.docs.map(async (photoDoc) => {
+        photosSnapshot.docs.map(async (photoDoc, index) => {
           const photoData = photoDoc.data();
+          console.log(`📸 Deleting photo ${index + 1}:`, {
+            photoId: photoDoc.id,
+            storagePath: photoData.storagePath,
+            familyId: photoData.familyId,
+          });
 
           // Delete from Storage
           if (photoData.storagePath) {
+            console.log("🗄️ Deleting from Storage:", photoData.storagePath);
             const storageRef = ref(storage, photoData.storagePath);
             await deleteObject(storageRef);
+            console.log("✅ Storage deletion successful");
           }
 
           // Delete from Firestore
+          console.log("🔥 Deleting from Firestore:", photoDoc.id);
           await deleteDoc(photoDoc.ref);
+          console.log("✅ Firestore deletion successful");
         })
       );
 
       // 3. Delete the person document
+      console.log("👤 Step 3: Deleting person document...");
       await deleteDoc(doc(db, COLLECTIONS.PEOPLE, personId));
+      console.log("✅ Person deletion successful");
 
       // Refresh the people list
+      console.log("🔄 Refreshing people list...");
       await fetchPeople();
+      console.log("✅ Delete person completed successfully");
     } catch (err) {
+      console.error("❌ Error deleting person:", err);
+      console.error("❌ Error details:", {
+        code: (err as any)?.code,
+        message: (err as any)?.message,
+        stack: (err as any)?.stack,
+      });
       setError(err instanceof Error ? err.message : "Failed to delete person");
-      console.error("Error deleting person:", err);
       throw err;
     }
   };
