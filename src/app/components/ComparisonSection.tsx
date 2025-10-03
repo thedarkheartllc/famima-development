@@ -2,66 +2,66 @@ import { HiOutlineCamera } from "react-icons/hi2";
 
 export function ComparisonSection() {
   return (
-    <section className='py-20 px-6 bg-gradient-to-b from-white to-green-50/20'>
+    <section className='py-16 sm:py-20 px-4 sm:px-6 bg-gradient-to-b from-white to-green-50/20'>
       <div className='max-w-6xl mx-auto'>
-        <div className='text-center mb-16'>
-          <h2 className='text-4xl md:text-5xl font-light text-gray-900 mb-4'>
-            <HiOutlineCamera className='inline-block mr-3 text-green-600' />
+        <div className='text-center mb-12 sm:mb-16'>
+          <h2 className='text-3xl sm:text-4xl md:text-5xl font-light text-gray-900 mb-4 px-2'>
+            <HiOutlineCamera className='inline-block mr-2 sm:mr-3 text-green-600 text-2xl sm:text-3xl' />
             Famima vs. Instagram
           </h2>
         </div>
 
-        <div className='bg-white rounded-3xl shadow-lg overflow-hidden'>
+        <div className='bg-white rounded-2xl sm:rounded-3xl shadow-lg overflow-hidden'>
           <div className='overflow-x-auto'>
-            <table className='w-full'>
+            <table className='w-full min-w-[600px]'>
               <thead className='bg-green-50'>
                 <tr>
-                  <th className='px-6 py-4 text-left text-lg font-medium text-gray-900 w-1/2'>
+                  <th className='px-3 sm:px-6 py-3 sm:py-4 text-left text-base sm:text-lg font-medium text-gray-900 w-1/2'>
                     Famima
                   </th>
-                  <th className='px-6 py-4 text-left text-lg font-medium text-gray-900 w-1/2'>
+                  <th className='px-3 sm:px-6 py-3 sm:py-4 text-left text-base sm:text-lg font-medium text-gray-900 w-1/2'>
                     Instagram
                   </th>
                 </tr>
               </thead>
               <tbody className='divide-y divide-gray-100'>
                 <tr>
-                  <td className='px-6 py-4 text-gray-600'>
+                  <td className='px-3 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-600'>
                     Calm, minimalist grid built for peace of mind
                   </td>
-                  <td className='px-6 py-4 text-gray-600'>
+                  <td className='px-3 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-600'>
                     Addictive feed designed to keep you scrolling
                   </td>
                 </tr>
                 <tr className='bg-green-50/30'>
-                  <td className='px-6 py-4 text-gray-600'>
+                  <td className='px-3 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-600'>
                     No ads. No algorithms. Ever.
                   </td>
-                  <td className='px-6 py-4 text-gray-600'>
+                  <td className='px-3 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-600'>
                     Ads, sponsored posts, algorithms
                   </td>
                 </tr>
                 <tr>
-                  <td className='px-6 py-4 text-gray-600'>
+                  <td className='px-3 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-600'>
                     100% private, family-only space
                   </td>
-                  <td className='px-6 py-4 text-gray-600'>
+                  <td className='px-3 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-600'>
                     NSFW content, strangers, bots
                   </td>
                 </tr>
                 <tr className='bg-green-50/30'>
-                  <td className='px-6 py-4 text-gray-600'>
+                  <td className='px-3 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-600'>
                     No followers. No likes. No social pressure.
                   </td>
-                  <td className='px-6 py-4 text-gray-600'>
+                  <td className='px-3 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-600'>
                     Follower counts, likes, comments, clout chasing
                   </td>
                 </tr>
                 <tr>
-                  <td className='px-6 py-4 text-gray-600'>
+                  <td className='px-3 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-600'>
                     Owned by you. Your data stays in your hands.
                   </td>
-                  <td className='px-6 py-4 text-gray-600'>
+                  <td className='px-3 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-600'>
                     Owned by a giant corporation that mines your data
                   </td>
                 </tr>
