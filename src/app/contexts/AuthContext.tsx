@@ -7,6 +7,7 @@ import {
   createUserWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  sendEmailVerification,
 } from "firebase/auth";
 import { auth, db } from "@/lib/firebase";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
@@ -22,7 +23,9 @@ interface AuthContextType {
     familyName: string
   ) => Promise<void>;
   logout: () => Promise<void>;
+  resendVerification: () => Promise<void>;
   isAdmin: boolean;
+  isEmailVerified: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -60,6 +63,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const user = userCredential.user;
       console.log("User created successfully:", user.uid);
 
+      // Send email verification
+      await sendEmailVerification(user);
+      console.log("Verification email sent");
+
       // Create family document in Firestore
       const familyId = user.uid; // Use user ID as family ID
       console.log("Creating family document with ID:", familyId);
@@ -85,11 +92,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await signOut(auth);
   };
 
+  const resendVerification = async () => {
+    if (user) {
+      await sendEmailVerification(user);
+    }
+  };
+
   const isAdmin = !!user;
+  const isEmailVerified = user?.emailVerified || false;
 
   return (
     <AuthContext.Provider
-      value={{ user, loading, signIn, signUp, logout, isAdmin }}
+      value={{
+        user,
+        loading,
+        signIn,
+        signUp,
+        logout,
+        resendVerification,
+        isAdmin,
+        isEmailVerified,
+      }}
     >
       {children}
     </AuthContext.Provider>

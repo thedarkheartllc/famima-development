@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function FamilyPage() {
-  const { isAdmin } = useAuth();
+  const { isAdmin, isEmailVerified } = useAuth();
   const { people, loading, addPerson, refetch } = usePeople(); // Get data AND functions from hook
   const { family, loading: familyLoading, updateFamily } = useFamily();
   const router = useRouter();
@@ -21,8 +21,10 @@ export default function FamilyPage() {
   useEffect(() => {
     if (!isAdmin) {
       router.push("/login");
+    } else if (isAdmin && !isEmailVerified) {
+      router.push("/signup");
     }
-  }, [isAdmin, router]);
+  }, [isAdmin, isEmailVerified, router]);
 
   if (!isAdmin) {
     return null;

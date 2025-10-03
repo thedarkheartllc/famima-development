@@ -8,14 +8,16 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function LoginPage() {
-  const { isAdmin } = useAuth();
+  const { isAdmin, isEmailVerified } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (isAdmin) {
+    if (isAdmin && isEmailVerified) {
       router.push("/family");
+    } else if (isAdmin && !isEmailVerified) {
+      router.push("/signup");
     }
-  }, [isAdmin, router]);
+  }, [isAdmin, isEmailVerified, router]);
 
   return (
     <main className='bg-gradient-to-b from-white to-green-50/30   min-h-screen'>
