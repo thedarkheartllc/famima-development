@@ -144,7 +144,7 @@ export function ImageViewer({
       {currentIndex > 0 && (
         <button
           onClick={goToPrevious}
-          className='absolute left-6 top-1/2 transform -translate-y-1/2 z-10 p-4 bg-gradient-to-br from-sky-200 to-sky-300 hover:from-sky-300 hover:to-sky-400 rounded-full text-gray-700 transition-all shadow-lg'
+          className='absolute left-6 bottom-6 md:top-1/2 md:bottom-auto md:transform md:-translate-y-1/2 z-10 p-4 bg-gradient-to-br from-gray-200 to-gray-300 hover:from-gray-300 hover:to-gray-400 rounded-full text-gray-700 transition-all shadow-lg'
           aria-label='Previous image'
         >
           <FaChevronLeft className='text-2xl' />
@@ -154,7 +154,7 @@ export function ImageViewer({
       {currentIndex < photos.length - 1 && (
         <button
           onClick={goToNext}
-          className='absolute right-6 top-1/2 transform -translate-y-1/2 z-10 p-4 bg-gradient-to-br from-sky-200 to-sky-300 hover:from-sky-300 hover:to-sky-400 rounded-full text-gray-700 transition-all shadow-lg'
+          className='absolute right-6 bottom-6 md:top-1/2 md:bottom-auto md:transform md:-translate-y-1/2 z-10 p-4 bg-gradient-to-br from-gray-200 to-gray-300 hover:from-gray-300 hover:to-gray-400 rounded-full text-gray-700 transition-all shadow-lg'
           aria-label='Next image'
         >
           <FaChevronRight className='text-2xl' />
@@ -186,10 +186,13 @@ export function ImageViewer({
       {/* Image info */}
       <div className='absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-white/80 backdrop-blur-md text-gray-700 px-6 py-3 rounded-full shadow-lg'>
         <div className='text-center space-y-1'>
-          <div className='font-light text-sm'>{currentPhoto.filename}</div>
-          {currentPhoto.date && (
+          {currentPhoto.dateObj && (
             <div className='text-xs font-light text-gray-500'>
-              {currentPhoto.date}
+              {currentPhoto.dateObj.toLocaleDateString("en-US", {
+                month: "2-digit",
+                day: "2-digit",
+                year: "numeric",
+              })}
             </div>
           )}
           <div className='text-xs font-light text-gray-500'>
