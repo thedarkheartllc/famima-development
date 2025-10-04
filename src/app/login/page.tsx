@@ -14,8 +14,6 @@ export default function LoginPage() {
   useEffect(() => {
     if (isAdmin && isEmailVerified) {
       router.push("/family");
-    } else if (isAdmin && !isEmailVerified) {
-      router.push("/signup");
     }
   }, [isAdmin, isEmailVerified, router]);
 
