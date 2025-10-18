@@ -21,7 +21,6 @@ export function EditFamilyForm({
   const [familyName, setFamilyName] = useState(currentFamilyName);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const { family } = useFamily();
 
   if (!isOpen) return null;
 

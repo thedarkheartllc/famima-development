@@ -2,7 +2,6 @@
 
 import { AppHeader } from "./components/AppHeader";
 import { Footer } from "./components/Footer";
-import { ComparisonSection } from "./components/ComparisonSection";
 import { HeroSection } from "./components/HeroSection";
 import { HeroImageSection } from "./components/HeroImageSection";
 import { FeaturesSection } from "./components/FeaturesSection";
@@ -17,7 +16,7 @@ export default function LandingPage() {
       <AppHeader showSignIn fixed />
 
       <HeroSection />
-      <HeroImageSection /> 
+      <HeroImageSection />
       <TargetAudienceSection />
       <WhatYouWontFindSection />
       <BenefitsSection />

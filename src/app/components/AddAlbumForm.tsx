@@ -28,22 +28,6 @@ const COLOR_OPTIONS = [
   { name: "Cloud", value: "from-slate-200 to-slate-300" },
 ];
 
-// Generate album ID from name and creation date
-const generateAlbumId = (name: string, createdAt: Date): string => {
-  // Clean the name: remove special characters, convert to lowercase, replace spaces with hyphens
-  const cleanName = name
-    .toLowerCase()
-    .replace(/[^a-z0-9\s]/g, "") // Remove special characters
-    .replace(/\s+/g, "-") // Replace spaces with hyphens
-    .replace(/-+/g, "-") // Replace multiple hyphens with single hyphen
-    .replace(/^-|-$/g, ""); // Remove leading/trailing hyphens
-
-  // Format date as YYYY-MM-DD
-  const dateStr = createdAt.toISOString().split("T")[0];
-
-  return `${cleanName}-${dateStr}`;
-};
-
 export function AddAlbumForm({
   onClose,
   addAlbum,
@@ -68,7 +52,6 @@ export function AddAlbumForm({
     setError("");
 
     try {
-      const createdAt = new Date();
       const formattedName =
         name.trim().charAt(0).toUpperCase() +
         name.trim().slice(1).toLowerCase();

@@ -11,7 +11,6 @@ import {
   doc,
   where,
   deleteDoc,
-  getDoc,
 } from "firebase/firestore";
 import { ref, deleteObject } from "firebase/storage";
 import { db, storage } from "@/lib/firebase";

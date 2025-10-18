@@ -89,7 +89,7 @@ export function FamilyPhotoUploadModal({
         setUploadProgress(0);
       }
     },
-    [onUploadComplete, onClose]
+    [onUploadComplete, onClose, uploadFamilyPhoto]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

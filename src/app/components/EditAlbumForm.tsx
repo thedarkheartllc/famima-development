@@ -218,8 +218,8 @@ export function EditAlbumForm({ isOpen, onClose, album }: EditAlbumFormProps) {
               Delete Album
             </h3>
             <p className='text-gray-600 font-light mb-6'>
-              Are you sure you want to delete "{album.name}"? This action cannot
-              be undone and will remove all photos in this album.
+              Are you sure you want to delete &quot;{album.name}&quot;? This
+              action cannot be undone and will remove all photos in this album.
             </p>
             <div className='flex gap-3'>
               <Button
