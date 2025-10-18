@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { EditFamilyForm } from "./EditFamilyForm";
 import { AddFamilyMemberForm } from "./AddFamilyMemberForm";
+import { FamilyPhotoUploadModal } from "./FamilyPhotoUploadModal";
 import { Person, Family } from "@/types";
 import {
   HiUser,
@@ -11,6 +12,7 @@ import {
   HiArrowRightOnRectangle,
   HiPencil,
   HiPlus,
+  HiPhoto,
 } from "react-icons/hi2";
 
 interface AccountDropdownProps {
@@ -21,6 +23,7 @@ interface AccountDropdownProps {
   refetch?: () => Promise<void>;
   family?: Family | null;
   updateFamily?: (newFamilyName: string) => Promise<void>;
+  updateFamilyImage?: (imageUrl: string) => Promise<void>;
 }
 
 export function AccountDropdown({
@@ -29,11 +32,13 @@ export function AccountDropdown({
   refetch,
   family,
   updateFamily,
+  updateFamilyImage,
 }: AccountDropdownProps) {
   const { logout, user } = useAuth();
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [showEditFamily, setShowEditFamily] = useState(false);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [showFamilyPhotoUpload, setShowFamilyPhotoUpload] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleLogout = async () => {
@@ -135,6 +140,21 @@ export function AccountDropdown({
                 </button>
               )}
 
+              {family && updateFamilyImage && (
+                <button
+                  onClick={() => {
+                    setShowProfileDropdown(false);
+                    setShowFamilyPhotoUpload(true);
+                  }}
+                  className='w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-3'
+                >
+                  <HiPhoto className='w-4 h-4' />
+                  {family.familyImage
+                    ? "Change Family Photo"
+                    : "Add Family Photo"}
+                </button>
+              )}
+
               {family && (
                 <button
                   onClick={() => {
@@ -178,6 +198,14 @@ export function AccountDropdown({
           onClose={() => setShowAddForm(false)}
           addPerson={addPerson}
           refetch={refetch}
+        />
+      )}
+
+      {showFamilyPhotoUpload && updateFamilyImage && (
+        <FamilyPhotoUploadModal
+          isOpen={showFamilyPhotoUpload}
+          onClose={() => setShowFamilyPhotoUpload(false)}
+          onUploadComplete={updateFamilyImage}
         />
       )}
 

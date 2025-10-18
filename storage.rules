@@ -2,10 +2,9 @@ rules_version = '2';
 
 service firebase.storage {
   match /b/{bucket}/o {
-    // Family-based photo storage - allow public read access
-    match /families/{familyId}/{personId}/{photoId} {
-      allow read: if true;  // Public read access
-      allow write, delete: if request.auth != null && 
+    // Family-based storage - only family owner can read/write/delete files in their folder
+    match /families/{familyId}/{allPaths=**} {
+      allow read, write, delete: if request.auth != null && 
         familyId == request.auth.uid;
     }
     

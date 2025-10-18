@@ -11,6 +11,7 @@ export const FAMILY_FIELDS = {
   ID: "id",
   EMAIL: "email",
   FAMILY_NAME: "familyName",
+  FAMILY_IMAGE: "familyImage",
   CREATED_AT: "createdAt",
 } as const;
 

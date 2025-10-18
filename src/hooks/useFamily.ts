@@ -31,6 +31,7 @@ export function useFamily() {
             id: data[FAMILY_FIELDS.ID],
             email: data[FAMILY_FIELDS.EMAIL],
             familyName: data[FAMILY_FIELDS.FAMILY_NAME],
+            familyImage: data[FAMILY_FIELDS.FAMILY_IMAGE],
             createdAt: data[FAMILY_FIELDS.CREATED_AT]?.toDate() || new Date(),
           });
         } else {
@@ -67,5 +68,23 @@ export function useFamily() {
     }
   };
 
-  return { family, loading, error, updateFamily };
+  const updateFamilyImage = async (imageUrl: string) => {
+    if (!user) {
+      throw new Error("User not authenticated");
+    }
+
+    try {
+      await updateDoc(doc(db, COLLECTIONS.FAMILIES, user.uid), {
+        [FAMILY_FIELDS.FAMILY_IMAGE]: imageUrl,
+      });
+
+      // Update local state
+      setFamily((prev) => (prev ? { ...prev, familyImage: imageUrl } : null));
+    } catch (err) {
+      console.error("Error updating family image:", err);
+      throw new Error("Failed to update family image");
+    }
+  };
+
+  return { family, loading, error, updateFamily, updateFamilyImage };
 }

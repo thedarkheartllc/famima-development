@@ -1,0 +1,256 @@
+"use client";
+
+import { useState, useCallback } from "react";
+import { useDropzone } from "react-dropzone";
+import { useAuth } from "../contexts/AuthContext";
+import { FaTimes } from "react-icons/fa";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "@/lib/firebase";
+
+interface FamilyPhotoUploadModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onUploadComplete: (imageUrl: string) => void;
+}
+
+export function FamilyPhotoUploadModal({
+  isOpen,
+  onClose,
+  onUploadComplete,
+}: FamilyPhotoUploadModalProps) {
+  const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadComplete, setUploadComplete] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const { user, isAdmin } = useAuth();
+
+  const uploadFamilyPhoto = async (file: File) => {
+    if (!user) {
+      throw new Error("User not authenticated");
+    }
+
+    // Create a unique filename
+    const timestamp = Date.now();
+    const fileExtension = file.name.split(".").pop();
+    const fileName = `family-photo-${timestamp}.${fileExtension}`;
+    const storagePath = `families/${user.uid}/${fileName}`;
+
+    // Create storage reference
+    const storageRef = ref(storage, storagePath);
+
+    // Upload file
+    const snapshot = await uploadBytes(storageRef, file);
+
+    // Get download URL
+    const downloadURL = await getDownloadURL(snapshot.ref);
+
+    return downloadURL;
+  };
+
+  const onDrop = useCallback(
+    async (acceptedFiles: File[]) => {
+      if (acceptedFiles.length === 0) return;
+
+      const file = acceptedFiles[0]; // Only take the first file
+      setUploading(true);
+      setUploadProgress(0);
+      setUploadComplete(false);
+      setError(null);
+
+      try {
+        // Simulate progress
+        const progressInterval = setInterval(() => {
+          setUploadProgress((prev) => {
+            if (prev >= 90) {
+              clearInterval(progressInterval);
+              return 90;
+            }
+            return prev + 10;
+          });
+        }, 100);
+
+        const imageUrl = await uploadFamilyPhoto(file);
+
+        clearInterval(progressInterval);
+        setUploadProgress(100);
+        setUploadComplete(true);
+
+        // Call the completion callback with the image URL
+        onUploadComplete(imageUrl);
+
+        // Auto-close after 2 seconds
+        setTimeout(() => {
+          onClose();
+        }, 2000);
+      } catch (err) {
+        console.error("Upload failed:", err);
+        setError(err instanceof Error ? err.message : "Upload failed");
+        setUploading(false);
+        setUploadProgress(0);
+      }
+    },
+    [onUploadComplete, onClose]
+  );
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: {
+      "image/*": [".jpeg", ".jpg", ".png", ".heic", ".heif"],
+    },
+    multiple: false,
+    disabled: uploading,
+  });
+
+  if (!isOpen) return null;
+
+  // Check if user is authenticated
+  if (!user || !isAdmin) {
+    return (
+      <div className='fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-50 p-4'>
+        <div className='bg-white rounded-3xl shadow-xl max-w-md w-full p-8'>
+          <div className='text-center space-y-4'>
+            <div className='text-5xl'>🔒</div>
+            <h2 className='text-2xl font-light text-gray-900'>
+              Authentication Required
+            </h2>
+            <p className='text-gray-600 font-light'>
+              You need to be logged in to upload family photos.
+            </p>
+            <button
+              onClick={onClose}
+              className='px-8 py-3 bg-gray-900 text-white rounded-full hover:bg-gray-800 transition-all hover:scale-[1.02] shadow-lg font-light'
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className='fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-50 p-4'>
+      <div className='bg-white rounded-3xl shadow-xl max-w-2xl w-full'>
+        {/* Header */}
+        <div className='flex items-center justify-between p-6 border-b border-gray-100'>
+          <div>
+            <h2 className='text-2xl font-light text-gray-900'>
+              Upload Family Photo
+            </h2>
+            <p className='text-sm text-gray-600 font-light mt-1'>
+              Add a photo to represent your family
+            </p>
+          </div>
+          <button
+            onClick={onClose}
+            className='p-2 hover:bg-gray-50 rounded-full transition-colors'
+            aria-label='Close modal'
+          >
+            <FaTimes className='text-gray-500 text-xl' />
+          </button>
+        </div>
+
+        {/* Upload Area */}
+        <div className='p-6'>
+          <div
+            {...getRootProps()}
+            className={`
+              border-2 border-dashed rounded-3xl p-8 text-center cursor-pointer transition-all
+              ${
+                isDragActive
+                  ? "border-green-300 bg-green-50/50"
+                  : "border-gray-200 hover:border-gray-300"
+              }
+              ${
+                uploading
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:bg-gray-50/50"
+              }
+            `}
+          >
+            <input {...getInputProps()} />
+
+            {uploading ? (
+              <div className='space-y-3'>
+                {uploadComplete ? (
+                  <div className='space-y-3'>
+                    <div className='text-4xl'>✅</div>
+                    <div className='text-lg font-light text-green-600'>
+                      Upload Complete!
+                    </div>
+                    <div className='text-sm font-light text-gray-600'>
+                      Family photo updated successfully
+                    </div>
+                  </div>
+                ) : (
+                  <div className='space-y-3'>
+                    <div className='text-base font-light text-gray-700'>
+                      Uploading family photo...
+                    </div>
+                    <div className='w-full bg-gray-100 rounded-full h-2'>
+                      <div
+                        className='bg-gray-900 h-2 rounded-full transition-all duration-300'
+                        style={{ width: `${uploadProgress}%` }}
+                      />
+                    </div>
+                    <div className='text-sm font-light text-gray-600'>
+                      {Math.round(uploadProgress)}% complete
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className='space-y-3'>
+                <div className='text-4xl'>👨‍👩‍👧‍👦</div>
+                <div className='text-base font-light text-gray-700'>
+                  {isDragActive
+                    ? "Drop photo here..."
+                    : "Drag & drop a family photo here, or click to select"}
+                </div>
+                <div className='text-sm font-light text-gray-500'>
+                  Supports JPG, PNG, HEIC, HEIF formats
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Error Display */}
+          {error && (
+            <div className='mt-4 p-3 bg-red-50 border border-red-100 rounded-2xl'>
+              <div className='text-red-600 text-sm font-light'>{error}</div>
+            </div>
+          )}
+
+          {/* Instructions */}
+          <div className='mt-4 text-xs font-light text-gray-600 bg-white/60 backdrop-blur-sm rounded-2xl p-4'>
+            <ul className='space-y-1.5'>
+              <li className='flex items-start gap-2'>
+                <span className='text-green-600 mt-0.5'>✓</span>
+                <span>Choose a photo that represents your family</span>
+              </li>
+              <li className='flex items-start gap-2'>
+                <span className='text-green-600 mt-0.5'>✓</span>
+                <span>Square or portrait photos work best</span>
+              </li>
+              <li className='flex items-start gap-2'>
+                <span className='text-green-600 mt-0.5'>✓</span>
+                <span>Photo will be displayed above your family name</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className='flex justify-end gap-3 p-6 border-t border-gray-100'>
+          <button
+            onClick={onClose}
+            disabled={uploading}
+            className='px-6 py-2 text-gray-600 hover:text-gray-900 font-light transition-colors disabled:opacity-50'
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

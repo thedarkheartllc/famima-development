@@ -2,6 +2,7 @@ export interface Family {
   id: string; // Document ID (user.uid)
   email: string; // Primary contact email
   familyName: string; // "The Smith Family"
+  familyImage?: string; // URL to family photo
   createdAt: Date; // When family was created
 }
 

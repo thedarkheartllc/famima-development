@@ -16,6 +16,7 @@ interface AppHeaderProps {
   refetch?: () => Promise<void>;
   family?: Family | null;
   updateFamily?: (newFamilyName: string) => Promise<void>;
+  updateFamilyImage?: (imageUrl: string) => Promise<void>;
 }
 
 export function AppHeader({
@@ -26,6 +27,7 @@ export function AppHeader({
   refetch,
   family,
   updateFamily,
+  updateFamilyImage,
 }: AppHeaderProps) {
   const { isAdmin, user } = useAuth();
 
@@ -76,6 +78,7 @@ export function AppHeader({
                 refetch={refetch}
                 family={family}
                 updateFamily={updateFamily}
+                updateFamilyImage={updateFamilyImage}
               />
             )}
           </div>
