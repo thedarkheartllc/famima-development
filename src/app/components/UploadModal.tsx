@@ -11,6 +11,7 @@ interface UploadModalProps {
   onClose: () => void;
   personId: string;
   personName: string;
+  storageId: string;
   onUploadComplete?: () => void;
 }
 
@@ -19,6 +20,7 @@ export function UploadModal({
   onClose,
   personId,
   personName,
+  storageId,
   onUploadComplete,
 }: UploadModalProps) {
   const [uploading, setUploading] = useState(false);
@@ -40,7 +42,7 @@ export function UploadModal({
       try {
         for (let i = 0; i < acceptedFiles.length; i++) {
           const file = acceptedFiles[i];
-          await uploadPhoto(file, personId, (progress) => {
+          await uploadPhoto(file, personId, storageId, (progress) => {
             // Calculate overall progress across all files
             const fileProgress = progress / acceptedFiles.length;
             const totalProgress =
@@ -63,7 +65,7 @@ export function UploadModal({
         setUploadProgress(0);
       }
     },
-    [personId, uploadPhoto, onUploadComplete, onClose]
+    [personId, storageId, uploadPhoto, onUploadComplete, onClose]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

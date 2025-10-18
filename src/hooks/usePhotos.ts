@@ -81,6 +81,7 @@ export function usePhotos(personId?: string) {
   const uploadPhoto = async (
     file: File,
     personId: string,
+    storageId: string,
     onProgress?: (progress: number) => void
   ) => {
     try {
@@ -119,7 +120,7 @@ export function usePhotos(personId?: string) {
 
       // Create storage reference
       const photoId = Date.now().toString();
-      const storagePath = `families/${user?.uid}/${personId}/${photoId}.jpg`;
+      const storagePath = `families/${user?.uid}/${storageId}/${photoId}.jpg`;
       const storageRef = ref(storage, storagePath);
 
       // Upload compressed file to Firebase Storage with progress tracking
@@ -147,7 +148,7 @@ export function usePhotos(personId?: string) {
                 personId,
                 familyId: user?.uid,
                 filename: file.name,
-                storagePath: `families/${user?.uid}/${personId}/${photoId}.jpg`,
+                storagePath: `families/${user?.uid}/${storageId}/${photoId}.jpg`,
                 uploadedAt: Timestamp.now(),
                 takenAt: takenAt ? Timestamp.fromDate(takenAt) : null,
                 size: compressedFile.size,
@@ -165,7 +166,7 @@ export function usePhotos(personId?: string) {
                 personId,
                 familyId: user?.uid || "",
                 filename: file.name,
-                storagePath: `families/${user?.uid}/${personId}/${photoId}.jpg`,
+                storagePath: `families/${user?.uid}/${storageId}/${photoId}.jpg`,
                 uploadedAt: new Date(),
                 takenAt: takenAt,
                 size: compressedFile.size,

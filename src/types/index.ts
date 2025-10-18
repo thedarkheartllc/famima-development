@@ -14,6 +14,7 @@ export interface Person {
   birthDate?: string;
   color: string;
   createdAt: Date;
+  storageId: string; // Formatted identifier for storage: "name-dateOfCreation"
   relationshipType?:
     | "parent"
     | "child"

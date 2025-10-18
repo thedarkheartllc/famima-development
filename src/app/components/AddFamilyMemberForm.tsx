@@ -28,6 +28,22 @@ const COLOR_OPTIONS = [
   { name: "Cloud", value: "from-slate-200 to-slate-300" },
 ];
 
+// Generate storage ID from name and creation date
+const generateStorageId = (name: string, createdAt: Date): string => {
+  // Clean the name: remove special characters, convert to lowercase, replace spaces with hyphens
+  const cleanName = name
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, "") // Remove special characters
+    .replace(/\s+/g, "-") // Replace spaces with hyphens
+    .replace(/-+/g, "-") // Replace multiple hyphens with single hyphen
+    .replace(/^-|-$/g, ""); // Remove leading/trailing hyphens
+
+  // Format date as YYYY-MM-DD
+  const dateStr = createdAt.toISOString().split("T")[0];
+
+  return `${cleanName}-${dateStr}`;
+};
+
 export function AddFamilyMemberForm({
   onClose,
   addPerson,
@@ -54,16 +70,20 @@ export function AddFamilyMemberForm({
     setError("");
 
     try {
+      const createdAt = new Date();
+      const formattedName =
+        name.trim().charAt(0).toUpperCase() +
+        name.trim().slice(1).toLowerCase();
+
       const personData: Omit<
         Person,
         "id" | "personId" | "createdAt" | "familyId"
       > = {
-        name:
-          name.trim().charAt(0).toUpperCase() +
-          name.trim().slice(1).toLowerCase(),
+        name: formattedName,
         birthDate: birthDate || undefined,
         color,
         relationshipType,
+        storageId: generateStorageId(formattedName, createdAt),
       };
 
       await addPerson(personData);

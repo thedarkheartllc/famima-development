@@ -59,6 +59,7 @@ export function usePeople() {
         id: doc.id,
         ...doc.data(),
         createdAt: doc.data().createdAt?.toDate() || new Date(),
+        storageId: doc.data().storageId || doc.id, // Fallback to doc.id for existing records
       })) as Person[];
 
       console.log("👥 fetchPeople: Setting people data:", peopleData);
@@ -87,10 +88,11 @@ export function usePeople() {
     try {
       setError(null);
 
+      const createdAt = new Date();
       const docRef = await addDoc(collection(db, COLLECTIONS.PEOPLE), {
         ...personData,
         familyId: user?.uid,
-        createdAt: new Date(),
+        createdAt,
       });
 
       // Update the document with its own ID as personId

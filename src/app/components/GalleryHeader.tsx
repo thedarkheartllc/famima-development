@@ -194,6 +194,7 @@ export function GalleryHeader({
             onClose={() => setShowUploadModal(false)}
             personId={person.id}
             personName={person.name}
+            storageId={person.storageId}
             onUploadComplete={onUploadComplete}
           />
           <EditUserForm

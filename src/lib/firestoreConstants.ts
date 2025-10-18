@@ -24,6 +24,7 @@ export const PERSON_FIELDS = {
   BIRTH_DATE: "birthDate",
   COLOR: "color",
   CREATED_AT: "createdAt",
+  STORAGE_ID: "storageId",
   RELATIONSHIP_TYPE: "relationshipType",
   PARTNER_ID: "partnerId",
   PARENT_IDS: "parentIds",
