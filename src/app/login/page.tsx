@@ -8,14 +8,14 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function LoginPage() {
-  const { isAdmin, isEmailVerified } = useAuth();
+  const { isAdmin } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (isAdmin && isEmailVerified) {
+    if (isAdmin) {
       router.push("/family");
     }
-  }, [isAdmin, isEmailVerified, router]);
+  }, [isAdmin, router]);
 
   return (
     <main className='bg-gradient-to-b from-white to-green-50/30   min-h-screen'>
@@ -29,7 +29,9 @@ export default function LoginPage() {
               alt='Family moments'
               className='w-24 h-24 rounded-full object-cover mx-auto shadow-lg'
             />
-            <h1 className='text-4xl font-light text-gray-900 '>Welcome back</h1>
+            <h1 className='text-4xl font-light text-gray-900 '>
+              Login to Famima
+            </h1>
             <p className='text-gray-600  font-light'>
               Sign in to access your family photos
             </p>

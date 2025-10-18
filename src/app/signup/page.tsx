@@ -8,14 +8,14 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function SignUpPage() {
-  const { isAdmin, isEmailVerified } = useAuth();
+  const { isAdmin } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (isAdmin && isEmailVerified) {
+    if (isAdmin) {
       router.push("/family");
     }
-  }, [isAdmin, isEmailVerified, router]);
+  }, [isAdmin, router]);
 
   return (
     <main className='bg-gradient-to-b from-white to-green-50/30 min-h-screen'>

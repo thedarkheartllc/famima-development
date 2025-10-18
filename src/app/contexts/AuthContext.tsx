@@ -5,12 +5,13 @@ import {
   User,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  signInWithPopup,
   signOut,
   onAuthStateChanged,
   sendEmailVerification,
 } from "firebase/auth";
-import { auth, db } from "@/lib/firebase";
-import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { auth, db, googleProvider } from "@/lib/firebase";
+import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
 import { COLLECTIONS, FAMILY_FIELDS } from "@/lib/firestoreConstants";
 
 interface AuthContextType {
@@ -22,6 +23,7 @@ interface AuthContextType {
     password: string,
     familyName: string
   ) => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
   logout: () => Promise<void>;
   resendVerification: () => Promise<void>;
   isAdmin: boolean;
@@ -88,6 +90,39 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const signInWithGoogle = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+
+      // Check if this is a new user (first time signing in with Google)
+      const familyId = user.uid;
+      const familyDocRef = doc(db, COLLECTIONS.FAMILIES, familyId);
+
+      // Try to get the family document
+      const familyDoc = await getDoc(familyDocRef);
+
+      if (!familyDoc.exists()) {
+        // This is a new user, create family document
+        const familyName =
+          user.displayName?.split(" ")[0] + "'s Family" || "Family";
+
+        const familyData = {
+          [FAMILY_FIELDS.EMAIL]: user.email,
+          [FAMILY_FIELDS.ID]: familyId,
+          [FAMILY_FIELDS.FAMILY_NAME]: familyName,
+          [FAMILY_FIELDS.CREATED_AT]: serverTimestamp(),
+        };
+
+        await setDoc(familyDocRef, familyData);
+        console.log("Family document created for Google user!");
+      }
+    } catch (error) {
+      console.error("Error in Google sign-in:", error);
+      throw error;
+    }
+  };
+
   const logout = async () => {
     await signOut(auth);
   };
@@ -99,7 +134,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const isAdmin = !!user;
-  const isEmailVerified = user?.emailVerified || false;
+  // Google users are automatically email verified, email/password users need verification
+  const isEmailVerified =
+    user?.emailVerified || user?.providerData?.[0]?.providerId === "google.com";
 
   return (
     <AuthContext.Provider
@@ -108,6 +145,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         loading,
         signIn,
         signUp,
+        signInWithGoogle,
         logout,
         resendVerification,
         isAdmin,
