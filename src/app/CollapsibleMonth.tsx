@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { MdExpandMore, MdExpandLess } from "react-icons/md";
-import Image from "next/image";
+import { ReliableImage } from "./components/ReliableImage";
 import { ImageViewer } from "./components/ImageViewer";
 
 interface PhotoWithDate {
@@ -72,24 +72,35 @@ export function CollapsibleMonth({
 
       {isExpanded && (
         <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6'>
-          {photos.map((photo, index) => (
-            <div key={photo.filename} className='flex flex-col space-y-2'>
-              <div
-                className='relative w-full aspect-square bg-gray-50 rounded-2xl overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition-all group'
-                onClick={() => openImageViewer(index)}
-              >
-                <Image
-                  src={photo.url || `/photos/${photo.filename}`}
-                  alt={photo.filename}
-                  fill
-                  className='object-cover transition-transform duration-300 group-hover:scale-105'
-                />
+          {photos.map((photo, index) => {
+            const imageSrc = photo.url || `/photos/${photo.filename}`;
+            console.log(`🖼️ CollapsibleMonth: Rendering photo ${index}:`, {
+              filename: photo.filename,
+              url: photo.url,
+              finalSrc: imageSrc,
+              priority: index < 6,
+            });
+
+            return (
+              <div key={photo.filename} className='flex flex-col space-y-2'>
+                <div
+                  className='relative w-full aspect-square bg-gray-50 rounded-2xl overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition-all group'
+                  onClick={() => openImageViewer(index)}
+                >
+                  <ReliableImage
+                    src={imageSrc}
+                    alt={photo.filename}
+                    fill
+                    className='object-cover transition-transform duration-300 group-hover:scale-105'
+                    priority={index < 6} // Prioritize first 6 images for better UX
+                  />
+                </div>
+                <p className='text-gray-600  text-xs sm:text-sm font-light text-right'>
+                  {photo.date || "?"}
+                </p>
               </div>
-              <p className='text-gray-600  text-xs sm:text-sm font-light text-right'>
-                {photo.date || "?"}
-              </p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 

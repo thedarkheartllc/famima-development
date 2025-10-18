@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import Image from "next/image";
+import { ReliableImage } from "./ReliableImage";
 import {
   FaTimes,
   FaChevronLeft,
@@ -169,7 +169,7 @@ export function ImageViewer({
           </div>
         )}
 
-        <Image
+        <ReliableImage
           src={currentPhoto.url || `/photos/${currentPhoto.filename}`}
           alt={currentPhoto.filename}
           width={1200}
@@ -180,6 +180,7 @@ export function ImageViewer({
           style={{ maxHeight: "85vh", maxWidth: "95vw" }}
           onLoad={() => setImageLoading(false)}
           onError={() => setImageLoading(false)}
+          priority={true} // Always prioritize images in the viewer
         />
       </div>
 
