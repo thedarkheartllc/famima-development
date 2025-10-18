@@ -66,15 +66,6 @@ export function EditFamilyForm({
         <form onSubmit={handleSubmit} className='space-y-6'>
           <div>
             <label className='block text-sm font-light text-gray-600 mb-2'>
-              Email Address
-            </label>
-            <div className='w-full px-4 py-3 border border-gray-100 rounded-2xl bg-gray-50 text-gray-700 font-light'>
-              {family?.email || "Loading..."}
-            </div>
-          </div>
-
-          <div>
-            <label className='block text-sm font-light text-gray-600 mb-2'>
               Family Name *
             </label>
             <input
