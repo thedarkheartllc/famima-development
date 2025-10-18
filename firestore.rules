@@ -25,6 +25,13 @@ service cloud.firestore {
          request.resource.data.createdBy == request.auth.uid);
     }
     
+    // Albums - only family members can access their albums
+    match /albums/{albumId} {
+      allow read, write, delete: if request.auth != null &&
+        (resource.data.familyId == request.auth.uid || 
+         request.resource.data.familyId == request.auth.uid);
+    }
+    
     // Allow authenticated users to create and read their own family documents
     match /families/{familyId} {
       allow read, write: if request.auth != null && request.auth.uid == familyId;

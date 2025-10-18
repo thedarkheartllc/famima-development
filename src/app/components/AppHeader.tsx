@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useAuth } from "../contexts/AuthContext";
 import { AccountDropdown } from "./AccountDropdown";
 import { Logo } from "./Logo";
-import { Person, Family } from "@/types";
+import { Person, Family, Album } from "@/types";
 
 interface AppHeaderProps {
   showSignIn?: boolean;
@@ -13,7 +13,11 @@ interface AppHeaderProps {
   addPerson?: (
     personData: Omit<Person, "id" | "personId" | "createdAt" | "familyId">
   ) => Promise<string>;
+  addAlbum?: (
+    albumData: Omit<Album, "id" | "albumId" | "createdAt" | "familyId">
+  ) => Promise<string>;
   refetch?: () => Promise<void>;
+  refetchAlbums?: () => Promise<void>;
   family?: Family | null;
   updateFamily?: (newFamilyName: string) => Promise<void>;
   updateFamilyImage?: (imageUrl: string) => Promise<void>;
@@ -24,7 +28,9 @@ export function AppHeader({
   showSignOut = false,
   fixed = false,
   addPerson,
+  addAlbum,
   refetch,
+  refetchAlbums,
   family,
   updateFamily,
   updateFamilyImage,
@@ -75,7 +81,9 @@ export function AppHeader({
               <AccountDropdown
                 showSignOut={showSignOut}
                 addPerson={addPerson}
+                addAlbum={addAlbum}
                 refetch={refetch}
+                refetchAlbums={refetchAlbums}
                 family={family}
                 updateFamily={updateFamily}
                 updateFamilyImage={updateFamilyImage}

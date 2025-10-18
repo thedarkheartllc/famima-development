@@ -3,6 +3,7 @@ export const COLLECTIONS = {
   FAMILIES: "families",
   PEOPLE: "people",
   PHOTOS: "photos",
+  ALBUMS: "albums",
   SHARE_LINKS: "shareLinks",
 } as const;
 
@@ -34,6 +35,7 @@ export const PERSON_FIELDS = {
 export const PHOTO_FIELDS = {
   ID: "id",
   PERSON_ID: "personId",
+  ALBUM_ID: "albumId",
   FAMILY_ID: "familyId",
   FILENAME: "filename",
   STORAGE_PATH: "storagePath",
@@ -41,6 +43,17 @@ export const PHOTO_FIELDS = {
   TAKEN_AT: "takenAt",
   SIZE: "size",
   URL: "url",
+} as const;
+
+// Album Fields
+export const ALBUM_FIELDS = {
+  ALBUM_ID: "albumId",
+  FAMILY_ID: "familyId",
+  NAME: "name",
+  DESCRIPTION: "description",
+  EVENT_DATE: "eventDate",
+  COLOR: "color",
+  CREATED_AT: "createdAt",
 } as const;
 
 // Common Field Values

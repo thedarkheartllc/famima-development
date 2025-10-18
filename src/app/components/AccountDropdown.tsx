@@ -4,8 +4,9 @@ import { useState, useRef, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { EditFamilyForm } from "./EditFamilyForm";
 import { AddFamilyMemberForm } from "./AddFamilyMemberForm";
+import { AddAlbumForm } from "./AddAlbumForm";
 import { FamilyPhotoUploadModal } from "./FamilyPhotoUploadModal";
-import { Person, Family } from "@/types";
+import { Person, Family, Album } from "@/types";
 import {
   HiUser,
   HiChevronDown,
@@ -13,6 +14,7 @@ import {
   HiPencil,
   HiPlus,
   HiPhoto,
+  HiFolderPlus,
 } from "react-icons/hi2";
 
 interface AccountDropdownProps {
@@ -20,7 +22,11 @@ interface AccountDropdownProps {
   addPerson?: (
     personData: Omit<Person, "id" | "personId" | "createdAt" | "familyId">
   ) => Promise<string>;
+  addAlbum?: (
+    albumData: Omit<Album, "id" | "albumId" | "createdAt" | "familyId">
+  ) => Promise<string>;
   refetch?: () => Promise<void>;
+  refetchAlbums?: () => Promise<void>;
   family?: Family | null;
   updateFamily?: (newFamilyName: string) => Promise<void>;
   updateFamilyImage?: (imageUrl: string) => Promise<void>;
@@ -29,7 +35,9 @@ interface AccountDropdownProps {
 export function AccountDropdown({
   showSignOut = false,
   addPerson,
+  addAlbum,
   refetch,
+  refetchAlbums,
   family,
   updateFamily,
   updateFamilyImage,
@@ -38,6 +46,7 @@ export function AccountDropdown({
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [showEditFamily, setShowEditFamily] = useState(false);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [showAddAlbumForm, setShowAddAlbumForm] = useState(false);
   const [showFamilyPhotoUpload, setShowFamilyPhotoUpload] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -140,6 +149,19 @@ export function AccountDropdown({
                 </button>
               )}
 
+              {addAlbum && refetchAlbums && (
+                <button
+                  onClick={() => {
+                    setShowProfileDropdown(false);
+                    setShowAddAlbumForm(true);
+                  }}
+                  className='w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-3'
+                >
+                  <HiFolderPlus className='w-4 h-4' />
+                  Add Album
+                </button>
+              )}
+
               {family && updateFamilyImage && (
                 <button
                   onClick={() => {
@@ -198,6 +220,14 @@ export function AccountDropdown({
           onClose={() => setShowAddForm(false)}
           addPerson={addPerson}
           refetch={refetch}
+        />
+      )}
+
+      {showAddAlbumForm && addAlbum && refetchAlbums && (
+        <AddAlbumForm
+          onClose={() => setShowAddAlbumForm(false)}
+          addAlbum={addAlbum}
+          refetch={refetchAlbums}
         />
       )}
 

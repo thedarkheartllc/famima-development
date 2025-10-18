@@ -19,6 +19,8 @@ interface GalleryContentProps {
   groupedPhotos: Record<string, PhotoWithDate[]>;
   photosWithUnknownDates?: PhotoWithDate[];
   personName?: string;
+  albumName?: string;
+  albumId?: string;
   photos?: Array<{ url?: string; filename: string }>; // Firebase photos for URL access
   onUploadComplete?: () => void;
   onDeletePhoto?: (photoId: string, storagePath: string) => Promise<void>;
@@ -31,6 +33,8 @@ export function GalleryContent({
   groupedPhotos,
   photosWithUnknownDates = [],
   personName,
+  albumName,
+  albumId,
   onUploadComplete,
   onDeletePhoto,
   isPublicView = false,
@@ -81,6 +85,8 @@ export function GalleryContent({
           onToggleAllMonths={toggleAllMonths}
           allExpanded={allExpanded}
           personName={personName}
+          albumName={albumName}
+          albumId={albumId}
           onUploadComplete={onUploadComplete}
         />
       )}

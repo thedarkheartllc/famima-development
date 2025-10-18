@@ -12,7 +12,9 @@ import {
 import Link from "next/link";
 import { UploadModal } from "./UploadModal";
 import { EditUserForm } from "./EditUserForm";
+import { EditAlbumForm } from "./EditAlbumForm";
 import { usePeople } from "../../hooks/usePeople";
+import { useAlbums } from "../../hooks/useAlbums";
 import { useShareLinks } from "../../hooks/useShareLinks";
 import { useToastContext } from "../contexts/ToastContext";
 import { Button } from "./Button";
@@ -22,6 +24,8 @@ interface GalleryHeaderProps {
   onToggleAllMonths: () => void;
   allExpanded: boolean;
   personName?: string;
+  albumName?: string;
+  albumId?: string;
   onUploadComplete?: () => void;
 }
 
@@ -30,10 +34,13 @@ export function GalleryHeader({
   onToggleAllMonths,
   allExpanded,
   personName,
+  albumName,
+  albumId,
   onUploadComplete,
 }: GalleryHeaderProps) {
   const {} = useTheme();
   const { people } = usePeople();
+  const { albums } = useAlbums();
   const { createShareLink } = useShareLinks();
   const { showSuccess, showError } = useToastContext();
   const [showUploadModal, setShowUploadModal] = useState(false);
@@ -42,6 +49,12 @@ export function GalleryHeader({
   const person = people.find(
     (p) => p.name.toLowerCase() === personName?.toLowerCase()
   );
+
+  const album = albums.find((a) => a.albumId === albumId);
+
+  // Determine if we're in album mode or person mode
+  const isAlbumMode = !!albumName && !!albumId;
+  const isPersonMode = !!personName && !!person;
 
   const handleShare = async () => {
     if (!person) {
@@ -112,7 +125,11 @@ export function GalleryHeader({
                 <span className='sm:hidden'>Back</span>
               </Link>
               <h1 className='text-xl sm:text-2xl md:text-3xl font-light text-gray-900  capitalize'>
-                {personName ? `${personName}'s Gallery` : "Photo Gallery"}
+                {isAlbumMode
+                  ? `${albumName} Album`
+                  : personName
+                  ? `${personName}'s Gallery`
+                  : "Photo Gallery"}
               </h1>
               <p className='text-sm text-gray-600  font-light'>
                 {photoCount} photos
@@ -121,38 +138,47 @@ export function GalleryHeader({
 
             {/* Right: Action Buttons */}
             <div className='flex items-center gap-2 sm:gap-3 flex-wrap'>
-              <Button
-                onClick={() => setShowEditModal(true)}
-                disabled={!person}
-                variant='ghost'
-                size='sm'
-                title='Edit person details'
-                className='flex-shrink-0 hover:cursor-pointer disabled:cursor-not-allowed'
-              >
-                <FaEdit />
-                <span className='hidden sm:inline'>Edit</span>
-              </Button>
+              {/* Edit button - show for both person and album mode */}
+              {(isPersonMode || isAlbumMode) && (
+                <Button
+                  onClick={() => setShowEditModal(true)}
+                  variant='ghost'
+                  size='sm'
+                  title={
+                    isPersonMode ? "Edit person details" : "Edit album details"
+                  }
+                  className='flex-shrink-0 hover:cursor-pointer'
+                >
+                  <FaEdit />
+                  <span className='hidden sm:inline'>Edit</span>
+                </Button>
+              )}
 
-              <Button
-                onClick={handleShare}
-                disabled={!person}
-                variant='ghost'
-                size='sm'
-                title='Share this gallery'
-                className='flex-shrink-0 hover:cursor-pointer disabled:cursor-not-allowed'
-              >
-                <FaShare />
-                <span className='hidden sm:inline'>Share</span>
-              </Button>
+              {/* Share button - only show for person mode */}
+              {isPersonMode && (
+                <Button
+                  onClick={handleShare}
+                  variant='ghost'
+                  size='sm'
+                  title='Share this gallery'
+                  className='flex-shrink-0 hover:cursor-pointer'
+                >
+                  <FaShare />
+                  <span className='hidden sm:inline'>Share</span>
+                </Button>
+              )}
 
+              {/* Upload button - show for both person and album mode */}
               <Button
                 onClick={() => setShowUploadModal(true)}
-                disabled={!person}
+                disabled={!isPersonMode && !isAlbumMode}
                 variant='primary'
                 size='sm'
                 title={
-                  !person
-                    ? `No person found for "${personName}" - upload disabled`
+                  isPersonMode
+                    ? "Upload photos to this person's gallery"
+                    : isAlbumMode
+                    ? "Upload photos to this album"
                     : "Upload photos"
                 }
                 className='flex-shrink-0 hover:cursor-pointer disabled:cursor-not-allowed'
@@ -187,21 +213,32 @@ export function GalleryHeader({
         </div>
       </header>
 
-      {person && (
+      {(isPersonMode || isAlbumMode) && (
         <>
           <UploadModal
             isOpen={showUploadModal}
             onClose={() => setShowUploadModal(false)}
-            personId={person.id}
-            personName={person.name}
-            storageId={person.storageId}
+            personId={isPersonMode ? person?.id : undefined}
+            albumId={isAlbumMode ? albumId : undefined}
+            personName={isPersonMode ? person?.name : undefined}
+            albumName={isAlbumMode ? albumName : undefined}
+            storageId={isPersonMode ? person?.storageId : albumId}
             onUploadComplete={onUploadComplete}
           />
-          <EditUserForm
-            isOpen={showEditModal}
-            onClose={() => setShowEditModal(false)}
-            person={person}
-          />
+          {isPersonMode && person && (
+            <EditUserForm
+              isOpen={showEditModal}
+              onClose={() => setShowEditModal(false)}
+              person={person}
+            />
+          )}
+          {isAlbumMode && album && (
+            <EditAlbumForm
+              isOpen={showEditModal}
+              onClose={() => setShowEditModal(false)}
+              album={album}
+            />
+          )}
         </>
       )}
     </>

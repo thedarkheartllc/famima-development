@@ -28,7 +28,8 @@ export interface Person {
 
 export interface Photo {
   id: string;
-  personId: string;
+  personId?: string; // Optional - photos can belong to people or albums
+  albumId?: string; // Optional - photos can belong to albums
   familyId: string; // Reference to the family this photo belongs to
   filename: string;
   storagePath: string;
@@ -36,6 +37,16 @@ export interface Photo {
   takenAt?: Date;
   size: number;
   url?: string; // Firebase Storage download URL
+}
+
+export interface Album {
+  albumId: string; // Formatted identifier: "name-dateOfCreation" (e.g., "christmas-2023-2024-10-18")
+  familyId: string; // Reference to the family this album belongs to
+  name: string; // Album name (e.g., "Christmas 2023", "Summer Vacation")
+  description?: string; // Optional description of the album
+  eventDate?: string; // Date of the event (YYYY-MM-DD format)
+  color: string; // Color theme for the album
+  createdAt: Date;
 }
 
 export interface ShareLink {

@@ -22,15 +22,15 @@ import { Photo } from "../types";
 import { useAuth } from "../app/contexts/AuthContext";
 import { COLLECTIONS, PHOTO_FIELDS } from "../lib/firestoreConstants";
 
-export function usePhotos(personId?: string) {
+export function usePhotos(personId?: string, albumId?: string) {
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { user } = useAuth();
 
-  // Fetch photos for a specific person
+  // Fetch photos for a specific person or album
   const fetchPhotos = useCallback(
-    async (personId: string) => {
+    async (targetPersonId?: string, targetAlbumId?: string) => {
       if (!user) return;
 
       try {
@@ -38,11 +38,26 @@ export function usePhotos(personId?: string) {
         setError(null);
 
         const photosRef = collection(db, COLLECTIONS.PHOTOS);
-        const q = query(
-          photosRef,
-          where(PHOTO_FIELDS.PERSON_ID, "==", personId),
-          where(PHOTO_FIELDS.FAMILY_ID, "==", user.uid)
-        );
+        let q;
+
+        if (targetPersonId) {
+          // Fetch photos for a specific person
+          q = query(
+            photosRef,
+            where(PHOTO_FIELDS.PERSON_ID, "==", targetPersonId),
+            where(PHOTO_FIELDS.FAMILY_ID, "==", user.uid)
+          );
+        } else if (targetAlbumId) {
+          // Fetch photos for a specific album
+          q = query(
+            photosRef,
+            where(PHOTO_FIELDS.ALBUM_ID, "==", targetAlbumId),
+            where(PHOTO_FIELDS.FAMILY_ID, "==", user.uid)
+          );
+        } else {
+          // Fetch all photos for the family
+          q = query(photosRef, where(PHOTO_FIELDS.FAMILY_ID, "==", user.uid));
+        }
 
         const querySnapshot = await getDocs(q);
         const photosData: Photo[] = [];
@@ -80,9 +95,10 @@ export function usePhotos(personId?: string) {
   // Upload a photo
   const uploadPhoto = async (
     file: File,
-    personId: string,
+    personIdOrAlbumId: string,
     storageId: string,
-    onProgress?: (progress: number) => void
+    onProgress?: (progress: number) => void,
+    isAlbumUpload: boolean = false
   ) => {
     try {
       setError(null);
@@ -145,7 +161,9 @@ export function usePhotos(personId?: string) {
 
               // Save photo metadata to Firestore
               const photoData = {
-                personId,
+                ...(isAlbumUpload
+                  ? { albumId: personIdOrAlbumId }
+                  : { personId: personIdOrAlbumId }),
                 familyId: user?.uid,
                 filename: file.name,
                 storagePath: `families/${user?.uid}/${storageId}/${photoId}.jpg`,
@@ -207,15 +225,17 @@ export function usePhotos(personId?: string) {
     }
   };
 
-  // Auto-fetch photos when personId changes
+  // Auto-fetch photos when personId or albumId changes
   useEffect(() => {
     if (personId) {
       fetchPhotos(personId);
+    } else if (albumId) {
+      fetchPhotos(undefined, albumId);
     } else {
       setPhotos([]);
       setLoading(false);
     }
-  }, [personId, fetchPhotos]);
+  }, [personId, albumId, fetchPhotos]);
 
   return {
     photos,

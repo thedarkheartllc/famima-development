@@ -9,9 +9,11 @@ import { FaTimes } from "react-icons/fa";
 interface UploadModalProps {
   isOpen: boolean;
   onClose: () => void;
-  personId: string;
-  personName: string;
-  storageId: string;
+  personId?: string;
+  albumId?: string;
+  personName?: string;
+  albumName?: string;
+  storageId?: string;
   onUploadComplete?: () => void;
 }
 
@@ -19,7 +21,9 @@ export function UploadModal({
   isOpen,
   onClose,
   personId,
+  albumId,
   personName,
+  albumName,
   storageId,
   onUploadComplete,
 }: UploadModalProps) {
@@ -42,13 +46,23 @@ export function UploadModal({
       try {
         for (let i = 0; i < acceptedFiles.length; i++) {
           const file = acceptedFiles[i];
-          await uploadPhoto(file, personId, storageId, (progress) => {
-            // Calculate overall progress across all files
-            const fileProgress = progress / acceptedFiles.length;
-            const totalProgress =
-              (i / acceptedFiles.length) * 100 + fileProgress;
-            setUploadProgress(totalProgress);
-          });
+          const isAlbumUpload = !!albumId;
+          const targetId = isAlbumUpload ? albumId : personId;
+          const targetStorageId = isAlbumUpload ? albumId : storageId;
+
+          await uploadPhoto(
+            file,
+            targetId!,
+            targetStorageId!,
+            (progress) => {
+              // Calculate overall progress across all files
+              const fileProgress = progress / acceptedFiles.length;
+              const totalProgress =
+                (i / acceptedFiles.length) * 100 + fileProgress;
+              setUploadProgress(totalProgress);
+            },
+            isAlbumUpload
+          );
           setUploadedCount(i + 1);
         }
 
@@ -65,7 +79,7 @@ export function UploadModal({
         setUploadProgress(0);
       }
     },
-    [personId, storageId, uploadPhoto, onUploadComplete, onClose]
+    [personId, albumId, storageId, uploadPhoto, onUploadComplete, onClose]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -112,7 +126,9 @@ export function UploadModal({
           <div>
             <h2 className='text-2xl font-light text-gray-900'>Upload Photos</h2>
             <p className='text-sm text-gray-600 font-light mt-1'>
-              Add photos to {personName}&apos;s gallery
+              {albumName
+                ? `Add photos to ${albumName} album`
+                : `Add photos to ${personName}'s gallery`}
             </p>
           </div>
           <button
