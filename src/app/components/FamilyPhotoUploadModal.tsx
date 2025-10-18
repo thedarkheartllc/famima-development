@@ -24,28 +24,31 @@ export function FamilyPhotoUploadModal({
   const [error, setError] = useState<string | null>(null);
   const { user, isAdmin } = useAuth();
 
-  const uploadFamilyPhoto = async (file: File) => {
-    if (!user) {
-      throw new Error("User not authenticated");
-    }
+  const uploadFamilyPhoto = useCallback(
+    async (file: File) => {
+      if (!user) {
+        throw new Error("User not authenticated");
+      }
 
-    // Create a unique filename
-    const timestamp = Date.now();
-    const fileExtension = file.name.split(".").pop();
-    const fileName = `family-photo-${timestamp}.${fileExtension}`;
-    const storagePath = `families/${user.uid}/${fileName}`;
+      // Create a unique filename
+      const timestamp = Date.now();
+      const fileExtension = file.name.split(".").pop();
+      const fileName = `family-photo-${timestamp}.${fileExtension}`;
+      const storagePath = `families/${user.uid}/${fileName}`;
 
-    // Create storage reference
-    const storageRef = ref(storage, storagePath);
+      // Create storage reference
+      const storageRef = ref(storage, storagePath);
 
-    // Upload file
-    const snapshot = await uploadBytes(storageRef, file);
+      // Upload file
+      const snapshot = await uploadBytes(storageRef, file);
 
-    // Get download URL
-    const downloadURL = await getDownloadURL(snapshot.ref);
+      // Get download URL
+      const downloadURL = await getDownloadURL(snapshot.ref);
 
-    return downloadURL;
-  };
+      return downloadURL;
+    },
+    [user]
+  );
 
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {

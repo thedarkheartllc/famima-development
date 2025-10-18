@@ -139,6 +139,10 @@ export function useAlbums() {
       console.log("🗑️ Starting deleteAlbum for:", albumId);
       console.log("👤 Current user:", user?.uid);
 
+      if (!user) {
+        throw new Error("User not authenticated");
+      }
+
       // First, let's find the album by its albumId field (not document ID)
       const albumsQuery = query(
         collection(db, COLLECTIONS.ALBUMS),
