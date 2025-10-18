@@ -18,11 +18,11 @@ export default function LandingPage() {
 
       <HeroSection />
       <HeroImageSection /> 
-      <FeaturesSection />
       <TargetAudienceSection />
-      <ComparisonSection />
-      <BenefitsSection />
       <WhatYouWontFindSection />
+      <BenefitsSection />
+      <FeaturesSection />
+      {/* <ComparisonSection /> */}
       <FinalCTASection />
 
       <Footer />
