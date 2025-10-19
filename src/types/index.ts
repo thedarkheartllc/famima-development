@@ -11,7 +11,7 @@ export interface Person {
   personId: string;
   familyId: string; // Reference to the family this person belongs to
   name: string;
-  birthDate?: string;
+  birthDate?: string | null;
   color: string;
   createdAt: Date;
   storageId: string; // Formatted identifier for storage: "name-dateOfCreation"
