@@ -79,7 +79,7 @@ export function CollapsibleMonth({
       </button>
 
       {isExpanded && (
-        <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6'>
+        <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-4'>
           {photos.map((photo, index) => {
             const imageSrc = photo.url || `/photos/${photo.filename}`;
             console.log(`🖼️ CollapsibleMonth: Rendering photo ${index}:`, {

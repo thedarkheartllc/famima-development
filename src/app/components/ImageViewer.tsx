@@ -133,7 +133,7 @@ export function ImageViewer({
         onDeletePhoto && (
           <button
             onClick={() => setShowDeleteConfirm(true)}
-            className='absolute top-6 right-20 z-10 p-3 bg-gradient-to-br from-red-200 to-red-300 hover:from-red-300 hover:to-red-400 rounded-full text-red-700 transition-all shadow-lg'
+            className='absolute top-6 left-6 z-10 p-3 bg-gradient-to-br from-red-200 to-red-300 hover:from-red-300 hover:to-red-400 rounded-full text-red-700 transition-all shadow-lg'
             aria-label='Delete photo'
           >
             <FaTrash className='text-xl' />
