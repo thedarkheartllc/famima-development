@@ -11,7 +11,10 @@ export function WhatYouWontFindSection() {
             "No advertisements",
             "No influencers",
             "No NSFW",
-            "No addiction",
+            "No politics",
+            "No false media",
+            "No Algorithms",
+            // "No world news",
           ].map((text, index) => (
             <div key={index} className='space-y-2'>
               <div className='text-gray-400 text-3xl sm:text-4xl'>✕</div>
