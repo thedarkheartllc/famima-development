@@ -33,7 +33,7 @@ export function AddAlbumForm({
   addAlbum,
   refetch,
 }: AddAlbumFormProps) {
-  const [name, setName] = useState("Christmas 2023");
+  const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [eventDate, setEventDate] = useState("");
   const [color, setColor] = useState("from-sky-200 to-sky-300");
@@ -58,9 +58,9 @@ export function AddAlbumForm({
 
       const albumData: Omit<Album, "albumId" | "createdAt" | "familyId"> = {
         name: formattedName,
-        color,
+        color: color || "from-sky-200 to-sky-300",
         ...(description.trim() && { description: description.trim() }),
-        ...(eventDate && { eventDate }),
+        ...(eventDate && { eventDate: eventDate }),
       };
 
       await addAlbum(albumData);
@@ -106,7 +106,7 @@ export function AddAlbumForm({
 
           <div>
             <label className='block text-sm font-light text-gray-600 mb-2'>
-              Description
+              Description (Optional)
             </label>
             <textarea
               value={description}
@@ -119,7 +119,7 @@ export function AddAlbumForm({
 
           <div>
             <label className='block text-sm font-light text-gray-600 mb-2'>
-              Event Date
+              Event Date (Optional)
             </label>
             <input
               type='date'
@@ -131,7 +131,7 @@ export function AddAlbumForm({
 
           <div>
             <label className='block text-sm font-light text-gray-600 mb-3'>
-              Color Theme
+              Color Theme (Optional)
             </label>
             <div className='grid grid-cols-4 gap-2'>
               {COLOR_OPTIONS.map((option) => (

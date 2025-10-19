@@ -56,11 +56,11 @@ export function EditAlbumForm({ isOpen, onClose, album }: EditAlbumFormProps) {
         name.trim().charAt(0).toUpperCase() +
         name.trim().slice(1).toLowerCase();
 
-      await updateAlbum(album.albumId, {
+      await updateAlbum(album.id, {
         name: formattedName,
         ...(description.trim() && { description: description.trim() }),
-        ...(eventDate && { eventDate }),
-        color,
+        ...(eventDate && { eventDate: eventDate }),
+        color: color || "from-sky-200 to-sky-300",
       });
 
       onClose();
@@ -125,7 +125,7 @@ export function EditAlbumForm({ isOpen, onClose, album }: EditAlbumFormProps) {
 
           <div>
             <label className='block text-sm font-light text-gray-600 mb-2'>
-              Description
+              Description (Optional)
             </label>
             <textarea
               value={description}
@@ -138,7 +138,7 @@ export function EditAlbumForm({ isOpen, onClose, album }: EditAlbumFormProps) {
 
           <div>
             <label className='block text-sm font-light text-gray-600 mb-2'>
-              Event Date
+              Event Date (Optional)
             </label>
             <input
               type='date'
@@ -150,7 +150,7 @@ export function EditAlbumForm({ isOpen, onClose, album }: EditAlbumFormProps) {
 
           <div>
             <label className='block text-sm font-light text-gray-600 mb-3'>
-              Color Theme
+              Color Theme (Optional)
             </label>
             <div className='grid grid-cols-4 gap-2'>
               {COLOR_OPTIONS.map((option) => (

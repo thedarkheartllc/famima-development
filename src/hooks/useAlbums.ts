@@ -55,8 +55,9 @@ export function useAlbums() {
       );
 
       const albumsData: Album[] = querySnapshot.docs.map((doc) => ({
-        albumId: doc.id,
+        id: doc.id, // Firestore document ID
         ...doc.data(),
+        albumId: doc.data().albumId || doc.id, // Custom albumId field, fallback to doc.id
         createdAt: doc.data().createdAt?.toDate() || new Date(),
       })) as Album[];
 
@@ -117,12 +118,19 @@ export function useAlbums() {
     }
   };
 
-  const updateAlbum = async (albumId: string, albumData: Partial<Album>) => {
+  const updateAlbum = async (documentId: string, albumData: Partial<Album>) => {
     try {
       setError(null);
 
-      const albumRef = doc(db, COLLECTIONS.ALBUMS, albumId);
-      await updateDoc(albumRef, albumData);
+      if (!user) {
+        throw new Error("User not authenticated");
+      }
+
+      const albumRef = doc(db, COLLECTIONS.ALBUMS, documentId);
+      await updateDoc(albumRef, {
+        ...albumData,
+        familyId: user.uid, // Ensure familyId is included for security rules
+      });
 
       // Refresh the albums list
       await fetchAlbums();

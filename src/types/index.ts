@@ -40,6 +40,7 @@ export interface Photo {
 }
 
 export interface Album {
+  id: string; // Firestore document ID for updates
   albumId: string; // Formatted identifier: "name-dateOfCreation" (e.g., "christmas-2023-2024-10-18")
   familyId: string; // Reference to the family this album belongs to
   name: string; // Album name (e.g., "Christmas 2023", "Summer Vacation")
