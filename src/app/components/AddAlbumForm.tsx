@@ -8,7 +8,7 @@ import { Button } from "./Button";
 interface AddAlbumFormProps {
   onClose: () => void;
   addAlbum: (
-    albumData: Omit<Album, "albumId" | "createdAt" | "familyId">
+    albumData: Omit<Album, "id" | "albumId" | "createdAt" | "familyId">
   ) => Promise<string>;
   refetch: () => Promise<void>;
 }
@@ -56,7 +56,10 @@ export function AddAlbumForm({
         name.trim().charAt(0).toUpperCase() +
         name.trim().slice(1).toLowerCase();
 
-      const albumData: Omit<Album, "albumId" | "createdAt" | "familyId"> = {
+      const albumData: Omit<
+        Album,
+        "id" | "albumId" | "createdAt" | "familyId"
+      > = {
         name: formattedName,
         color: color || "from-sky-200 to-sky-300",
         ...(description.trim() && { description: description.trim() }),
