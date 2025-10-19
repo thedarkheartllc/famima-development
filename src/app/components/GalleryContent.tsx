@@ -103,7 +103,7 @@ export function GalleryContent({
           </p>
         </div>
       ) : (
-        <div className='max-w-7xl mx-auto px-4 sm:px-6 space-y-8'>
+        <div className='max-w-7xl mx-auto px-2 sm:px-4 space-y-4'>
           {sortedGroupKeys.map((groupKey) => (
             <CollapsibleMonth
               key={groupKey}

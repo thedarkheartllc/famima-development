@@ -63,17 +63,17 @@ export function CollapsibleMonth({
   };
 
   return (
-    <div className='space-y-4'>
+    <div className='space-y-2'>
       <button
         onClick={toggleExpanded}
-        className='w-full text-gray-900  text-lg sm:text-2xl md:text-3xl font-light text-left border-b border-gray-100  pb-2 hover:border-gray-200  transition-colors'
+        className='w-full text-gray-900  text-md sm:text-2xl md:text-3xl font-light text-left border-b border-gray-100  pb-1 hover:border-gray-200  transition-colors'
       >
         <div className='flex items-center justify-start gap-3'>
           <span>{monthName}</span>
           {isExpanded ? (
-            <MdExpandLess className='text-lg sm:text-xl text-gray-600 ' />
+            <MdExpandLess className='text-md sm:text-xl text-gray-600 ' />
           ) : (
-            <MdExpandMore className='text-lg sm:text-xl text-gray-600 ' />
+            <MdExpandMore className='text-md sm:text-xl text-gray-600 ' />
           )}
         </div>
       </button>
