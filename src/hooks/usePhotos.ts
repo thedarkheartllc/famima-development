@@ -51,7 +51,7 @@ export function usePhotos(
               photosRef,
               where(PHOTO_FIELDS.PERSON_ID, "==", targetPersonId)
             );
-          } else {
+          } else if (user) {
             q = query(
               photosRef,
               where(PHOTO_FIELDS.PERSON_ID, "==", targetPersonId),
@@ -65,7 +65,7 @@ export function usePhotos(
               photosRef,
               where(PHOTO_FIELDS.ALBUM_ID, "==", targetAlbumId)
             );
-          } else {
+          } else if (user) {
             q = query(
               photosRef,
               where(PHOTO_FIELDS.ALBUM_ID, "==", targetAlbumId),
@@ -74,13 +74,19 @@ export function usePhotos(
           }
         } else {
           // Fetch all photos for the family (only for authenticated users)
-          if (!allowPublicAccess) {
+          if (!allowPublicAccess && user) {
             q = query(photosRef, where(PHOTO_FIELDS.FAMILY_ID, "==", user.uid));
           } else {
             setPhotos([]);
             setLoading(false);
             return;
           }
+        }
+
+        if (!q) {
+          setPhotos([]);
+          setLoading(false);
+          return;
         }
 
         const querySnapshot = await getDocs(q);
