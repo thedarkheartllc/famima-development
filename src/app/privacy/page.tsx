@@ -134,6 +134,43 @@ export default function PrivacyPage() {
 
             <section className='space-y-4'>
               <h2 className='text-2xl font-light text-gray-900'>
+                5.1. How We Store Your Photos
+              </h2>
+              <p>
+                Your photos are stored in Google's Firebase Storage, which is
+                like a highly secure digital vault:
+              </p>
+              <ul className='list-disc pl-6 space-y-2'>
+                <li>
+                  <strong>Your photos are locked up:</strong> They're encrypted
+                  (scrambled) so only you and your family can see them
+                </li>
+                <li>
+                  <strong>Safe transfer:</strong> Photos are protected when
+                  uploading and downloading, like sending a letter in a locked
+                  box
+                </li>
+                <li>
+                  <strong>Only you have the key:</strong> We use strict access
+                  controls so only people you invite can see your photos
+                </li>
+                <li>
+                  <strong>Backup protection:</strong> Your photos are stored in
+                  multiple secure locations in case something happens to one
+                </li>
+                <li>
+                  <strong>Regular security checks:</strong> Google constantly
+                  monitors and updates their security systems
+                </li>
+              </ul>
+              <p className='pt-2'>
+                Think of it like storing your photos in the world's most secure
+                bank vault, but it's digital and only you have the combination.
+              </p>
+            </section>
+
+            <section className='space-y-4'>
+              <h2 className='text-2xl font-light text-gray-900'>
                 6. Your Rights
               </h2>
               <p>You have complete control over your data:</p>
