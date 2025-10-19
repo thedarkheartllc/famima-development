@@ -19,14 +19,14 @@ export function TargetAudienceSection() {
               <HiOutlineUsers className='text-green-600 text-lg sm:text-xl mt-1 flex-shrink-0' />
               <p className='text-sm sm:text-base text-gray-600'>
                 Families who want a <strong>legacy archive</strong> of
-                grandparents, parents, children, and future generations.
+                grandparents, parents, children, pets and future generations.
               </p>
             </div>
             <div className='flex items-start gap-3'>
               <HiOutlineShieldCheck className='text-green-600 text-lg sm:text-xl mt-1 flex-shrink-0' />
               <p className='text-sm sm:text-base text-gray-600'>
-                Parents who don&apos;t want their kids&apos; photos on
-                Instagram, Facebook, or Google.
+                People who don&apos;t want their photos on Instagram or
+                Facebook.
               </p>
             </div>
           </div>
@@ -41,8 +41,8 @@ export function TargetAudienceSection() {
             <div className='flex items-start gap-3'>
               <HiOutlineCamera className='text-green-600 text-lg sm:text-xl mt-1 flex-shrink-0' />
               <p className='text-sm sm:text-base text-gray-600'>
-                Anyone who wants to preserve memories without relying on big
-                tech platforms.
+                Anyone who wants to preserve and share memories without
+                distractions.
               </p>
             </div>
           </div>
