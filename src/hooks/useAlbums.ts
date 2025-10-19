@@ -82,7 +82,7 @@ export function useAlbums() {
   }, [user, fetchAlbums]);
 
   const addAlbum = async (
-    albumData: Omit<Album, "albumId" | "createdAt" | "familyId">
+    albumData: Omit<Album, "id" | "albumId" | "createdAt" | "familyId">
   ) => {
     try {
       setError(null);
