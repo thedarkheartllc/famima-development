@@ -32,7 +32,12 @@ export function FamilyTree({ people }: FamilyTreeProps) {
   );
 
   const renderPersonCard = (
-    person: { id: string; name: string; color: string; birthDate?: string },
+    person: {
+      id: string;
+      name: string;
+      color: string;
+      birthDate?: string | null;
+    },
     size: "large" | "medium" | "small" = "medium"
   ) => {
     const sizeClasses = {
