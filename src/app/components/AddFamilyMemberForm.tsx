@@ -49,8 +49,8 @@ export function AddFamilyMemberForm({
   addPerson,
   refetch,
 }: AddFamilyMemberFormProps) {
-  const [name, setName] = useState("John Smith");
-  const [birthDate, setBirthDate] = useState("1990-01-15");
+  const [name, setName] = useState("");
+  const [birthDate, setBirthDate] = useState("");
   const [color, setColor] = useState("from-sky-200 to-sky-300");
   const [relationshipType, setRelationshipType] = useState<
     "parent" | "child" | "partner" | "grandchild" | "pet" | "other"
@@ -63,6 +63,11 @@ export function AddFamilyMemberForm({
 
     if (!name.trim()) {
       setError("Name is required");
+      return;
+    }
+
+    if (!relationshipType) {
+      setError("Relationship type is required");
       return;
     }
 
@@ -80,8 +85,8 @@ export function AddFamilyMemberForm({
         "id" | "personId" | "createdAt" | "familyId"
       > = {
         name: formattedName,
-        birthDate: birthDate || undefined,
-        color,
+        birthDate: birthDate || null,
+        color: color || "from-sky-200 to-sky-300",
         relationshipType,
         storageId: generateStorageId(formattedName, createdAt),
       };
@@ -131,7 +136,7 @@ export function AddFamilyMemberForm({
 
           <div>
             <label className='block text-sm font-light text-gray-600 mb-2'>
-              Birth Date
+              Birth Date (Optional)
             </label>
             <input
               type='date'
@@ -143,7 +148,7 @@ export function AddFamilyMemberForm({
 
           <div>
             <label className='block text-sm font-light text-gray-600 mb-2'>
-              Relationship Type
+              Relationship Type *
             </label>
             <select
               value={relationshipType}
@@ -171,7 +176,7 @@ export function AddFamilyMemberForm({
 
           <div>
             <label className='block text-sm font-light text-gray-600 mb-3'>
-              Color Theme
+              Color Theme (Optional)
             </label>
             <div className='grid grid-cols-4 gap-2'>
               {COLOR_OPTIONS.map((option) => (

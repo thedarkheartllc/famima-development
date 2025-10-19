@@ -51,6 +51,11 @@ export function EditUserForm({ isOpen, onClose, person }: EditUserFormProps) {
       return;
     }
 
+    if (!relationshipType) {
+      setError("Relationship type is required");
+      return;
+    }
+
     setLoading(true);
     setError("");
 
@@ -59,8 +64,8 @@ export function EditUserForm({ isOpen, onClose, person }: EditUserFormProps) {
         name:
           name.trim().charAt(0).toUpperCase() +
           name.trim().slice(1).toLowerCase(),
-        birthDate: birthDate || undefined,
-        color,
+        birthDate: birthDate || null,
+        color: color || "from-sky-200 to-sky-300",
         relationshipType,
       };
 
@@ -120,7 +125,7 @@ export function EditUserForm({ isOpen, onClose, person }: EditUserFormProps) {
 
           <div>
             <label className='block text-sm font-light text-gray-600 mb-2'>
-              Birth Date
+              Birth Date (Optional)
             </label>
             <input
               type='date'
@@ -132,7 +137,7 @@ export function EditUserForm({ isOpen, onClose, person }: EditUserFormProps) {
 
           <div>
             <label className='block text-sm font-light text-gray-600 mb-2'>
-              Relationship Type
+              Relationship Type *
             </label>
             <select
               value={relationshipType}
@@ -160,7 +165,7 @@ export function EditUserForm({ isOpen, onClose, person }: EditUserFormProps) {
 
           <div>
             <label className='block text-sm font-light text-gray-600 mb-3'>
-              Color Theme
+              Color Theme (Optional)
             </label>
             <div className='grid grid-cols-4 gap-2'>
               {COLOR_OPTIONS.map((option) => (
