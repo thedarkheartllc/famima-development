@@ -129,6 +129,9 @@ export default function AlbumPage({
     return b.localeCompare(a); // Most recent first
   });
 
+  // Create combined array of all photos (sorted by date, most recent first)
+  const allPhotos = [...sortedPhotos, ...photosWithUnknownDates];
+
   return (
     <>
       <main className='bg-gradient-to-b from-white to-green-50/30 min-h-screen'>
@@ -137,6 +140,7 @@ export default function AlbumPage({
           sortedGroupKeys={sortedGroupKeys}
           groupedPhotos={groupedPhotos}
           photosWithUnknownDates={photosWithUnknownDates}
+          allPhotos={allPhotos}
           albumName={album.name}
           albumId={album.albumId}
           photos={albumPhotos}

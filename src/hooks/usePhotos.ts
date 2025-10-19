@@ -22,7 +22,11 @@ import { Photo } from "../types";
 import { useAuth } from "../app/contexts/AuthContext";
 import { COLLECTIONS, PHOTO_FIELDS } from "../lib/firestoreConstants";
 
-export function usePhotos(personId?: string, albumId?: string) {
+export function usePhotos(
+  personId?: string,
+  albumId?: string,
+  allowPublicAccess?: boolean
+) {
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -31,7 +35,7 @@ export function usePhotos(personId?: string, albumId?: string) {
   // Fetch photos for a specific person or album
   const fetchPhotos = useCallback(
     async (targetPersonId?: string, targetAlbumId?: string) => {
-      if (!user) return;
+      if (!user && !allowPublicAccess) return;
 
       try {
         setLoading(true);
@@ -42,21 +46,41 @@ export function usePhotos(personId?: string, albumId?: string) {
 
         if (targetPersonId) {
           // Fetch photos for a specific person
-          q = query(
-            photosRef,
-            where(PHOTO_FIELDS.PERSON_ID, "==", targetPersonId),
-            where(PHOTO_FIELDS.FAMILY_ID, "==", user.uid)
-          );
+          if (allowPublicAccess) {
+            q = query(
+              photosRef,
+              where(PHOTO_FIELDS.PERSON_ID, "==", targetPersonId)
+            );
+          } else {
+            q = query(
+              photosRef,
+              where(PHOTO_FIELDS.PERSON_ID, "==", targetPersonId),
+              where(PHOTO_FIELDS.FAMILY_ID, "==", user.uid)
+            );
+          }
         } else if (targetAlbumId) {
           // Fetch photos for a specific album
-          q = query(
-            photosRef,
-            where(PHOTO_FIELDS.ALBUM_ID, "==", targetAlbumId),
-            where(PHOTO_FIELDS.FAMILY_ID, "==", user.uid)
-          );
+          if (allowPublicAccess) {
+            q = query(
+              photosRef,
+              where(PHOTO_FIELDS.ALBUM_ID, "==", targetAlbumId)
+            );
+          } else {
+            q = query(
+              photosRef,
+              where(PHOTO_FIELDS.ALBUM_ID, "==", targetAlbumId),
+              where(PHOTO_FIELDS.FAMILY_ID, "==", user.uid)
+            );
+          }
         } else {
-          // Fetch all photos for the family
-          q = query(photosRef, where(PHOTO_FIELDS.FAMILY_ID, "==", user.uid));
+          // Fetch all photos for the family (only for authenticated users)
+          if (!allowPublicAccess) {
+            q = query(photosRef, where(PHOTO_FIELDS.FAMILY_ID, "==", user.uid));
+          } else {
+            setPhotos([]);
+            setLoading(false);
+            return;
+          }
         }
 
         const querySnapshot = await getDocs(q);
@@ -89,7 +113,7 @@ export function usePhotos(personId?: string, albumId?: string) {
         setLoading(false);
       }
     },
-    [user]
+    [user, allowPublicAccess]
   );
 
   // Upload a photo

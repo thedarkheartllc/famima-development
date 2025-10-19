@@ -17,6 +17,7 @@ interface PhotoWithDate {
 interface CollapsibleMonthProps {
   monthName: string;
   photos: PhotoWithDate[];
+  allPhotos: PhotoWithDate[];
   isExpanded?: boolean;
   onToggle?: () => void;
   onDeletePhoto?: (photoId: string, storagePath: string) => Promise<void>;
@@ -25,6 +26,7 @@ interface CollapsibleMonthProps {
 export function CollapsibleMonth({
   monthName,
   photos,
+  allPhotos,
   isExpanded: externalExpanded,
   onToggle,
   onDeletePhoto,
@@ -46,7 +48,13 @@ export function CollapsibleMonth({
   };
 
   const openImageViewer = (index: number) => {
-    setCurrentImageIndex(index);
+    // Find the global index of this photo in allPhotos
+    const clickedPhoto = photos[index];
+    const globalIndex = allPhotos.findIndex(
+      (photo) =>
+        photo.filename === clickedPhoto.filename && photo.id === clickedPhoto.id
+    );
+    setCurrentImageIndex(globalIndex >= 0 ? globalIndex : index);
     setViewerOpen(true);
   };
 
@@ -55,17 +63,17 @@ export function CollapsibleMonth({
   };
 
   return (
-    <div className='space-y-6'>
+    <div className='space-y-4'>
       <button
         onClick={toggleExpanded}
-        className='w-full text-gray-900  text-2xl sm:text-3xl md:text-4xl font-light text-center border-b border-gray-100  pb-4 hover:border-gray-200  transition-colors'
+        className='w-full text-gray-900  text-lg sm:text-2xl md:text-3xl font-light text-left border-b border-gray-100  pb-2 hover:border-gray-200  transition-colors'
       >
-        <div className='flex items-center justify-center gap-3'>
+        <div className='flex items-center justify-start gap-3'>
           <span>{monthName}</span>
           {isExpanded ? (
-            <MdExpandLess className='text-xl sm:text-2xl text-gray-600 ' />
+            <MdExpandLess className='text-lg sm:text-xl text-gray-600 ' />
           ) : (
-            <MdExpandMore className='text-xl sm:text-2xl text-gray-600 ' />
+            <MdExpandMore className='text-lg sm:text-xl text-gray-600 ' />
           )}
         </div>
       </button>
@@ -108,7 +116,7 @@ export function CollapsibleMonth({
       <ImageViewer
         isOpen={viewerOpen}
         onClose={closeImageViewer}
-        photos={photos}
+        photos={allPhotos}
         currentIndex={currentImageIndex}
         onIndexChange={setCurrentImageIndex}
         onDeletePhoto={onDeletePhoto}

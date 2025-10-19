@@ -35,7 +35,7 @@ export default function PublicShare({
     photos,
     loading: photosLoading,
     error: photosError,
-  } = usePhotos(shareLink?.personId);
+  } = usePhotos(shareLink?.personId, undefined, true);
 
   // Fetch share link details
   useEffect(() => {
@@ -164,6 +164,9 @@ export default function PublicShare({
     return b.localeCompare(a); // Most recent first
   });
 
+  // Create combined array of all photos (sorted by date, most recent first)
+  const allPhotos = [...sortedPhotos, ...photosWithUnknownDates];
+
   return (
     <main className='bg-gradient-to-b from-white to-green-50/30 min-h-screen'>
       {/* Public Share Header */}
@@ -190,6 +193,7 @@ export default function PublicShare({
         sortedGroupKeys={sortedGroupKeys}
         groupedPhotos={groupedPhotos}
         photosWithUnknownDates={photosWithUnknownDates}
+        allPhotos={allPhotos}
         personName={shareLink?.personName}
         photos={photos}
         isPublicView={true}

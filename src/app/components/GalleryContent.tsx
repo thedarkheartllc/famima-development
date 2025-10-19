@@ -18,6 +18,7 @@ interface GalleryContentProps {
   sortedGroupKeys: string[];
   groupedPhotos: Record<string, PhotoWithDate[]>;
   photosWithUnknownDates?: PhotoWithDate[];
+  allPhotos: PhotoWithDate[];
   personName?: string;
   albumName?: string;
   albumId?: string;
@@ -32,6 +33,7 @@ export function GalleryContent({
   sortedGroupKeys,
   groupedPhotos,
   photosWithUnknownDates = [],
+  allPhotos,
   personName,
   albumName,
   albumId,
@@ -101,12 +103,13 @@ export function GalleryContent({
           </p>
         </div>
       ) : (
-        <div className='max-w-7xl mx-auto px-4 sm:px-6 space-y-12'>
+        <div className='max-w-7xl mx-auto px-4 sm:px-6 space-y-8'>
           {sortedGroupKeys.map((groupKey) => (
             <CollapsibleMonth
               key={groupKey}
               monthName={formatMonthYear(groupKey)}
               photos={groupedPhotos[groupKey]}
+              allPhotos={allPhotos}
               isExpanded={expandedMonths[groupKey] ?? allExpanded}
               onToggle={() => toggleMonth(groupKey)}
               onDeletePhoto={isPublicView ? undefined : onDeletePhoto}
@@ -118,6 +121,7 @@ export function GalleryContent({
             <CollapsibleMonth
               monthName={`Date Unknown (${photosWithUnknownDates.length})`}
               photos={photosWithUnknownDates}
+              allPhotos={allPhotos}
               isExpanded={expandedMonths["date-unknown"] ?? allExpanded}
               onToggle={() => toggleMonth("date-unknown")}
               onDeletePhoto={isPublicView ? undefined : onDeletePhoto}

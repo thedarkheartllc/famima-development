@@ -125,6 +125,9 @@ export default function Gallery({
     return b.localeCompare(a); // Most recent first
   });
 
+  // Create combined array of all photos (sorted by date, most recent first)
+  const allPhotos = [...sortedPhotos, ...photosWithUnknownDates];
+
   return (
     <>
       <main className='bg-gradient-to-b from-white to-green-50/30   min-h-screen'>
@@ -133,6 +136,7 @@ export default function Gallery({
           sortedGroupKeys={sortedGroupKeys}
           groupedPhotos={groupedPhotos}
           photosWithUnknownDates={photosWithUnknownDates}
+          allPhotos={allPhotos}
           personName={decodedName}
           photos={photos}
           onUploadComplete={handleUploadComplete}
