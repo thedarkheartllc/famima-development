@@ -6,6 +6,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { FaTimes } from "react-icons/fa";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "@/lib/firebase";
+import imageCompression from "browser-image-compression";
 
 interface FamilyPhotoUploadModalProps {
   isOpen: boolean;
@@ -30,17 +31,31 @@ export function FamilyPhotoUploadModal({
         throw new Error("User not authenticated");
       }
 
+      // Compress the image before uploading
+      const compressedFile = await imageCompression(file, {
+        maxSizeMB: 0.5, // 500KB target
+        maxWidthOrHeight: 1920, // Max width or height
+        useWebWorker: true,
+        fileType: "image/jpeg",
+        initialQuality: 0.9, // Start with 90% quality
+      });
+
+      console.log(
+        `Family photo - Original size: ${(file.size / 1024 / 1024).toFixed(
+          2
+        )}MB, Compressed size: ${(compressedFile.size / 1024).toFixed(2)}KB`
+      );
+
       // Create a unique filename
       const timestamp = Date.now();
-      const fileExtension = file.name.split(".").pop();
-      const fileName = `family-photo-${timestamp}.${fileExtension}`;
+      const fileName = `family-photo-${timestamp}.jpg`;
       const storagePath = `families/${user.uid}/${fileName}`;
 
       // Create storage reference
       const storageRef = ref(storage, storagePath);
 
-      // Upload file
-      const snapshot = await uploadBytes(storageRef, file);
+      // Upload compressed file
+      const snapshot = await uploadBytes(storageRef, compressedFile);
 
       // Get download URL
       const downloadURL = await getDownloadURL(snapshot.ref);

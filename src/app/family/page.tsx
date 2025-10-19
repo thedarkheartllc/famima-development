@@ -5,6 +5,7 @@ import { Albums } from "../components/Albums";
 import { AppHeader } from "../components/AppHeader";
 import { Footer } from "../components/Footer";
 import { Loading } from "../components/Loading";
+import { ReliableImage } from "../components/ReliableImage";
 import { useAuth } from "../contexts/AuthContext";
 import { usePeople } from "@/hooks/usePeople";
 import { useAlbums } from "@/hooks/useAlbums";
@@ -58,9 +59,11 @@ export default function FamilyPage() {
           {/* Family Photo */}
           {family?.familyImage && (
             <div className='flex justify-center'>
-              <img
+              <ReliableImage
                 src={family.familyImage}
                 alt={`${family.familyName} family photo`}
+                width={160}
+                height={160}
                 className='w-32 h-32 md:w-40 md:h-40 rounded-full object-cover shadow-lg border-4 border-white'
               />
             </div>
