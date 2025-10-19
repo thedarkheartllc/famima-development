@@ -137,13 +137,13 @@ export default function PrivacyPage() {
                 5.1. How We Store Your Photos
               </h2>
               <p>
-                Your photos are stored in Google's Firebase Storage, which is
-                like a highly secure digital vault:
+                Your photos are stored in Google&apos;s Firebase Storage, which
+                is like a highly secure digital vault:
               </p>
               <ul className='list-disc pl-6 space-y-2'>
                 <li>
-                  <strong>Your photos are locked up:</strong> They're encrypted
-                  (scrambled) so only you and your family can see them
+                  <strong>Your photos are locked up:</strong> They&apos;re
+                  encrypted (scrambled) so only you and your family can see them
                 </li>
                 <li>
                   <strong>Safe transfer:</strong> Photos are protected when
@@ -164,8 +164,9 @@ export default function PrivacyPage() {
                 </li>
               </ul>
               <p className='pt-2'>
-                Think of it like storing your photos in the world's most secure
-                bank vault, but it's digital and only you have the combination.
+                Think of it like storing your photos in the world&apos;s most
+                secure bank vault, but it&apos;s digital and only you have the
+                combination.
               </p>
             </section>
 
