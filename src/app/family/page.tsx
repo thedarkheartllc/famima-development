@@ -62,9 +62,9 @@ export default function FamilyPage() {
               <ReliableImage
                 src={family.familyImage}
                 alt={`${family.familyName} family photo`}
-                width={160}
-                height={160}
-                className='w-32 h-32 md:w-40 md:h-40 rounded-full object-cover shadow-lg border-4 border-white'
+                width={320}
+                height={180}
+                className='w-80 h-44 md:w-[28rem] md:h-68 rounded-xl object-cover shadow-lg border-4 border-white'
               />
             </div>
           )}

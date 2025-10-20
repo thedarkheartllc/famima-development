@@ -1,23 +1,9 @@
 "use client";
 
-import { useState } from "react";
 import { useTheme } from "../contexts/ThemeContext";
-import {
-  FaUpload,
-  FaChevronUp,
-  FaChevronDown,
-  FaEdit,
-  FaShare,
-} from "react-icons/fa";
-import Link from "next/link";
-import { UploadModal } from "./UploadModal";
-import { EditUserForm } from "./EditUserForm";
-import { EditAlbumForm } from "./EditAlbumForm";
 import { usePeople } from "../../hooks/usePeople";
-import { useAlbums } from "../../hooks/useAlbums";
-import { useShareLinks } from "../../hooks/useShareLinks";
-import { useToastContext } from "../contexts/ToastContext";
-import { Button } from "./Button";
+import { GalleryActionButtons } from "./GalleryActionButtons";
+import { GalleryHeaderTitle } from "./GalleryHeaderTitle";
 import { Person } from "../../types";
 
 interface GalleryHeaderProps {
@@ -43,217 +29,42 @@ export function GalleryHeader({
 }: GalleryHeaderProps) {
   const {} = useTheme();
   const { people } = usePeople();
-  const { albums } = useAlbums();
-  const { createShareLink } = useShareLinks();
-  const { showSuccess, showError } = useToastContext();
-  const [showUploadModal, setShowUploadModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
 
   // Use passed person object or find by name as fallback
   const personData =
     person ||
     people.find((p) => p.name.toLowerCase() === personName?.toLowerCase());
 
-  const album = albums.find((a) => a.albumId === albumId);
-
   // Determine if we're in album mode or person mode
   const isAlbumMode = !!albumName && !!albumId;
   const isPersonMode = !!personName && !!personData;
 
-  const handleShare = async () => {
-    if (!personData) {
-      showError("No person found - cannot create share link");
-      return;
-    }
-
-    try {
-      const shareLink = await createShareLink(personData.id, personData.name);
-
-      if (shareLink) {
-        const shareUrl = `${window.location.origin}/share/${shareLink.shareId}`;
-
-        // Try to copy to clipboard with fallback
-        try {
-          if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(shareUrl);
-            showSuccess("Share link created and copied to clipboard!");
-          } else {
-            // Fallback for non-secure contexts or older browsers
-            const textArea = document.createElement("textarea");
-            textArea.value = shareUrl;
-            textArea.style.position = "fixed";
-            textArea.style.left = "-999999px";
-            textArea.style.top = "-999999px";
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-
-            try {
-              document.execCommand("copy");
-              showSuccess("Share link created and copied to clipboard!");
-            } catch {
-              showSuccess(`Share link created! Copy this URL: ${shareUrl}`);
-            }
-
-            document.body.removeChild(textArea);
-          }
-        } catch (clipboardError) {
-          console.warn("Clipboard copy failed:", clipboardError);
-          showSuccess(`Share link created! Copy this URL: ${shareUrl}`);
-        }
-      } else {
-        showError("Failed to create share link");
-      }
-    } catch (error) {
-      console.error("Failed to create share link:", error);
-      showError(
-        "Failed to create share link: " +
-          (error instanceof Error ? error.message : "Unknown error")
-      );
-    }
-  };
-
   return (
     <>
-      <header className='sticky top-0 z-50 bg-white/90 /90 backdrop-blur-md border-b border-gray-100  mb-6'>
-        <div className='max-w-7xl mx-auto px-4 sm:px-6 py-4'>
-          <div className='flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4'>
-            {/* Left: Title and Count */}
-            <div className='flex-1'>
-              <Link
-                href='/family'
-                className='inline-flex items-center gap-2 text-gray-600  hover:text-gray-900 font-light transition-colors mb-2'
-              >
-                <span>←</span>
-                <span className='hidden sm:inline'>Back to Family</span>
-                <span className='sm:hidden'>Back</span>
-              </Link>
-              <h1 className='text-xl sm:text-2xl md:text-3xl font-light text-gray-900  capitalize flex items-center gap-3'>
-                {isAlbumMode ? (
-                  `${albumName} Album`
-                ) : personName ? (
-                  <>
-                    <span>{personName}'s Gallery</span>
-                    {personData && (
-                      <div
-                        className={`w-4 h-4 rounded-full flex-shrink-0 border border-black bg-gradient-to-br ${personData.color}`}
-                      />
-                    )}
-                  </>
-                ) : (
-                  "Photo Gallery"
-                )}
-              </h1>
-              <p className='text-sm text-gray-600  font-light'>
-                {photoCount} photos
-              </p>
-            </div>
-
-            {/* Right: Action Buttons */}
-            <div className='flex items-center gap-2 sm:gap-3 flex-wrap'>
-              {/* Edit button - show for both person and album mode */}
-              {(isPersonMode || isAlbumMode) && (
-                <Button
-                  onClick={() => setShowEditModal(true)}
-                  variant='ghost'
-                  size='sm'
-                  title={
-                    isPersonMode ? "Edit person details" : "Edit album details"
-                  }
-                  className='flex-shrink-0 hover:cursor-pointer'
-                >
-                  <FaEdit />
-                  <span className='hidden sm:inline'>Edit</span>
-                </Button>
-              )}
-
-              {/* Share button - only show for person mode */}
-              {isPersonMode && (
-                <Button
-                  onClick={handleShare}
-                  variant='ghost'
-                  size='sm'
-                  title='Share this gallery'
-                  className='flex-shrink-0 hover:cursor-pointer'
-                >
-                  <FaShare />
-                  <span className='hidden sm:inline'>Share</span>
-                </Button>
-              )}
-
-              {/* Upload button - show for both person and album mode */}
-              <Button
-                onClick={() => setShowUploadModal(true)}
-                disabled={!isPersonMode && !isAlbumMode}
-                variant='primary'
-                size='sm'
-                title={
-                  isPersonMode
-                    ? "Upload photos to this person's gallery"
-                    : isAlbumMode
-                    ? "Upload photos to this album"
-                    : "Upload photos"
-                }
-                className='flex-shrink-0 hover:cursor-pointer disabled:cursor-not-allowed'
-              >
-                <FaUpload />
-                <span className='hidden sm:inline'>Upload</span>
-              </Button>
-
-              <Button
-                onClick={onToggleAllMonths}
-                variant='ghost'
-                size='sm'
-                aria-label={
-                  allExpanded ? "Collapse all months" : "Expand all months"
-                }
-                className='flex-shrink-0 hover:cursor-pointer'
-              >
-                {allExpanded ? (
-                  <>
-                    <FaChevronUp />
-                    <span className='hidden sm:inline'>Collapse All</span>
-                  </>
-                ) : (
-                  <>
-                    <FaChevronDown />
-                    <span className='hidden sm:inline'>Expand All</span>
-                  </>
-                )}
-              </Button>
-            </div>
+      <header className='sticky top-0 z-50 bg-white/90 /90 backdrop-blur-md border-b border-gray-100  mb-6 py-2'>
+        <div className='max-w-7xl mx-auto px-4 sm:px-6 py-3'>
+          {/* Responsive layout: Desktop (same row) / Mobile (2 rows) */}
+          <div className='flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4'>
+            <GalleryHeaderTitle
+              personName={personName}
+              person={personData}
+              albumName={albumName}
+              photoCount={photoCount}
+              isAlbumMode={isAlbumMode}
+            />
+            <GalleryActionButtons
+              isPersonMode={isPersonMode}
+              isAlbumMode={isAlbumMode}
+              personData={personData}
+              albumId={albumId}
+              albumName={albumName}
+              onUploadComplete={onUploadComplete}
+              onToggleAllMonths={onToggleAllMonths}
+              allExpanded={allExpanded}
+            />
           </div>
         </div>
       </header>
-
-      {(isPersonMode || isAlbumMode) && (
-        <>
-          <UploadModal
-            isOpen={showUploadModal}
-            onClose={() => setShowUploadModal(false)}
-            personId={isPersonMode ? personData?.id : undefined}
-            albumId={isAlbumMode ? albumId : undefined}
-            personName={isPersonMode ? personData?.name : undefined}
-            albumName={isAlbumMode ? albumName : undefined}
-            storageId={isPersonMode ? personData?.storageId : albumId}
-            onUploadComplete={onUploadComplete}
-          />
-          {isPersonMode && personData && (
-            <EditUserForm
-              isOpen={showEditModal}
-              onClose={() => setShowEditModal(false)}
-              person={personData}
-            />
-          )}
-          {isAlbumMode && album && (
-            <EditAlbumForm
-              isOpen={showEditModal}
-              onClose={() => setShowEditModal(false)}
-              album={album}
-            />
-          )}
-        </>
-      )}
     </>
   );
 }
