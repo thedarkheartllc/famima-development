@@ -79,7 +79,7 @@ export function CollapsibleMonth({
       </button>
 
       {isExpanded && (
-        <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-4'>
+        <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3'>
           {photos.map((photo, index) => {
             const imageSrc = photo.url || `/photos/${photo.filename}`;
             console.log(`🖼️ CollapsibleMonth: Rendering photo ${index}:`, {
@@ -92,7 +92,7 @@ export function CollapsibleMonth({
             return (
               <div key={photo.filename} className='flex flex-col space-y-2'>
                 <div
-                  className='relative w-full aspect-square bg-gray-50 rounded-2xl overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition-all group'
+                  className='relative w-full aspect-square bg-gray-50 rounded-lg overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition-all group'
                   onClick={() => openImageViewer(index)}
                 >
                   <ReliableImage
