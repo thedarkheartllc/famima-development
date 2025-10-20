@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { GalleryHeader } from "./GalleryHeader";
 import { CollapsibleMonth } from "../CollapsibleMonth";
+import { Person } from "../../types";
 
 interface PhotoWithDate {
   id?: string;
@@ -20,6 +21,7 @@ interface GalleryContentProps {
   photosWithUnknownDates?: PhotoWithDate[];
   allPhotos: PhotoWithDate[];
   personName?: string;
+  person?: Person; // Add person object
   albumName?: string;
   albumId?: string;
   photos?: Array<{ url?: string; filename: string }>; // Firebase photos for URL access
@@ -35,6 +37,7 @@ export function GalleryContent({
   photosWithUnknownDates = [],
   allPhotos,
   personName,
+  person,
   albumName,
   albumId,
   onUploadComplete,
@@ -87,6 +90,7 @@ export function GalleryContent({
           onToggleAllMonths={toggleAllMonths}
           allExpanded={allExpanded}
           personName={personName}
+          person={person}
           albumName={albumName}
           albumId={albumId}
           onUploadComplete={onUploadComplete}

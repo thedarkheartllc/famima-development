@@ -18,12 +18,14 @@ import { useAlbums } from "../../hooks/useAlbums";
 import { useShareLinks } from "../../hooks/useShareLinks";
 import { useToastContext } from "../contexts/ToastContext";
 import { Button } from "./Button";
+import { Person } from "../../types";
 
 interface GalleryHeaderProps {
   photoCount: number;
   onToggleAllMonths: () => void;
   allExpanded: boolean;
   personName?: string;
+  person?: Person;
   albumName?: string;
   albumId?: string;
   onUploadComplete?: () => void;
@@ -34,6 +36,7 @@ export function GalleryHeader({
   onToggleAllMonths,
   allExpanded,
   personName,
+  person,
   albumName,
   albumId,
   onUploadComplete,
@@ -46,24 +49,25 @@ export function GalleryHeader({
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
 
-  const person = people.find(
-    (p) => p.name.toLowerCase() === personName?.toLowerCase()
-  );
+  // Use passed person object or find by name as fallback
+  const personData =
+    person ||
+    people.find((p) => p.name.toLowerCase() === personName?.toLowerCase());
 
   const album = albums.find((a) => a.albumId === albumId);
 
   // Determine if we're in album mode or person mode
   const isAlbumMode = !!albumName && !!albumId;
-  const isPersonMode = !!personName && !!person;
+  const isPersonMode = !!personName && !!personData;
 
   const handleShare = async () => {
-    if (!person) {
+    if (!personData) {
       showError("No person found - cannot create share link");
       return;
     }
 
     try {
-      const shareLink = await createShareLink(person.id, person.name);
+      const shareLink = await createShareLink(personData.id, personData.name);
 
       if (shareLink) {
         const shareUrl = `${window.location.origin}/share/${shareLink.shareId}`;
@@ -124,12 +128,21 @@ export function GalleryHeader({
                 <span className='hidden sm:inline'>Back to Family</span>
                 <span className='sm:hidden'>Back</span>
               </Link>
-              <h1 className='text-xl sm:text-2xl md:text-3xl font-light text-gray-900  capitalize'>
-                {isAlbumMode
-                  ? `${albumName} Album`
-                  : personName
-                  ? `${personName}'s Gallery`
-                  : "Photo Gallery"}
+              <h1 className='text-xl sm:text-2xl md:text-3xl font-light text-gray-900  capitalize flex items-center gap-3'>
+                {isAlbumMode ? (
+                  `${albumName} Album`
+                ) : personName ? (
+                  <>
+                    <span>{personName}'s Gallery</span>
+                    {personData && (
+                      <div
+                        className={`w-4 h-4 rounded-full flex-shrink-0 border border-black bg-gradient-to-br ${personData.color}`}
+                      />
+                    )}
+                  </>
+                ) : (
+                  "Photo Gallery"
+                )}
               </h1>
               <p className='text-sm text-gray-600  font-light'>
                 {photoCount} photos
@@ -218,18 +231,18 @@ export function GalleryHeader({
           <UploadModal
             isOpen={showUploadModal}
             onClose={() => setShowUploadModal(false)}
-            personId={isPersonMode ? person?.id : undefined}
+            personId={isPersonMode ? personData?.id : undefined}
             albumId={isAlbumMode ? albumId : undefined}
-            personName={isPersonMode ? person?.name : undefined}
+            personName={isPersonMode ? personData?.name : undefined}
             albumName={isAlbumMode ? albumName : undefined}
-            storageId={isPersonMode ? person?.storageId : albumId}
+            storageId={isPersonMode ? personData?.storageId : albumId}
             onUploadComplete={onUploadComplete}
           />
-          {isPersonMode && person && (
+          {isPersonMode && personData && (
             <EditUserForm
               isOpen={showEditModal}
               onClose={() => setShowEditModal(false)}
-              person={person}
+              person={personData}
             />
           )}
           {isAlbumMode && album && (

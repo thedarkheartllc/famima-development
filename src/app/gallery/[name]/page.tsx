@@ -138,6 +138,7 @@ export default function Gallery({
           photosWithUnknownDates={photosWithUnknownDates}
           allPhotos={allPhotos}
           personName={decodedName}
+          person={person}
           photos={photos}
           onUploadComplete={handleUploadComplete}
           onDeletePhoto={deletePhoto}

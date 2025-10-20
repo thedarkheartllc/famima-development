@@ -82,12 +82,12 @@ export function CollapsibleMonth({
         <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3'>
           {photos.map((photo, index) => {
             const imageSrc = photo.url || `/photos/${photo.filename}`;
-            console.log(`🖼️ CollapsibleMonth: Rendering photo ${index}:`, {
-              filename: photo.filename,
-              url: photo.url,
-              finalSrc: imageSrc,
-              priority: index < 6,
-            });
+            // console.log(`🖼️ CollapsibleMonth: Rendering photo ${index}:`, {
+            //   filename: photo.filename,
+            //   url: photo.url,
+            //   finalSrc: imageSrc,
+            //   priority: index < 6,
+            // });
 
             return (
               <div key={photo.filename} className='flex flex-col space-y-2'>
