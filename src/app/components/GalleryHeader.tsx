@@ -15,6 +15,8 @@ interface GalleryHeaderProps {
   albumName?: string;
   albumId?: string;
   onUploadComplete?: () => void;
+  onShowUploadModal?: () => void;
+  onShowEditModal?: () => void;
 }
 
 export function GalleryHeader({
@@ -26,6 +28,8 @@ export function GalleryHeader({
   albumName,
   albumId,
   onUploadComplete,
+  onShowUploadModal,
+  onShowEditModal,
 }: GalleryHeaderProps) {
   const {} = useTheme();
   const { people } = usePeople();
@@ -61,6 +65,8 @@ export function GalleryHeader({
               onUploadComplete={onUploadComplete}
               onToggleAllMonths={onToggleAllMonths}
               allExpanded={allExpanded}
+              onShowUploadModal={onShowUploadModal}
+              onShowEditModal={onShowEditModal}
             />
           </div>
         </div>

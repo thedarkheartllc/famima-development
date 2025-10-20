@@ -3,6 +3,10 @@
 import { useState } from "react";
 import { GalleryHeader } from "./GalleryHeader";
 import { CollapsibleMonth } from "../CollapsibleMonth";
+import { UploadModal } from "./UploadModal";
+import { EditUserForm } from "./EditUserForm";
+import { EditAlbumForm } from "./EditAlbumForm";
+import { useAlbums } from "../../hooks/useAlbums";
 import { Person } from "../../types";
 
 interface PhotoWithDate {
@@ -44,6 +48,15 @@ export function GalleryContent({
   onDeletePhoto,
   isPublicView = false,
 }: GalleryContentProps) {
+  const { albums } = useAlbums();
+  const [showUploadModal, setShowUploadModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+
+  const album = albums.find((a) => a.albumId === albumId);
+
+  // Determine if we're in album mode or person mode
+  const isAlbumMode = !!albumName && !!albumId;
+  const isPersonMode = !!personName && !!person;
   const formatMonthYear = (key: string) => {
     const [year, month] = key.split("-");
     const date = new Date(parseInt(year), parseInt(month) - 1);
@@ -94,6 +107,8 @@ export function GalleryContent({
           albumName={albumName}
           albumId={albumId}
           onUploadComplete={onUploadComplete}
+          onShowUploadModal={() => setShowUploadModal(true)}
+          onShowEditModal={() => setShowEditModal(true)}
         />
       )}
 
@@ -132,6 +147,36 @@ export function GalleryContent({
             />
           )}
         </div>
+      )}
+
+      {/* Modals */}
+      {!isPublicView && (isPersonMode || isAlbumMode) && (
+        <>
+          <UploadModal
+            isOpen={showUploadModal}
+            onClose={() => setShowUploadModal(false)}
+            personId={isPersonMode ? person?.id : undefined}
+            albumId={isAlbumMode ? albumId : undefined}
+            personName={isPersonMode ? person?.name : undefined}
+            albumName={isAlbumMode ? albumName : undefined}
+            storageId={isPersonMode ? person?.storageId : albumId}
+            onUploadComplete={onUploadComplete}
+          />
+          {isPersonMode && person && (
+            <EditUserForm
+              isOpen={showEditModal}
+              onClose={() => setShowEditModal(false)}
+              person={person}
+            />
+          )}
+          {isAlbumMode && album && (
+            <EditAlbumForm
+              isOpen={showEditModal}
+              onClose={() => setShowEditModal(false)}
+              album={album}
+            />
+          )}
+        </>
       )}
     </>
   );

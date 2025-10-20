@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import {
   FaUpload,
   FaChevronUp,
@@ -8,10 +7,6 @@ import {
   FaEdit,
   FaShare,
 } from "react-icons/fa";
-import { UploadModal } from "./UploadModal";
-import { EditUserForm } from "./EditUserForm";
-import { EditAlbumForm } from "./EditAlbumForm";
-import { useAlbums } from "../../hooks/useAlbums";
 import { useShareLinks } from "../../hooks/useShareLinks";
 import { useToastContext } from "../contexts/ToastContext";
 import { Button } from "./Button";
@@ -26,6 +21,8 @@ interface GalleryActionButtonsProps {
   onUploadComplete?: () => void;
   onToggleAllMonths: () => void;
   allExpanded: boolean;
+  onShowUploadModal?: () => void;
+  onShowEditModal?: () => void;
 }
 
 export function GalleryActionButtons({
@@ -37,14 +34,11 @@ export function GalleryActionButtons({
   onUploadComplete,
   onToggleAllMonths,
   allExpanded,
+  onShowUploadModal,
+  onShowEditModal,
 }: GalleryActionButtonsProps) {
-  const { albums } = useAlbums();
   const { createShareLink } = useShareLinks();
   const { showSuccess, showError } = useToastContext();
-  const [showUploadModal, setShowUploadModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
-
-  const album = albums.find((a) => a.albumId === albumId);
 
   const handleShare = async () => {
     if (!personData) {
@@ -105,7 +99,7 @@ export function GalleryActionButtons({
         {/* Edit button - show for both person and album mode */}
         {(isPersonMode || isAlbumMode) && (
           <Button
-            onClick={() => setShowEditModal(true)}
+            onClick={onShowEditModal}
             variant='ghost'
             size='sm'
             title={isPersonMode ? "Edit person details" : "Edit album details"}
@@ -132,7 +126,7 @@ export function GalleryActionButtons({
 
         {/* Upload button - show for both person and album mode */}
         <Button
-          onClick={() => setShowUploadModal(true)}
+          onClick={onShowUploadModal}
           disabled={!isPersonMode && !isAlbumMode}
           variant='primary'
           size='sm'
@@ -169,36 +163,6 @@ export function GalleryActionButtons({
           )}
         </Button>
       </div>
-
-      {/* Modals */}
-      {(isPersonMode || isAlbumMode) && (
-        <>
-          <UploadModal
-            isOpen={showUploadModal}
-            onClose={() => setShowUploadModal(false)}
-            personId={isPersonMode ? personData?.id : undefined}
-            albumId={isAlbumMode ? albumId : undefined}
-            personName={isPersonMode ? personData?.name : undefined}
-            albumName={isAlbumMode ? albumName : undefined}
-            storageId={isPersonMode ? personData?.storageId : albumId}
-            onUploadComplete={onUploadComplete}
-          />
-          {isPersonMode && personData && (
-            <EditUserForm
-              isOpen={showEditModal}
-              onClose={() => setShowEditModal(false)}
-              person={personData}
-            />
-          )}
-          {isAlbumMode && album && (
-            <EditAlbumForm
-              isOpen={showEditModal}
-              onClose={() => setShowEditModal(false)}
-              album={album}
-            />
-          )}
-        </>
-      )}
     </>
   );
 }
