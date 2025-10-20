@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { HiUsers } from "react-icons/hi2";
+import { HiArrowLeft } from "react-icons/hi2";
 import { Person } from "../../types";
 
 interface GalleryHeaderTitleDesktopProps {
@@ -23,16 +23,20 @@ export function GalleryHeaderTitleDesktop({
   const personData = person;
 
   return (
-    <div className='hidden sm:flex flex-col gap-1'>
-      {/* Row 1: Back button + Title */}
-      <div className='flex items-center gap-4'>
+    <div className='hidden sm:flex gap-4'>
+      {/* Back button column */}
+      <div className='flex items-start pt-1'>
         <Link
           href='/family'
           className='inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 font-light transition-colors'
         >
-          <HiUsers className='w-4 h-4' />
+          <HiArrowLeft className='w-4 h-4' />
           <span>Back</span>
         </Link>
+      </div>
+
+      {/* Title and details column */}
+      <div className='flex flex-col gap-1'>
         <h1 className='text-xl md:text-2xl font-light text-gray-900 capitalize flex items-center gap-3'>
           {isAlbumMode ? (
             `${albumName} Album`
@@ -49,20 +53,21 @@ export function GalleryHeaderTitleDesktop({
             "Photo Gallery"
           )}
         </h1>
-      </div>
 
-      {/* Row 2: Photo count and birthday */}
-      <div className='flex items-center gap-4'>
-        <p className='text-sm text-gray-600 font-light'>{photoCount} photos</p>
-        {!isAlbumMode && personData?.birthDate && (
-          <p className='text-sm text-gray-500 font-light'>
-            {new Date(personData.birthDate).toLocaleDateString("en-US", {
-              month: "long",
-              day: "numeric",
-              year: "numeric",
-            })}
+        <div className='flex items-center gap-4'>
+          {!isAlbumMode && personData?.birthDate && (
+            <p className='text-sm text-gray-500 font-light'>
+              {new Date(personData.birthDate).toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })}
+            </p>
+          )}
+          <p className='text-sm text-gray-600 font-light'>
+            {photoCount} photos
           </p>
-        )}
+        </div>
       </div>
     </div>
   );
