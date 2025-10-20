@@ -43,16 +43,16 @@ export function ReliableImage({
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
 
-  console.log("🖼️ ReliableImage: Component state:", {
-    src,
-    validatedSrc,
-    isValidating,
-    error: error?.message,
-    imageError,
-  });
+  // console.log("🖼️ ReliableImage: Component state:", {
+  //   src,
+  //   validatedSrc,
+  //   isValidating,
+  //   error: error?.message,
+  //   imageError,
+  // });
 
   const handleLoad = () => {
-    console.log("✅ ReliableImage: Image loaded successfully:", imageSrc);
+    // console.log("✅ ReliableImage: Image loaded successfully:", imageSrc);
     onLoad?.();
   };
 
@@ -73,11 +73,11 @@ export function ReliableImage({
     ? fallbackSrc
     : validatedSrc || src || fallbackSrc;
 
-  console.log("🎯 ReliableImage: Final image source:", imageSrc);
+  // console.log("🎯 ReliableImage: Final image source:", imageSrc);
 
   // Show loading state - only show if we're validating OR if we don't have a validated source yet
   if (isValidating || (!validatedSrc && !imageError)) {
-    console.log("⏳ ReliableImage: Showing loading state");
+    // console.log("⏳ ReliableImage: Showing loading state");
     return (
       <div
         className={`bg-gray-100 animate-pulse flex items-center justify-center ${className}`}
@@ -90,7 +90,7 @@ export function ReliableImage({
 
   // Show error state
   if (error && !imageError) {
-    console.log("❌ ReliableImage: Showing error state:", error.message);
+    // console.log("❌ ReliableImage: Showing error state:", error.message);
     return (
       <div
         className={`bg-gray-100 flex items-center justify-center ${className}`}
@@ -104,10 +104,10 @@ export function ReliableImage({
     );
   }
 
-  console.log(
-    "🖼️ ReliableImage: Rendering Image component with src:",
-    imageSrc
-  );
+  // console.log(
+  //   "🖼️ ReliableImage: Rendering Image component with src:",
+  //   imageSrc
+  // );
 
   // Check if this is a family image (already compressed) to avoid double processing
   const isFamilyImage = imageSrc?.includes("family-photo-");
