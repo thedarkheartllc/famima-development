@@ -5,6 +5,8 @@ import { useAuth } from "../contexts/AuthContext";
 import { AccountDropdown } from "./AccountDropdown";
 import { Logo } from "./Logo";
 import { Person, Family, Album } from "@/types";
+import { useRouter, usePathname } from "next/navigation";
+import { HiHome } from "react-icons/hi2";
 
 interface AppHeaderProps {
   showSignIn?: boolean;
@@ -36,6 +38,8 @@ export function AppHeader({
   updateFamilyImage,
 }: AppHeaderProps) {
   const { isAdmin, user } = useAuth();
+  const router = useRouter();
+  const pathname = usePathname();
 
   const headerClasses = fixed
     ? "fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md border-b border-gray-100 z-50"
@@ -68,16 +72,17 @@ export function AppHeader({
               </Link>
             )}
 
-            {showSignIn && user && (
-              <Link
-                href='/family'
-                className='px-4 sm:px-6 py-2 text-gray-700 hover:text-gray-900 font-light transition-colors'
+            {showSignIn && user && pathname === "/" && (
+              <button
+                onClick={() => router.push("/family")}
+                className='flex items-center gap-2 px-3 py-2 text-gray-700 hover:text-gray-900 font-light transition-colors rounded-lg hover:bg-gray-50'
               >
-                My Family Tree
-              </Link>
+                <HiHome className='w-5 h-5' />
+                My Family
+              </button>
             )}
 
-            {isAdmin && user && (
+            {isAdmin && user && pathname !== "/" && (
               <AccountDropdown
                 showSignOut={showSignOut}
                 addPerson={addPerson}
