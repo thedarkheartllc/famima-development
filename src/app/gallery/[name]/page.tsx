@@ -150,7 +150,7 @@ export default function Gallery({
           groupedPhotos={groupedPhotos}
           photosWithUnknownDates={photosWithUnknownDates}
           allPhotos={allPhotos}
-          personName={decodedName}
+          personName={currentPerson.name}
           person={currentPerson}
           photos={photos}
           onUploadComplete={handleUploadComplete}

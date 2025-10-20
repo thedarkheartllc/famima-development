@@ -45,10 +45,10 @@ export function GalleryHeader({
 
   return (
     <>
-      <header className='sticky top-0 z-50 bg-white/90 /90 backdrop-blur-md border-b border-gray-100  mb-6 py-2'>
-        <div className='max-w-7xl mx-auto px-4 sm:px-6 py-3'>
+      <header className='sticky top-0 z-50 bg-white/90 /90 backdrop-blur-md border-b border-gray-100  mb-4 py-4'>
+        <div className='max-w-7xl mx-auto px-4 sm:px-6'>
           {/* Responsive layout: Desktop (same row) / Mobile (2 rows) */}
-          <div className='flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4'>
+          <div className='flex flex-col sm:flex-row sm:items-start sm:justify-between sm:gap-4'>
             <GalleryHeaderTitle
               personName={personName}
               person={personData}
