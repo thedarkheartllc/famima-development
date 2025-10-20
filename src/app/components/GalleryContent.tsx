@@ -31,6 +31,7 @@ interface GalleryContentProps {
   photos?: Array<{ url?: string; filename: string }>; // Firebase photos for URL access
   onUploadComplete?: () => void;
   onDeletePhoto?: (photoId: string, storagePath: string) => Promise<void>;
+  onPersonUpdate?: (updatedPerson: Person) => void;
   isPublicView?: boolean;
 }
 
@@ -46,6 +47,7 @@ export function GalleryContent({
   albumId,
   onUploadComplete,
   onDeletePhoto,
+  onPersonUpdate,
   isPublicView = false,
 }: GalleryContentProps) {
   const { albums } = useAlbums();
@@ -167,6 +169,7 @@ export function GalleryContent({
               isOpen={showEditModal}
               onClose={() => setShowEditModal(false)}
               person={person}
+              onPersonUpdate={onPersonUpdate}
             />
           )}
           {isAlbumMode && album && (

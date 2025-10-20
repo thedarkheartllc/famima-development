@@ -1,11 +1,12 @@
 "use client";
 
-import { use } from "react";
+import { use, useState, useEffect } from "react";
 import { GalleryContent } from "../../components/GalleryContent";
 import { Footer } from "../../components/Footer";
 import { Loading } from "../../components/Loading";
 import { usePhotos } from "../../../hooks/usePhotos";
 import { usePeople } from "../../../hooks/usePeople";
+import { Person } from "../../../types";
 
 interface PhotoWithDate {
   id?: string;
@@ -23,6 +24,7 @@ export default function Gallery({
 }) {
   const resolvedParams = use(params);
   const { people, loading: peopleLoading } = usePeople();
+  const [currentPerson, setCurrentPerson] = useState<Person | null>(null);
 
   // Decode the URL parameter to handle spaces and special characters
   const decodedName = decodeURIComponent(resolvedParams.name);
@@ -39,18 +41,29 @@ export default function Gallery({
   );
 
   console.log("🖼️ Gallery: Person found:", person ? person.name : "NOT FOUND");
+
+  // Update currentPerson when people data changes
+  useEffect(() => {
+    if (person) {
+      setCurrentPerson(person);
+    }
+  }, [person]);
   const {
     photos,
     loading: photosLoading,
     error,
     fetchPhotos,
     deletePhoto,
-  } = usePhotos(person?.id);
+  } = usePhotos(currentPerson?.id);
 
   const handleUploadComplete = () => {
-    if (person?.id) {
-      fetchPhotos(person.id);
+    if (currentPerson?.id) {
+      fetchPhotos(currentPerson.id);
     }
+  };
+
+  const handlePersonUpdate = (updatedPerson: Person) => {
+    setCurrentPerson(updatedPerson);
   };
 
   if (peopleLoading || photosLoading) {
@@ -75,7 +88,7 @@ export default function Gallery({
     );
   }
 
-  if (!person) {
+  if (!currentPerson) {
     return (
       <main className='bg-gradient-to-b from-white to-green-50/30   min-h-screen'>
         <div className='flex justify-center items-center min-h-[60vh]'>
@@ -138,10 +151,11 @@ export default function Gallery({
           photosWithUnknownDates={photosWithUnknownDates}
           allPhotos={allPhotos}
           personName={decodedName}
-          person={person}
+          person={currentPerson}
           photos={photos}
           onUploadComplete={handleUploadComplete}
           onDeletePhoto={deletePhoto}
+          onPersonUpdate={handlePersonUpdate}
         />
       </main>
       <Footer />

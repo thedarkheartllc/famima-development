@@ -10,6 +10,7 @@ interface EditUserFormProps {
   isOpen: boolean;
   onClose: () => void;
   person: Person;
+  onPersonUpdate?: (updatedPerson: Person) => void;
 }
 
 const COLOR_OPTIONS = [
@@ -27,7 +28,12 @@ const COLOR_OPTIONS = [
   { name: "Cloud", value: "from-slate-200 to-slate-300" },
 ];
 
-export function EditUserForm({ isOpen, onClose, person }: EditUserFormProps) {
+export function EditUserForm({
+  isOpen,
+  onClose,
+  person,
+  onPersonUpdate,
+}: EditUserFormProps) {
   const [name, setName] = useState(person.name);
   const [birthDate, setBirthDate] = useState(person.birthDate || "");
   const [color, setColor] = useState(person.color || "from-sky-200 to-sky-300");
@@ -70,6 +76,13 @@ export function EditUserForm({ isOpen, onClose, person }: EditUserFormProps) {
       };
 
       await updatePerson(person.id, updatedData);
+
+      // Create the updated person object to pass to the callback
+      const updatedPerson: Person = {
+        ...person,
+        ...updatedData,
+      };
+      onPersonUpdate?.(updatedPerson);
       onClose();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to update person");
