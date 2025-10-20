@@ -31,6 +31,10 @@ export function UploadModal({
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadComplete, setUploadComplete] = useState(false);
   const [uploadedCount, setUploadedCount] = useState(0);
+  const [failedCount, setFailedCount] = useState(0);
+  const [failedFiles, setFailedFiles] = useState<
+    { filename: string; error: string }[]
+  >([]);
   const [totalFiles, setTotalFiles] = useState(0);
   const { uploadPhoto, error } = usePhotos();
   const { user, isAdmin } = useAuth();
@@ -41,6 +45,8 @@ export function UploadModal({
       setUploadProgress(0);
       setUploadComplete(false);
       setUploadedCount(0);
+      setFailedCount(0);
+      setFailedFiles([]);
       setTotalFiles(acceptedFiles.length);
 
       try {
@@ -50,7 +56,7 @@ export function UploadModal({
           const targetId = isAlbumUpload ? albumId : personId;
           const targetStorageId = isAlbumUpload ? albumId : storageId;
 
-          await uploadPhoto(
+          const result = await uploadPhoto(
             file,
             targetId!,
             targetStorageId!,
@@ -63,18 +69,30 @@ export function UploadModal({
             },
             isAlbumUpload
           );
-          setUploadedCount(i + 1);
+
+          if (result.success) {
+            setUploadedCount((prev) => prev + 1);
+          } else {
+            setFailedCount((prev) => prev + 1);
+            setFailedFiles((prev) => [
+              ...prev,
+              {
+                filename: file.name,
+                error: result.error || "Unknown error",
+              },
+            ]);
+          }
         }
 
         setUploadComplete(true);
         onUploadComplete?.();
 
-        // Auto-close after 2 seconds
+        // Auto-close after 3 seconds (increased to allow reading results)
         setTimeout(() => {
           onClose();
-        }, 2000);
+        }, 3000);
       } catch (err) {
-        console.error("Upload failed:", err);
+        console.error("Upload process failed:", err);
         setUploading(false);
         setUploadProgress(0);
       }
@@ -164,18 +182,40 @@ export function UploadModal({
               <div className='space-y-3'>
                 {uploadComplete ? (
                   <div className='space-y-3'>
-                    <div className='text-4xl'>✅</div>
-                    <div className='text-lg font-light text-green-600'>
-                      Upload Complete!
+                    <div className='text-4xl'>
+                      {failedCount === 0
+                        ? "✅"
+                        : failedCount === totalFiles
+                        ? "❌"
+                        : "⚠️"}
+                    </div>
+                    <div
+                      className={`text-lg font-light ${
+                        failedCount === 0
+                          ? "text-green-600"
+                          : failedCount === totalFiles
+                          ? "text-red-600"
+                          : "text-yellow-600"
+                      }`}
+                    >
+                      {failedCount === 0
+                        ? "Upload Complete!"
+                        : failedCount === totalFiles
+                        ? "Upload Failed!"
+                        : "Upload Partially Complete!"}
                     </div>
                     <div className='text-sm font-light text-gray-600'>
-                      Successfully uploaded {uploadedCount} photo(s)
+                      {uploadedCount > 0 &&
+                        `Successfully uploaded ${uploadedCount} photo(s)`}
+                      {uploadedCount > 0 && failedCount > 0 && " • "}
+                      {failedCount > 0 && `${failedCount} photo(s) failed`}
                     </div>
                   </div>
                 ) : (
                   <div className='space-y-3'>
                     <div className='text-base font-light text-gray-700'>
-                      Uploading photos... ({uploadedCount} of {totalFiles})
+                      Uploading photos... ({uploadedCount + failedCount} of{" "}
+                      {totalFiles})
                     </div>
                     <div className='w-full bg-gray-100 rounded-full h-2'>
                       <div
@@ -208,6 +248,25 @@ export function UploadModal({
           {error && (
             <div className='mt-4 p-3 bg-red-50 border border-red-100 rounded-2xl'>
               <div className='text-red-600 text-sm font-light'>{error}</div>
+            </div>
+          )}
+
+          {/* Failed Files Display */}
+          {uploadComplete && failedFiles.length > 0 && (
+            <div className='mt-4 p-3 bg-red-50 border border-red-100 rounded-2xl'>
+              <div className='text-red-600 text-sm font-medium mb-2'>
+                Failed uploads:
+              </div>
+              <div className='space-y-1 max-h-32 overflow-y-auto'>
+                {failedFiles.map((failedFile, index) => (
+                  <div key={index} className='text-xs text-red-600'>
+                    <span className='font-medium'>{failedFile.filename}</span>
+                    <span className='text-red-500 ml-1'>
+                      • {failedFile.error}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 

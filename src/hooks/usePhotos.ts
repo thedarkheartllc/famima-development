@@ -129,7 +129,7 @@ export function usePhotos(
     storageId: string,
     onProgress?: (progress: number) => void,
     isAlbumUpload: boolean = false
-  ) => {
+  ): Promise<{ success: boolean; photo?: Photo; error?: string }> => {
     try {
       setError(null);
 
@@ -173,65 +173,83 @@ export function usePhotos(
       const uploadTask = uploadBytesResumable(storageRef, compressedFile);
 
       // Set up progress tracking
-      return new Promise<Photo>((resolve, reject) => {
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {
-            const progress =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            onProgress?.(progress);
-          },
-          (error) => {
-            reject(error);
-          },
-          async () => {
-            try {
-              // Get download URL
-              const downloadURL = await getDownloadURL(storageRef);
+      return new Promise<{ success: boolean; photo?: Photo; error?: string }>(
+        (resolve) => {
+          uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+              const progress =
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              onProgress?.(progress);
+            },
+            (error) => {
+              console.error("Upload failed:", error);
+              resolve({
+                success: false,
+                error: error.message || "Upload failed",
+              });
+            },
+            async () => {
+              try {
+                // Get download URL
+                const downloadURL = await getDownloadURL(storageRef);
 
-              // Save photo metadata to Firestore
-              const photoData = {
-                ...(isAlbumUpload
-                  ? { albumId: personIdOrAlbumId }
-                  : { personId: personIdOrAlbumId }),
-                familyId: user?.uid,
-                filename: file.name,
-                storagePath: `families/${user?.uid}/${storageId}/${photoId}.jpg`,
-                uploadedAt: Timestamp.now(),
-                takenAt: takenAt ? Timestamp.fromDate(takenAt) : null,
-                size: compressedFile.size,
-                url: downloadURL,
-              };
+                // Save photo metadata to Firestore
+                const photoData = {
+                  ...(isAlbumUpload
+                    ? { albumId: personIdOrAlbumId }
+                    : { personId: personIdOrAlbumId }),
+                  familyId: user?.uid,
+                  filename: file.name,
+                  storagePath: `families/${user?.uid}/${storageId}/${photoId}.jpg`,
+                  uploadedAt: Timestamp.now(),
+                  takenAt: takenAt ? Timestamp.fromDate(takenAt) : null,
+                  size: compressedFile.size,
+                  url: downloadURL,
+                };
 
-              const docRef = await addDoc(
-                collection(db, COLLECTIONS.PHOTOS),
-                photoData
-              );
+                const docRef = await addDoc(
+                  collection(db, COLLECTIONS.PHOTOS),
+                  photoData
+                );
 
-              // Add to local state
-              const newPhoto: Photo = {
-                id: docRef.id,
-                personId,
-                familyId: user?.uid || "",
-                filename: file.name,
-                storagePath: `families/${user?.uid}/${storageId}/${photoId}.jpg`,
-                uploadedAt: new Date(),
-                takenAt: takenAt,
-                size: compressedFile.size,
-                url: downloadURL,
-              };
+                // Add to local state
+                const newPhoto: Photo = {
+                  id: docRef.id,
+                  personId,
+                  familyId: user?.uid || "",
+                  filename: file.name,
+                  storagePath: `families/${user?.uid}/${storageId}/${photoId}.jpg`,
+                  uploadedAt: new Date(),
+                  takenAt: takenAt,
+                  size: compressedFile.size,
+                  url: downloadURL,
+                };
 
-              setPhotos((prev) => [newPhoto, ...prev]);
-              resolve(newPhoto);
-            } catch (err) {
-              reject(err);
+                setPhotos((prev) => [newPhoto, ...prev]);
+                resolve({ success: true, photo: newPhoto });
+              } catch (err) {
+                console.error("Failed to save photo metadata:", err);
+                resolve({
+                  success: false,
+                  error:
+                    err instanceof Error
+                      ? err.message
+                      : "Failed to save photo metadata",
+                });
+              }
             }
-          }
-        );
-      });
+          );
+        }
+      );
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to upload photo");
-      throw err;
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to upload photo";
+      console.error("Upload error:", err);
+      return {
+        success: false,
+        error: errorMessage,
+      };
     }
   };
 
