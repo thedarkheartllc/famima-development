@@ -10,11 +10,11 @@ interface ImageCacheOptions {
 
 // Function to preload an image and return a promise
 const preloadImage = (src: string): Promise<string> => {
-  console.log("🖼️ useImageCache: Starting to preload image:", src);
+  // console.log("🖼️ useImageCache: Starting to preload image:", src);
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.onload = () => {
-      console.log("✅ useImageCache: Image loaded successfully:", src);
+      // console.log("✅ useImageCache: Image loaded successfully:", src);
       resolve(src);
     };
     img.onerror = (error) => {
@@ -31,7 +31,7 @@ const validateImageUrl = async (url: string): Promise<string> => {
   try {
     // First try to preload the image
     await preloadImage(url);
-    console.log("✅ useImageCache: Image validation successful:", url);
+    // console.log("✅ useImageCache: Image validation successful:", url);
     return url;
   } catch (error) {
     console.error("❌ useImageCache: Image validation failed:", url, error);
@@ -50,16 +50,16 @@ export function useImageCache(
     enabled = true,
   } = options;
 
-  console.log("🎯 useImageCache: Hook called with:", {
-    imageUrl,
-    enabled,
-    retry,
-  });
+  // console.log("🎯 useImageCache: Hook called with:", {
+  //   imageUrl,
+  //   enabled,
+  //   retry,
+  // });
 
   return useQuery({
     queryKey: ["image", imageUrl],
     queryFn: () => {
-      console.log("🚀 useImageCache: Query function called for:", imageUrl);
+      // console.log("🚀 useImageCache: Query function called for:", imageUrl);
       return validateImageUrl(imageUrl!);
     },
     enabled: enabled && !!imageUrl,
